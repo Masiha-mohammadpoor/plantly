@@ -1,77 +1,107 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const ProductSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'نام محصول الزامی است'],
-    trim: true,
-    maxlength: [100, 'نام محصول نمی‌تواند بیشتر از ۱۰۰ کاراکتر باشد']
-  },
-  price: {
-    type: Number,
-    required: [true, 'قیمت محصول الزامی است'],
-    min: [0, 'قیمت نمی‌تواند منفی باشد']
-  },
-  description: {
-    type: String,
-    required: [true, 'توضیحات محصول الزامی است'],
-    maxlength: [1000, 'توضیحات نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد']
-  },
-  category: {
-    type: String,
-    required: [true, 'دسته‌بندی محصول الزامی است'],
-    enum: {
-      values: ['الکترونیک', 'پوشاک', 'کتاب', 'لوازم خانگی', 'غذا', 'سایر'],
-      message: 'لطفا یک دسته‌بندی معتبر انتخاب کنید'
-    }
-  },
-  stock: {
-    type: Number,
-    required: [true, 'تعداد موجودی الزامی است'],
-    min: [0, 'تعداد موجودی نمی‌تواند منفی باشد'],
-    default: 0
-  },
-  ratings: {
-    type: Number,
-    default: 0,
-    min: [0, 'امتیاز نمی‌تواند کمتر از ۰ باشد'],
-    max: [5, 'امتیاز نمی‌تواند بیشتر از ۵ باشد']
-  },
-  images: [
-    {
-      public_id: {
-        type: String,
-        required: true
+const ProductSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "نام محصول الزامی است"],
+      trim: true,
+      maxlength: [100, "نام محصول نمی‌تواند بیشتر از ۱۰۰ کاراکتر باشد"],
+    },
+    slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      index: true,
+    },
+    description: {
+      type: String,
+      required: [true, "توضیحات محصول الزامی است"],
+      maxlength: [1000, "توضیحات نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد"],
+    },
+    price: {
+      type: Number,
+      required: [true, "قیمت محصول الزامی است"],
+      min: [0, "قیمت نمی‌تواند منفی باشد"],
+    },
+    offPrice: {
+      type: Number,
+      min: [0, "قیمت تخفیف نمی‌تواند منفی باشد"],
+      validate: {
+        validator: function (value) {
+          // اگر price وجود ندارد یا offPrice خالی است، validation را رد کن
+          if (!this.price || value === null || value === undefined) return true;
+          return value <= this.price;
+        },
+        message: "قیمت تخفیف باید کمتر یا مساوی قیمت اصلی باشد",
       },
-      url: {
-        type: String,
-        required: true
-      }
-    }
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now
+    },
+    discount: {
+      type: Number,
+      min: [0, "تخفیف نمی‌تواند منفی باشد"],
+      max: [100, "تخفیف نمی‌تواند بیشتر از ۱۰۰٪ باشد"],
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: [true, "دسته‌بندی الزامی است"],
+    },
+    images: [
+      {
+        url: { type: String, required: true },
+        altText: { type: String },
+      },
+    ],
+    stock: {
+      type: Number,
+      required: [true, "تعداد موجودی الزامی است"],
+      min: [0, "تعداد موجودی نمی‌تواند منفی باشد"],
+      default: 0,
+    },
+    likesCount: {
+      type: Number,
+      default: 0,
+      min: [0, "تعداد لایک نمی‌تواند منفی باشد"],
+    },
+    featured: {
+      type: Boolean,
+      default: false,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  // createdBy: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'user',
-  //   required: true
-  // }
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
+
+// محاسبه خودکار slug از نام محصول
+ProductSchema.pre("save", function (next) {
+  if (!this.slug) {
+    this.slug = this.name
+      .replace(/\s+/g, "-")
+      .replace(/[^\w-]+/g, "")
+      .toLowerCase();
+  }
+  next();
 });
 
-// Middleware برای محاسبه میانگین رتبه‌بندی
-ProductSchema.methods.updateRatings = async function() {
-  const reviews = await this.model('Review').find({ product: this._id });
-  
-  if (reviews.length === 0) {
-    this.ratings = 0;
-    return;
+// محاسبه خودکار تخفیف اگر offPrice وجود دارد
+ProductSchema.pre("save", function (next) {
+  if (this.offPrice && this.price) {
+    this.discount = Math.round(
+      ((this.price - this.offPrice) / this.price) * 100
+    );
   }
+  next();
+});
 
-  const sum = reviews.reduce((acc, item) => acc + item.rating, 0);
-  this.ratings = sum / reviews.length;
-  await this.save();
-};
-
-export default mongoose.models.Product || mongoose.model('Product', ProductSchema);
+export default mongoose.models.Product ||
+  mongoose.model("Product", ProductSchema);
