@@ -8,15 +8,13 @@ const CategorySchema = new mongoose.Schema({
     trim: true,
     maxlength: [50, 'نام دسته‌بندی نمی‌تواند بیشتر از ۵۰ کاراکتر باشد']
   },
-  slug: {
+  englishTitle: {
     type: String,
+    required: [true, 'عنوان انگلیسی الزامی است'],
     unique: true,
-    lowercase: true
-  },
-  parent: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Category',
-    default: null
+    trim: true,
+    lowercase: true,
+    match: [/^[a-z0-9-]+$/, 'عنوان انگلیسی فقط می‌تواند شامل حروف انگلیسی، اعداد و خط تیره باشد']
   },
   description: {
     type: String,
@@ -42,18 +40,10 @@ const CategorySchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// ایجاد slug خودکار قبل از ذخیره
+// ایجاد slug خودکار از englishTitle
 CategorySchema.pre('save', function(next) {
-  this.slug = this.name.replace(/\s+/g, '-').toLowerCase();
+  this.englishTitle = this.englishTitle.toLowerCase().replace(/\s+/g, '-');
   next();
-});
-
-// رابطه مجازی برای زیردسته‌ها
-CategorySchema.virtual('subcategories', {
-  ref: 'Category',
-  localField: '_id',
-  foreignField: 'parent',
-  justOne: false
 });
 
 export default mongoose.models.Category || mongoose.model('Category', CategorySchema);

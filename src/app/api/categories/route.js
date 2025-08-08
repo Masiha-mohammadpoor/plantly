@@ -9,16 +9,11 @@ export async function GET(request) {
     
     const { searchParams } = new URL(request.url);
     const featured = searchParams.get('featured');
-    const parent = searchParams.get('parent');
     
     const query = {};
-    
     if (featured === 'true') query.featured = true;
-    if (parent === 'null') query.parent = null;
     
-    const categories = await Category.find(query)
-      .populate('parent', 'name slug')
-      .sort({ name: 1 });
+    const categories = await Category.find(query).sort({ name: 1 });
     
     return NextResponse.json({ 
       success: true, 
@@ -39,9 +34,10 @@ export async function POST(request) {
     await connectDB();
     const body = await request.json();
     
-    if (!body.name) {
+    // اعتبارسنجی فیلدهای الزامی
+    if (!body.name || !body.englishTitle) {
       return NextResponse.json(
-        { success: false, error: 'نام دسته‌بندی الزامی است' },
+        { success: false, error: 'نام و عنوان انگلیسی الزامی هستند' },
         { status: 400 }
       );
     }
@@ -54,8 +50,9 @@ export async function POST(request) {
     );
   } catch (error) {
     if (error.code === 11000) {
+      const field = error.message.includes('englishTitle') ? 'عنوان انگلیسی' : 'نام';
       return NextResponse.json(
-        { success: false, error: 'این دسته‌بندی قبلا ثبت شده است' },
+        { success: false, error: `${field} تکراری است` },
         { status: 400 }
       );
     }

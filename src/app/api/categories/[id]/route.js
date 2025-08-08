@@ -7,9 +7,7 @@ export async function GET(request, { params }) {
   try {
     await connectDB();
     
-    const category = await Category.findById(params.id)
-      .populate('parent', 'name slug')
-      .populate('subcategories');
+    const category = await Category.findById(params.id);
     
     if (!category) {
       return NextResponse.json(
@@ -33,6 +31,10 @@ export async function PUT(request, { params }) {
     await connectDB();
     const body = await request.json();
     
+    // حذف فیلدهای غیرقابل به‌روزرسانی
+    delete body._id;
+    delete body.createdAt;
+    
     const category = await Category.findByIdAndUpdate(params.id, body, {
       new: true,
       runValidators: true
@@ -48,8 +50,9 @@ export async function PUT(request, { params }) {
     return NextResponse.json({ success: true, data: category });
   } catch (error) {
     if (error.code === 11000) {
+      const field = error.message.includes('englishTitle') ? 'عنوان انگلیسی' : 'نام';
       return NextResponse.json(
-        { success: false, error: 'این نام دسته‌بندی قبلا ثبت شده است' },
+        { success: false, error: `${field} تکراری است` },
         { status: 400 }
       );
     }
@@ -64,15 +67,6 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
-    
-    // بررسی وجود زیردسته‌ها
-    const hasSubcategories = await Category.exists({ parent: params.id });
-    if (hasSubcategories) {
-      return NextResponse.json(
-        { success: false, error: 'این دسته‌بندی دارای زیرمجموعه است و نمی‌توان حذف کرد' },
-        { status: 400 }
-      );
-    }
     
     const category = await Category.findByIdAndDelete(params.id);
     
