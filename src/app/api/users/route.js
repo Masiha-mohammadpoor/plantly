@@ -3,11 +3,11 @@ import User from '@/models/User';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 
-// GET همه کاربران
+// GET همه کاربران (فقط ادمین)
 export async function GET() {
   try {
     await connectDB();
-    const users = await User.find({}).select('-password');
+    const users = await User.find({}).select('-password -cart -likes -saved');
     return NextResponse.json({ success: true, data: users });
   } catch (error) {
     return NextResponse.json(
@@ -23,7 +23,7 @@ export async function POST(request) {
     await connectDB();
     const body = await request.json();
 
-    // اعتبارسنجی فیلدهای ضروری
+    // اعتبارسنجی
     if (!body.username || !body.email || !body.password) {
       return NextResponse.json(
         { success: false, error: 'نام کاربری، ایمیل و رمز عبور الزامی هستند' },
@@ -31,11 +31,11 @@ export async function POST(request) {
       );
     }
 
-    // بررسی تکراری نبودن ایمیل
-    const existingUser = await User.findOne({ email: body.email });
+    // بررسی تکراری نبودن
+    const existingUser = await User.findOne({ $or: [{ email: body.email }, { username: body.username }] });
     if (existingUser) {
       return NextResponse.json(
-        { success: false, error: 'این ایمیل قبلا ثبت شده است' },
+        { success: false, error: 'کاربر با این ایمیل یا نام کاربری وجود دارد' },
         { status: 400 }
       );
     }
@@ -44,19 +44,14 @@ export async function POST(request) {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(body.password, salt);
 
-    // ایجاد کاربر جدید
+    // ایجاد کاربر
     const user = await User.create({
-      username: body.username,
-      email: body.email,
-      password: hashedPassword,
-      role: body.role || 'user'
+      ...body,
+      password: hashedPassword
     });
 
-    // حذف رمز عبور از پاسخ
-    const userResponse = user.toJSON();
-
     return NextResponse.json(
-      { success: true, data: userResponse },
+      { success: true, data: user.toJSON() },
       { status: 201 }
     );
   } catch (error) {

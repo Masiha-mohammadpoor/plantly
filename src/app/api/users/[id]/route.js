@@ -2,13 +2,16 @@ import connectDB from '@/lib/db/connect';
 import User from '@/models/User';
 import { NextResponse } from 'next/server';
 
-
-// GET کاربر خاص با ID
+// GET اطلاعات کاربر خاص
 export async function GET(request, { params }) {
   try {
     await connectDB();
-    const user = await User.findById(params.id).select('-password');
-    
+    const user = await User.findById(params.id)
+      .select('-password')
+      .populate('likes', 'name price')
+      .populate('saved', 'name price')
+      .populate('cart.items.product', 'name price images');
+
     if (!user) {
       return NextResponse.json(
         { success: false, error: 'کاربر یافت نشد' },
@@ -25,14 +28,13 @@ export async function GET(request, { params }) {
   }
 }
 
-// PUT به روزرسانی کاربر
+//به روز رسانی کاربر
 export async function PUT(request, { params }) {
   try {
     await connectDB();
     const body = await request.json();
-
-    // پیدا کردن کاربر
     const user = await User.findById(params.id);
+
     if (!user) {
       return NextResponse.json(
         { success: false, error: 'کاربر یافت نشد' },
@@ -40,23 +42,81 @@ export async function PUT(request, { params }) {
       );
     }
 
-    // به روزرسانی فیلدها
+    // فقط فیلدهایی که در بدنه درخواست ارسال شده‌اند را به‌روز می‌کنیم
     if (body.username) user.username = body.username;
     if (body.email) user.email = body.email;
-    if (body.role) user.role = body.role;
+    // سایر فیلدهای عمومی کاربر
 
-    // اگر رمز عبور جدید ارسال شده، آن را هش کنید
-    if (body.password) {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(body.password, salt);
+    // مدیریت عملیات خاص
+    if (body.action === 'like') {
+      const index = user.likes.indexOf(body.productId);
+      if (index === -1) {
+        user.likes.push(body.productId);
+      } else {
+        user.likes.splice(index, 1);
+      }
+    }
+
+    if (body.action === 'save') {
+      const index = user.saved.indexOf(body.productId);
+      if (index === -1) {
+        user.saved.push(body.productId);
+      } else {
+        user.saved.splice(index, 1);
+      }
+    }
+
+    if (body.action === 'addToCart') {
+      const existingItem = user.cart.items.find(item => 
+        item.product.toString() === body.productId
+      );
+
+      if (existingItem) {
+        existingItem.quantity += body.quantity || 1;
+      } else {
+        user.cart.items.push({
+          product: body.productId,
+          quantity: body.quantity || 1
+        });
+      }
+    }
+
+    if (body.action === 'decreaseCartItem') {
+      const existingItem = user.cart.items.find(item => 
+        item.product.toString() === body.productId
+      );
+
+      if (existingItem) {
+        if (existingItem.quantity > 1) {
+          existingItem.quantity -= body.quantity || 1;
+        } else {
+          user.cart.items = user.cart.items.filter(item => 
+            item.product.toString() !== body.productId
+          );
+        }
+      }
+    }
+
+    if (body.action === 'removeFromCart') {
+      user.cart.items = user.cart.items.filter(item => 
+        item.product.toString() !== body.productId
+      );
     }
 
     await user.save();
+    
+    if (body.action?.includes('Cart')) {
+      await user.calculateCartTotal();
+    }
 
-    // حذف رمز عبور از پاسخ
-    const userResponse = user.toJSON();
-
-    return NextResponse.json({ success: true, data: userResponse });
+    return NextResponse.json({ 
+      success: true, 
+      data: await User.findById(params.id)
+        .select('-password')
+        .populate('likes', 'name price')
+        .populate('saved', 'name price')
+        .populate('cart.items.product', 'name price images')
+    });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: error.message },
@@ -64,6 +124,7 @@ export async function PUT(request, { params }) {
     );
   }
 }
+
 
 // DELETE حذف کاربر
 export async function DELETE(request, { params }) {
