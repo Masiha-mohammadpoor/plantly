@@ -1,7 +1,7 @@
 const Home = () => {
   return (
     <p className="text-lg">
-      Hello
+      
     </p>
   );
 }
