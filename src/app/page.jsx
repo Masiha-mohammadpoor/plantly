@@ -1,6 +1,8 @@
 const Home = () => {
   return (
-    <p>hello</p>
+    <p className="text-lg">
+      Hello
+    </p>
   );
 }
 
