@@ -9,7 +9,7 @@ const Header = () => {
       </div>
       <div></div>
       <div>
-        <ul className="flex justify-center items-center gap-x-10 text-text ">
+        <ul className="flex justify-center items-center gap-x-10 text-secondary-500">
           <li>Home</li>
           <li>Products</li>
           <li>About Us</li>
@@ -18,7 +18,7 @@ const Header = () => {
         </ul>
       </div>
       <div>
-        <button className="text-sm text-white bg-primary-500 p-2 rounded-lg cursor-pointer hover:bg-primary-800 transition-all duration-200">
+        <button className="text-sm text-white bg-primary-500 p-2 rounded-lg cursor-pointer hover:bg-primary-800 transition-all duration-300">
           Login / SignUp
         </button>
       </div>
