@@ -27,6 +27,9 @@ const Home = () => {
     autoplaySpeed: 3450,
     pauseOnHover: false,
     centerPadding: "20px",
+    draggable: false,
+    swipe: false,
+    touchMove: false,
   };
 
   return (

@@ -1,4 +1,33 @@
 import Image from "next/image";
+import Link from "next/link";
+
+const linksData = [
+  {
+    id:1,
+    title : "Home",
+    href : "/"
+  },
+  {
+    id:2,
+    title : "Products",
+    href : "/products"
+  },
+  {
+    id:3,
+    title : "About Us",
+    href : "/about-us"
+  },
+  {
+    id:4,
+    title : "Contact",
+    href : "/contact"
+  },
+  {
+    id:5,
+    title : "My Plant",
+    href : "my-plant"
+  },
+]
 
 const Header = () => {
   return (
@@ -10,11 +39,9 @@ const Header = () => {
       <div></div>
       <div>
         <ul className="flex justify-center items-center gap-x-10 text-secondary-500">
-          <li>Home</li>
-          <li>Products</li>
-          <li>About Us</li>
-          <li>Contact</li>
-          <li>My Plant</li>
+          {linksData.map(l => {
+            return <Link key={l.id} href={l.href} replace>{l.title}</Link>
+          })}
         </ul>
       </div>
       <div>
