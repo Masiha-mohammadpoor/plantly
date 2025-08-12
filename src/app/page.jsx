@@ -63,7 +63,7 @@ const Home = () => {
           return (
             <div key={p} className={`relative col-span-1 w-44 h-44`}>
               <div
-                className={`w-full h-full bg-white rounded-lg homePage-plant origin-bottom transition-all duration-500 ${
+                className={`w-full h-full bg-white rounded-lg custom-shadow origin-bottom transition-all duration-500 ${
                   animation === p && "animate-plant"
                 }`}
               ></div>

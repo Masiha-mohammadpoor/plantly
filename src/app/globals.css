@@ -5,7 +5,7 @@
   --color-primary-500: #3a5a40;
   --color-primary-800: #344e41;
   --color-bg: #ebedf0;
-  --color-secondary-200:#adb5bd;
+  --color-secondary-200:#e4e8ed;
   --color-secondary-500:#6c757d;
   --color-secondary-800:#495057;
 }
@@ -18,7 +18,7 @@
     clip-path: polygon(15% 0 , 100% 0 , 100% 100% , 0 100%);
 }
 
-.homePage-plant {
+.custom-shadow {
   box-shadow: 3px 3px 10px #e8e7e7;
 }
 
@@ -32,4 +32,9 @@
 
 .slick-slide {
   padding: 0 8px;
+}
+
+.product-image {
+  -webkit-filter: drop-shadow(0px 7px 3px #3c3c3c90);
+  filter: drop-shadow(0px 7px 3px #3c3c3c90);
 }
