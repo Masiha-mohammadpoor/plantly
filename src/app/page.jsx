@@ -1,9 +1,36 @@
+"use client";
 import Image from "next/image";
 import { HiArrowNarrowRight } from "react-icons/hi";
+import { useState, useEffect, useRef } from "react";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 const Home = () => {
+  let sliderRef = useRef(null);
+  const productsNumber = [1, 2, 3, 4, 5, 6];
+  const [animation, setAnimation] = useState(1);
+
+  useEffect(() => {
+    sliderRef.slickPlay();
+
+    setInterval(() => {
+      setAnimation((prev) => (prev < 6 ? prev + 1 : 1));
+    }, 3500);
+  }, []);
+
+  const settings = {
+    infinite: true,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3450,
+    pauseOnHover: false,
+    centerPadding: "20px",
+  };
+
   return (
-    <secion className="flex flex-col">
+    <section className="flex flex-col">
       <article className="grid grid-cols-6 mt-[70px] px-8">
         <div className="col-span-2"></div>
         <div className="col-span-2">
@@ -27,87 +54,54 @@ const Home = () => {
           </div>
         </div>
       </article>
-      <article className="absolute bottom-0 left-0 righ-0 w-full mt-4 mb-2 grid grid-cols-5 gap-6 px-6">
-        {/*  */}
-        <div className="relative col-span-1 h-44">
-          <div className="w-full h-full bg-white rounded-lg homePage-plant animate-plant origin-bottom"></div>
-          <div className="absolute bottom-0 -left-[7rem] w-[400px] h-[400px]">
-            <Image
-              src="/images/plant-1.webp"
-              alt="plant"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p className="absolute z-30 bottom-16 right-[25%] text-sm font-semibold text-black">
-            Chlorophytunm <br />
-            Comosum
-          </p>
-          <p className="absolute bottom-10 right-[25%] text-primary-500 flex items-center text-xs">View the product <HiArrowNarrowRight/></p>
-        </div>
-        {/*  */}
-        <div className="relative col-span-1 h-44">
-          <div className="w-full h-full bg-white rounded-lg homePage-plant origin-bottom"></div>
-          <div  className="absolute bottom-0 -left-[3.5rem] w-[190px] h-[190px]">
-            <Image
-              src="/images/plant-1.webp"
-              alt="plant"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p className="absolute z-30 bottom-5 right-5 text-sm font-semibold text-secondary-500">
-            Chlorophytunm <br />
-            Comosum
-          </p>
-        </div>
-        <div className="relative col-span-1 h-44">
-          <div className="w-full h-full bg-white rounded-lg homePage-plant origin-bottom"></div>
-          <div  className="absolute bottom-0 -left-[3.5rem] w-[190px] h-[190px]">
-            <Image
-              src="/images/plant-1.webp"
-              alt="plant"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p className="absolute z-30 bottom-5 right-5 text-sm font-semibold text-secondary-500">
-            Chlorophytunm <br />
-            Comosum
-          </p>
-        </div>
-        <div className="relative col-span-1 h-44">
-          <div className="w-full h-full bg-white rounded-lg homePage-plant origin-bottom"></div>
-          <div  className="absolute bottom-0 -left-[3.5rem] w-[190px] h-[190px]">
-            <Image
-              src="/images/plant-1.webp"
-              alt="plant"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p className="absolute z-30 bottom-5 right-5 text-sm font-semibold text-secondary-500">
-            Chlorophytunm <br />
-            Comosum
-          </p>
-        </div>
-        <div className="relative col-span-1 h-44">
-          <div className="w-full h-full bg-white rounded-lg homePage-plant origin-bottom"></div>
-          <div  className="absolute bottom-0 -left-[3.5rem] w-[190px] h-[190px]">
-            <Image
-              src="/images/plant-1.webp"
-              alt="plant"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p className="absolute z-30 bottom-5 right-5 text-sm font-semibold text-secondary-500">
-            Chlorophytunm <br />
-            Comosum
-          </p>
-        </div>
-      </article>
-    </secion>
+      <Slider
+        ref={(slider) => (sliderRef = slider)}
+        {...settings}
+        className="mt-4"
+      >
+        {productsNumber.map((p) => {
+          return (
+            <div key={p} className={`relative col-span-1 w-44 h-44`}>
+              <div
+                className={`w-full h-full bg-white rounded-lg homePage-plant origin-bottom transition-all duration-500 ${
+                  animation === p && "animate-plant"
+                }`}
+              ></div>
+              <div
+                className={`absolute bottom-0 transition-all duration-500 ${
+                  animation === p
+                    ? "-left-[7rem] w-[400px] h-[400px]"
+                    : "-left-[3.5rem] w-[190px] h-[190px]"
+                }`}
+              >
+                <Image
+                  src="/images/plant-1.webp"
+                  alt="plant"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <p
+                className={`absolute z-30 transition-all duration-500 ${
+                  animation === p
+                    ? "bottom-16 right-[25%] text-black"
+                    : "bottom-5 right-5 text-secondary-500"
+                } text-sm font-semibold`}
+              >
+                Chlorophytunm {p}
+                <br />
+                Comosum
+              </p>
+              {animation === p && (
+                <p className="transition-all duration-500 absolute bottom-10 right-[25%] text-primary-500 flex items-center text-xs">
+                  View the product <HiArrowNarrowRight />
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </Slider>
+    </section>
   );
 };
 

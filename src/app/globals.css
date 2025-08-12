@@ -13,14 +13,23 @@
 .shop-btn {
   clip-path: polygon(0 0,100% 0,85% 100%,0 100% );
 }
+
 .profile-btn {
     clip-path: polygon(15% 0 , 100% 0 , 100% 100% , 0 100%);
-
 }
+
 .homePage-plant {
   box-shadow: 3px 3px 10px #e8e7e7;
 }
 
 .animate-plant {
   transform: scaley(1.5);
+}
+
+.slick-list {
+  overflow: visible !important;
+}
+
+.slick-slide {
+  padding: 0 8px;
 }
