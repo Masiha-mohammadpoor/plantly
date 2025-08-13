@@ -2,6 +2,7 @@ import { FaGoogle } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import Input from "@/app/components/Input";
+import Link from "next/link";
 
 const Signup = () => {
   return (
@@ -12,9 +13,11 @@ const Signup = () => {
           Welcome to our site. Register to use all the features.
         </p>
         <h3 className="text-xl text-white pb-6">Or</h3>
-        <button className="text-white cursor-pointer border-2 border-white rounded-lg py-1 px-7">
-          SIGN IN
-        </button>
+        <Link href="/signin">
+          <button className="text-white cursor-pointer border-2 border-white rounded-lg py-1 px-7">
+            SIGN IN
+          </button>
+        </Link>
       </article>
       <article className="w-[50%] h-screen flex flex-col justify-center items-center">
         <h2 className="text-3xl font-semibold pb-3">Create Account</h2>
