@@ -1,0 +1,56 @@
+import { FaGoogle } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa";
+import Input from "@/app/components/Input";
+
+const Signup = () => {
+  return (
+    <section className="flex">
+      <article className="h-screen w-[50%] bg-primary-200 rounded-r-[120px] flex flex-col justify-center items-center">
+        <h1 className="text-white text-5xl font-semibold pb-6">Welcome!</h1>
+        <p className="max-w-80 break-words overflow-hidden text-center text-sm text-white pb-6">
+          Welcome to our site. Register to use all the features.
+        </p>
+        <h3 className="text-xl text-white pb-6">Or</h3>
+        <button className="text-white cursor-pointer border-2 border-white rounded-lg py-1 px-7">
+          SIGN IN
+        </button>
+      </article>
+      <article className="w-[50%] h-screen flex flex-col justify-center items-center">
+        <h2 className="text-3xl font-semibold pb-3">Create Account</h2>
+        <div className="flex gap-x-2 pb-3">
+          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
+            <FaGoogle />
+          </button>
+          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
+            <FaGithub />
+          </button>
+          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
+            <FaLinkedinIn />
+          </button>
+        </div>
+        <p className="text-secondary-500 text-sm pb-3">
+          or use your email for registration
+        </p>
+        <form className="flex flex-col items-center justify-center">
+          <Input name="name" placeholder="name..." />
+          <Input name="email" placeholder="email..." />
+          <Input name="password" placeholder="password..." type="password" />
+          <Input
+            name="repeatPassword"
+            placeholder="repeat password..."
+            type="password"
+          />
+          <button
+            className="bg-primary-200 text-white rounded-lg cursor-pointer py-1 w-full"
+            type="submit"
+          >
+            SIGN UP
+          </button>
+        </form>
+      </article>
+    </section>
+  );
+};
+
+export default Signup;

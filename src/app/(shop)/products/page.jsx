@@ -5,7 +5,7 @@ import {
   HiOutlineHeart,
 } from "react-icons/hi";
 import { FaRegBookmark } from "react-icons/fa6";
-import Filter from "../components/Filter";
+import Filter from "../../components/Filter";
 
 const Products = () => {
   const productsNumber = [1, 2, 3, 4, 5, 6];

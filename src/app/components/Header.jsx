@@ -45,9 +45,9 @@ const Header = () => {
         </ul>
       </div>
       <div>
-        <button className="text-sm text-white bg-primary-500 p-2 rounded-lg cursor-pointer hover:bg-primary-800 transition-all duration-300">
+        <Link href="/signup"><button className="text-sm text-white bg-primary-500 p-2 rounded-lg cursor-pointer hover:bg-primary-800 transition-all duration-300">
           Login / SignUp
-        </button>
+        </button></Link>
       </div>
     </header>
   );

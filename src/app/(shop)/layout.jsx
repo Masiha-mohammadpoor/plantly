@@ -1,5 +1,5 @@
-import Header from "./components/Header";
-import "./globals.css";
+import Header from "../components/Header";
+import "../globals.css";
 import { Rubik } from "next/font/google";
 
 const rubik = Rubik({
