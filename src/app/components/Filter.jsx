@@ -57,7 +57,7 @@ const Filter = () => {
             className="cursor-pointer bg-white py-2 px-2 flex justify-between items-center"
           >
             <div className="flex items-center gap-x-2">
-              <FaSortAmountDown className="text-secondary-500" />
+              <IoPricetagOutline className="text-secondary-500" />
               <h2 className="font-semibold text-secondary-500">Type</h2>
             </div>
             <span className="text-lg text-secondary-500">
@@ -87,7 +87,7 @@ const Filter = () => {
             className="cursor-pointer bg-white py-2 px-2 flex justify-between items-center"
           >
             <div className="flex items-center gap-x-2">
-              <IoPricetagOutline className="text-secondary-500" />
+              <FaSortAmountDown className="text-secondary-500" />
               <h2 className="font-semibold text-secondary-500">Sort</h2>
             </div>
             <span className="text-lg text-secondary-500">

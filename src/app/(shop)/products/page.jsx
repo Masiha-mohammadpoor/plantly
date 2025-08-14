@@ -45,8 +45,10 @@ const Products = () => {
                       <FaRegBookmark />
                     </button>
                   </div>
-                  <div className="absolute top-10 left-2 rounded-full text-xs text-white bg-primary-500 px-2 py-1">category</div>
-                  <div className="absolute w-40 h-40 left-[52px] -top-12">
+                  <div className="absolute top-10 left-2 rounded-full text-xs text-white bg-primary-500 px-2 py-1">
+                    category
+                  </div>
+                  <div className="absolute w-40 h-40 left-[70px] -top-12">
                     <Image
                       src="/images/plant-1.webp"
                       alt="plant"
