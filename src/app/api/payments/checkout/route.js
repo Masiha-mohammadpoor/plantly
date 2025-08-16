@@ -1,7 +1,7 @@
-import connectDB from '@/lib/db/connect';
+import {connectDB} from '@/lib/db/connect';
 import Payment from '@/models/Payment';
-import User from '@/models/User';
 import Product from '@/models/Product';
+import User from '@/models/User';
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {

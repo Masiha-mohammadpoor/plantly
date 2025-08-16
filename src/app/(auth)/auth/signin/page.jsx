@@ -1,12 +1,11 @@
-"use client";
 import { FaGoogle } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import Input from "@/app/components/Input";
 import Link from "next/link";
+import { signIn } from "@/auth";
 
 const Signin = () => {
-
   return (
     <section className="flex">
       <article className="h-screen w-[50%] bg-primary-200 rounded-r-[120px] flex flex-col justify-center items-center">
@@ -26,13 +25,31 @@ const Signin = () => {
       <article className="w-[50%] h-screen flex flex-col justify-center items-center">
         <h2 className="text-3xl font-semibold pb-3">Login To The Account</h2>
         <div className="flex gap-x-2 pb-3">
-          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
+          <button
+            onClick={async () => {
+              "use server";
+              await signIn("google", { redirect: "/" });
+            }}
+            className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500"
+          >
             <FaGoogle />
           </button>
-          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
+          <button
+            onClick={async () => {
+              "use server";
+              await signIn("github", { redirect: "/" });
+            }}
+            className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500"
+          >
             <FaGithub />
           </button>
-          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
+          <button
+            onClick={async () => {
+              "use server";
+              await signIn("linkedin", { redirect: "/" });
+            }}
+            className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500"
+          >
             <FaLinkedinIn />
           </button>
         </div>

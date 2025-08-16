@@ -93,7 +93,6 @@ ProductSchema.pre("save", function (next) {
   next();
 });
 
-// محاسبه خودکار تخفیف اگر offPrice وجود دارد
 ProductSchema.pre("save", function (next) {
   if (this.offPrice && this.price) {
     this.discount = Math.round(
@@ -103,5 +102,4 @@ ProductSchema.pre("save", function (next) {
   next();
 });
 
-export default mongoose.models.Product ||
-  mongoose.model("Product", ProductSchema);
+export default mongoose.models.Product || mongoose.model("Product", ProductSchema);

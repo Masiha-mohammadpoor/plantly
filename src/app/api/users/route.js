@@ -1,4 +1,4 @@
-import connectDB from '@/lib/db/connect';
+import {connectDB} from '@/lib/db/connect';
 import User from '@/models/User';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
@@ -24,7 +24,7 @@ export async function POST(request) {
     const body = await request.json();
 
     // اعتبارسنجی
-    if (!body.username || !body.email || !body.password) {
+    if (!body.name || !body.email || !body.password) {
       return NextResponse.json(
         { success: false, error: 'نام کاربری، ایمیل و رمز عبور الزامی هستند' },
         { status: 400 }
@@ -32,7 +32,7 @@ export async function POST(request) {
     }
 
     // بررسی تکراری نبودن
-    const existingUser = await User.findOne({ $or: [{ email: body.email }, { username: body.username }] });
+    const existingUser = await User.findOne({ $or: [{ email: body.email }, { name: body.name }] });
     if (existingUser) {
       return NextResponse.json(
         { success: false, error: 'کاربر با این ایمیل یا نام کاربری وجود دارد' },

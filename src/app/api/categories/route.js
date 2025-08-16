@@ -1,4 +1,4 @@
-import connectDB from '@/lib/db/connect';
+import {connectDB} from '@/lib/db/connect';
 import Category from '@/models/Category';
 import { NextResponse } from 'next/server';
 
