@@ -1,11 +1,44 @@
+"use client";
 import { FaGoogle } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import Input from "@/components/Input";
 import Link from "next/link";
-import { signIn } from "@/auth";
+import { signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    email: yup
+      .string()
+      .required("Email is required")
+      .email("Please enter a valid email"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters"),
+  })
+  .required();
 
 const Signin = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isDirty, isSubmitting },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: yupResolver(schema),
+    mode: "onTouched",
+  });
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <section className="flex">
       <article className="h-screen w-[50%] bg-primary-200 rounded-r-[120px] flex flex-col justify-center items-center">
@@ -26,28 +59,19 @@ const Signin = () => {
         <h2 className="text-3xl font-semibold pb-3">Login To The Account</h2>
         <div className="flex gap-x-2 pb-3">
           <button
-            onClick={async () => {
-              "use server";
-              await signIn("google", { redirect: "/" });
-            }}
+            onClick={() => signIn("google", { redirect: "/" })}
             className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500"
           >
             <FaGoogle />
           </button>
           <button
-            onClick={async () => {
-              "use server";
-              await signIn("github", { redirect: "/" });
-            }}
+            onClick={() => signIn("github", { redirect: "/" })}
             className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500"
           >
             <FaGithub />
           </button>
           <button
-            onClick={async () => {
-              "use server";
-              await signIn("linkedin", { redirect: "/" });
-            }}
+            onClick={() => signIn("linkedin", { redirect: "/" })}
             className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500"
           >
             <FaLinkedinIn />
@@ -56,11 +80,26 @@ const Signin = () => {
         <p className="text-secondary-500 text-sm pb-3">
           or use your email for login
         </p>
-        <form className="flex flex-col items-center justify-center">
-          <Input name="email" placeholder="email..." />
-          <Input name="password" placeholder="password..." type="password" />
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col items-center justify-center"
+        >
+          <Input
+            register={register}
+            errors={errors}
+            name="email"
+            placeholder="email..."
+          />
+          <Input
+            register={register}
+            errors={errors}
+            name="password"
+            placeholder="password..."
+            type="password"
+          />
           <button
-            className="bg-primary-200 text-white rounded-lg cursor-pointer py-2 w-full"
+            disabled={!isValid || !isDirty || isSubmitting}
+            className="bg-primary-200 disabled:cursor-not-allowed disabled:bg-secondary-500 disabled:opacity-65 text-white rounded-lg cursor-pointer py-2 w-full"
             type="submit"
           >
             SIGN IN
