@@ -1,7 +1,7 @@
 import { FaGoogle } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
-import Input from "@/app/components/Input";
+import Input from "@/components/Input";
 import Link from "next/link";
 import { signIn } from "@/auth";
 

@@ -2,10 +2,51 @@
 import { FaGoogle } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
-import Input from "@/app/components/Input";
+import Input from "@/components/Input";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    name: yup
+      .string()
+      .required("Name is required")
+      .min(6, "Name must be at least 6 characters"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .email("Please enter a valid email"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters"),
+    repeatPassword: yup
+      .string()
+      .required("Password repetition is required")
+      .oneOf([yup.ref("password"), null], "Passwords must match"),
+  })
+  .required();
 
 const Signup = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isDirty, isSubmitting },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+    },
+    resolver: yupResolver(schema),
+    mode: "onTouched",
+  });
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <section className="flex">
@@ -37,17 +78,39 @@ const Signup = () => {
         <p className="text-secondary-500 text-sm pb-3">
           or use your email for registration
         </p>
-        <form className="flex flex-col items-center justify-center">
-          <Input name="username" placeholder="username..." />
-          <Input name="email" placeholder="email..." />
-          <Input name="password" placeholder="password..." type="password" />
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col items-center justify-center"
+        >
           <Input
+            errors={errors}
+            register={register}
+            name="name"
+            placeholder="name..."
+          />
+          <Input
+            errors={errors}
+            register={register}
+            name="email"
+            placeholder="email..."
+          />
+          <Input
+            errors={errors}
+            register={register}
+            name="password"
+            placeholder="password..."
+            type="password"
+          />
+          <Input
+            errors={errors}
+            register={register}
             name="repeatPassword"
             placeholder="repeat password..."
             type="password"
           />
           <button
-            className="bg-primary-200 text-white rounded-lg cursor-pointer py-2 w-full"
+            disabled={!isValid || !isDirty || isSubmitting}
+            className="bg-primary-200 disabled:cursor-not-allowed disabled:bg-secondary-500 disabled:opacity-65 text-white rounded-lg cursor-pointer py-2 w-full"
             type="submit"
           >
             SIGN UP
