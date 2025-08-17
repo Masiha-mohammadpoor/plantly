@@ -2,6 +2,7 @@ import { connectDB } from '@/lib/db/connect';
 import User from '@/models/User';
 import Product from '@/models/Product';
 import { NextResponse } from 'next/server';
+import { getToken } from '@/utils/auth';
 
 // Helper functions
 const handleLikeAction = (user, productId) => {
@@ -34,7 +35,8 @@ const handleAddToCart = (user, productId, quantity = 1) => {
   } else {
     user.cart.items.push({
       product: productId,
-      quantity
+      quantity,
+      addedAt: new Date()
     });
   }
 };
@@ -67,6 +69,15 @@ export async function GET(request, { params }) {
     await connectDB();
     const { id } = params;
     
+    // Verify authentication
+    const token = getToken(request);
+    if (!token || (token.id !== id && token.role !== 'ADMIN')) {
+      return NextResponse.json(
+        { success: false, error: 'دسترسی غیرمجاز' },
+        { status: 403 }
+      );
+    }
+    
     const user = await User.findById(id)
       .select('-password')
       .populate('likes', 'name price images')
@@ -95,8 +106,17 @@ export async function PUT(request, { params }) {
     await connectDB();
     const { id } = params;
     const body = await request.json();
-    const user = await User.findById(id);
+    
+    // Verify authentication
+    const token = getToken(request);
+    if (!token || (token.id !== id && token.role !== 'ADMIN')) {
+      return NextResponse.json(
+        { success: false, error: 'دسترسی غیرمجاز' },
+        { status: 403 }
+      );
+    }
 
+    const user = await User.findById(id);
     if (!user) {
       return NextResponse.json(
         { success: false, error: 'کاربر یافت نشد' },
@@ -107,6 +127,7 @@ export async function PUT(request, { params }) {
     // Update basic fields
     if (body.name) user.name = body.name;
     if (body.email) user.email = body.email;
+    if (body.role && token.role === 'ADMIN') user.role = body.role;
 
     // Handle special actions
     if (body.action) {
@@ -129,6 +150,7 @@ export async function PUT(request, { params }) {
       }
     }
 
+    user.updatedAt = new Date();
     await user.save();
     
     if (body.action?.includes('Cart')) {
@@ -158,8 +180,17 @@ export async function DELETE(request, { params }) {
   try {
     await connectDB();
     const { id } = params;
-    const user = await User.findByIdAndDelete(id);
+    
+    // Verify authentication
+    const token = getToken(request);
+    if (!token || (token.id !== id && token.role !== 'ADMIN')) {
+      return NextResponse.json(
+        { success: false, error: 'دسترسی غیرمجاز' },
+        { status: 403 }
+      );
+    }
 
+    const user = await User.findByIdAndDelete(id);
     if (!user) {
       return NextResponse.json(
         { success: false, error: 'کاربر یافت نشد' },
