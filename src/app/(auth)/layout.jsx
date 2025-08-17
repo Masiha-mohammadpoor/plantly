@@ -1,5 +1,7 @@
 import "../globals.css";
 import { Rubik } from "next/font/google";
+import Providers from "../Providers";
+
 const rubik = Rubik({
   subsets: ["latin"],
 });
@@ -15,7 +17,9 @@ export default function RootLayout({ children }) {
       <body
         className={`antialiased bg-bg ${rubik.className} overflow-x-hidden`}
       >
-        <main>{children}</main>
+        <Providers>
+          <main>{children}</main>
+        </Providers>
       </body>
     </html>
   );

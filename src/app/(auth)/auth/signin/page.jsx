@@ -8,6 +8,9 @@ import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useSignin } from "@/hooks/useAuth";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const schema = yup
   .object({
@@ -23,6 +26,8 @@ const schema = yup
   .required();
 
 const Signin = () => {
+  const router = useRouter();
+  const { mutateAsync } = useSignin();
   const {
     register,
     handleSubmit,
@@ -35,8 +40,15 @@ const Signin = () => {
     resolver: yupResolver(schema),
     mode: "onTouched",
   });
-  const onSubmit = (data) => {
-    console.log(data);
+
+  const onSubmit = async (data) => {
+    try {
+      const { message } = await mutateAsync(data);
+      toast.success(message);
+      router.push("/");
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    }
   };
 
   return (
