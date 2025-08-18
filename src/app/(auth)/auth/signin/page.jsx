@@ -43,7 +43,7 @@ const Signin = () => {
 
   const onSubmit = async (data) => {
     try {
-      const { message } = await mutateAsync(data);
+      const { message } = await mutateAsync({...data});
       toast.success(message);
       router.push("/");
     } catch (err) {

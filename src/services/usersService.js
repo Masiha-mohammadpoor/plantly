@@ -8,6 +8,10 @@ export const signin = (data) => {
   return http.post("/auth/signin", data).then(res => res.data);
 };
 
+export const getLoggedInUser = () => {
+  return http.get("/auth/me").then(res => res.data);
+};
+
 export const updateUser = (id, data) => {
   return http.put(`/users/${id}`, data).then(res => res.data);
 };

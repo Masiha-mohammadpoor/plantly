@@ -13,7 +13,7 @@ export async function POST(req) {
     // Check if user exists
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
-      return new Response(JSON.stringify({ error: "کاربری با این ایمیل یافت نشد" }), {
+      return new Response(JSON.stringify({ message: "کاربری با این ایمیل یافت نشد" }), {
         status: 404,
         headers: { "Content-Type": "application/json" },
       });
@@ -22,7 +22,7 @@ export async function POST(req) {
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return new Response(JSON.stringify({ error: "رمز عبور اشتباه است" }), {
+      return new Response(JSON.stringify({ message: "رمز عبور اشتباه است" }), {
         status: 401,
         headers: { "Content-Type": "application/json" },
       });
@@ -49,7 +49,7 @@ export async function POST(req) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "خطای سرور" }), {
+    return new Response(JSON.stringify({ message: "خطای سرور" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

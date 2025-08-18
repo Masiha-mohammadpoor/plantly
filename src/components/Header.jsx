@@ -1,5 +1,8 @@
+"use client";
+import { useGetUser } from "@/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
+import { CiUser, CiShoppingCart } from "react-icons/ci";
 
 const linksData = [
   {
@@ -30,6 +33,9 @@ const linksData = [
 ];
 
 const Header = () => {
+  const { data, isLoading } = useGetUser();
+  console.log(data);
+
   return (
     <header className="flex justify-between items-center pt-3 px-8">
       <Link href="/">
@@ -51,11 +57,24 @@ const Header = () => {
         </ul>
       </div>
       <div>
-        <Link href="/auth/signin">
-          <button className="text-sm text-white bg-primary-500 p-2 rounded-lg cursor-pointer hover:bg-primary-800 transition-all duration-300">
-            Login / SignUp
-          </button>
-        </Link>
+        {isLoading ? (
+          <div></div>
+        ) : data ? (
+          <div className="flex gap-x-4">
+            <button>
+              <CiUser className="text-2xl text-secondary-800" />
+            </button>
+            <button>
+              <CiShoppingCart className="text-2xl text-secondary-800" />
+            </button>
+          </div>
+        ) : (
+          <Link href="/auth/signin">
+            <button className="text-sm text-white bg-primary-500 p-2 rounded-lg cursor-pointer hover:bg-primary-800 transition-all duration-300">
+              Login / SignUp
+            </button>
+          </Link>
+        )}
       </div>
     </header>
   );
