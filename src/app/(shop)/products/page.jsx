@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import {
   HiOutlineSearch,
@@ -6,9 +7,12 @@ import {
 } from "react-icons/hi";
 import { FaRegBookmark } from "react-icons/fa6";
 import Filter from "@/components/Filter";
+import { useGetAllProducts } from "@/hooks/useProducts";
 
 const Products = () => {
-  const productsNumber = [1, 2, 3, 4, 5, 6];
+  const { data, isLoading } = useGetAllProducts();
+  const { count, data: products } = data || {};
+  console.log(products);
 
   return (
     <section className="mt-10 flex flex-col">
@@ -26,52 +30,56 @@ const Products = () => {
       </article>
       <article className="mt-10 px-8 grid grid-cols-12 gap-8">
         <Filter />
-        <article className="col-span-9">
-          <h2 className="pb-6 text-secondary-500 text-lg font-semibold">
-            plants (6)
-          </h2>
-          <div className="grid grid-cols-12 gap-x-6 gap-y-10">
-            {productsNumber.map((p) => {
-              return (
-                <div
-                  key={p}
-                  className="rounded-lg col-span-3 bg-primary-200 relative h-52"
-                >
-                  <div className="absolute left-2 top-2 flex gap-x-1">
-                    <button className="text-red-500 text-2xl cursor-pointer">
-                      <HiOutlineHeart />
-                    </button>
-                    <button className="text-primary-500 text-xl cursor-pointer">
-                      <FaRegBookmark />
-                    </button>
-                  </div>
-                  <div className="absolute top-10 left-2 rounded-full text-xs text-white bg-primary-500 px-2 py-1">
-                    category
-                  </div>
-                  <div className="absolute w-40 h-40 left-[70px] -top-12">
-                    <Image
-                      src="/images/plant-1.webp"
-                      alt="plant"
-                      fill
-                      className="object-contain product-image"
-                    />
-                  </div>
-                  <div className="absolute bottom-0 flex justify-between items-end w-full px-2 pb-1">
-                    <div>
-                      <p className="text-sm text-white">
-                        Chlorophytunm <br /> Comosum
-                      </p>
-                      <p className="text-sm text-white py-2">$ 25</p>
-                    </div>
-                    <button className="p-1.5 text-white rounded-lg bg-primary-500 mb-1 cursor-pointer">
-                      <HiOutlinePlusSm />
-                    </button>
-                  </div>
+        {isLoading
+          ? "loading..."
+          : data && (
+              <article className="col-span-9">
+                <h2 className="pb-6 text-secondary-500 text-lg font-semibold">
+                  plants ({count})
+                </h2>
+                <div className="grid grid-cols-12 gap-x-6 gap-y-10">
+                  {products.map((p) => {
+                    return (
+                      <div
+                        key={p._id}
+                        className="rounded-lg col-span-3 bg-primary-200 relative h-52"
+                      >
+                        <div className="absolute left-2 top-2 flex gap-x-1">
+                          <button className="text-red-500 text-2xl cursor-pointer">
+                            <HiOutlineHeart />
+                          </button>
+                          <button className="text-primary-500 text-xl cursor-pointer">
+                            <FaRegBookmark />
+                          </button>
+                        </div>
+                        <div className="absolute top-10 left-2 rounded-full text-xs text-white bg-primary-500 px-2 py-1">
+                          {p.category.name}
+                        </div>
+                        <div className="absolute w-40 h-40 left-[80px] -top-12">
+                          <Image
+                            src={p.images}
+                            alt={p.name}
+                            fill
+                            className="object-contain product-image"
+                          />
+                        </div>
+                        <div className="absolute bottom-0 flex justify-between items-end w-full px-2 pb-1">
+                          <div>
+                            <p className="text-sm text-white">{p.name}</p>
+                            <p className="text-sm text-white py-2">
+                              $ {p.offPrice}
+                            </p>
+                          </div>
+                          <button className="p-1.5 text-white rounded-lg bg-primary-500 mb-1 cursor-pointer">
+                            <HiOutlinePlusSm />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
-        </article>
+              </article>
+            )}
       </article>
     </section>
   );

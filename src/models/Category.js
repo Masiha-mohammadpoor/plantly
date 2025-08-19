@@ -4,14 +4,12 @@ const CategorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'نام دسته‌بندی الزامی است'],
-    unique: true,
     trim: true,
     maxlength: [50, 'نام دسته‌بندی نمی‌تواند بیشتر از ۵۰ کاراکتر باشد']
   },
   englishTitle: {
     type: String,
     required: [true, 'عنوان انگلیسی الزامی است'],
-    unique: true,
     trim: true,
     lowercase: true,
     match: [/^[a-z0-9-]+$/, 'عنوان انگلیسی فقط می‌تواند شامل حروف انگلیسی، اعداد و خط تیره باشد']

@@ -29,7 +29,6 @@ const ProductSchema = new mongoose.Schema(
       min: [0, "قیمت تخفیف نمی‌تواند منفی باشد"],
       validate: {
         validator: function (value) {
-          // اگر price وجود ندارد یا offPrice خالی است، validation را رد کن
           if (!this.price || value === null || value === undefined) return true;
           return value <= this.price;
         },
@@ -46,12 +45,10 @@ const ProductSchema = new mongoose.Schema(
       ref: "Category",
       required: [true, "دسته‌بندی الزامی است"],
     },
-    images: [
-      {
-        url: { type: String, required: true },
-        altText: { type: String },
-      },
-    ],
+    images: {
+      type:String,
+      required:[true , "عکس محصول الزامی است"]
+    },
     stock: {
       type: Number,
       required: [true, "تعداد موجودی الزامی است"],

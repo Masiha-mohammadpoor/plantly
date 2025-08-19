@@ -42,7 +42,7 @@ export async function GET(request) {
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 500 }
     );
   }
@@ -66,7 +66,7 @@ export async function POST(request) {
     const categoryExists = await Category.exists({ _id: body.category });
     if (!categoryExists) {
       return NextResponse.json(
-        { success: false, error: 'دسته‌بندی معتبر نیست' },
+        { success: false, message: 'دسته‌بندی معتبر نیست' },
         { status: 400 }
       );
     }

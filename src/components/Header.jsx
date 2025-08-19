@@ -34,13 +34,12 @@ const linksData = [
 
 const Header = () => {
   const { data, isLoading } = useGetUser();
-  console.log(data);
 
   return (
     <header className="flex justify-between items-center pt-3 px-8">
       <Link href="/">
         <div className="flex justify-center items-end gap-x-1">
-          <Image src="/images/Logo.png" alt="Logo" width={30} height={30} />
+          <Image src="/Logo.png" alt="Logo" width={30} height={30} />
           <h2 className="text-primary-500 font-semibold text-base">PLANTLY</h2>
         </div>
       </Link>
