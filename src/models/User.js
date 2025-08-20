@@ -79,22 +79,20 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-// Middleware برای به‌روزرسانی تاریخ
 UserSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-// محاسبه خودکار قیمت کل سبد خرید
 UserSchema.methods.calculateCartTotal = async function () {
   const populatedUser = await this.populate("cart.items.product");
   this.cart.totalPrice = populatedUser.cart.items.reduce((total, item) => {
-    return total + item.product.price * item.quantity;
+    return total + item.product.offPrice * item.quantity;
   }, 0);
+  
   return this.save();
 };
 
-// حذف فیلدهای حساس هنگام تبدیل به JSON
 UserSchema.methods.toJSON = function () {
   const user = this.toObject();
   delete user.password;

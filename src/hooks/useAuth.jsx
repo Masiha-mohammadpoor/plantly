@@ -22,11 +22,6 @@ export const useUpdateUser = () =>
     mutationFn: updateUser,
   });
 
-export const useLikeAndSaveProduct = () =>
-  useMutation({
-    mutationFn: likeAndSaveProduct,
-  });
-
 export const useGetUser = () => {
   const { data: user, isLoading: userLoading } = useQuery({
     queryKey: ["get-user"],
