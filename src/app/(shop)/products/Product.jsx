@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { HiOutlinePlusSm, HiOutlineHeart, HiHeart } from "react-icons/hi";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 const Product = ({ product, user, actionHandler }) => {
   return (
@@ -52,16 +53,33 @@ const Product = ({ product, user, actionHandler }) => {
       <div className="absolute bottom-0 flex justify-between items-end w-full px-2 pb-1">
         <div>
           <p className="text-sm text-white">{product.name}</p>
-          <p className="text-sm text-white py-2">$ {product.offPrice}</p>
+          {product.discount !== 0 ? <div className="py-2 flex flex-col">
+            <div className="flex items-center gap-x-2">
+              <span className="text-white text-xs bg-red-500 px-1 py-0.5 rounded-full">{product.discount} %</span>
+              <p className="text-white text-sm line-through">$ {product.price}</p>
+            </div>
+            <p className="text-white">$ {product.offPrice}</p>
+          </div> : <p className="text-white pb-2 pt-7">$ {product.offPrice}</p>}
         </div>
-        <button
-          onClick={() =>
-            actionHandler({ action: "addToCart", productId: product._id })
-          }
-          className="p-1.5 text-white rounded-lg bg-primary-500 mb-1 cursor-pointer"
-        >
-          <HiOutlinePlusSm />
-        </button>
+        {user.user.cart.items.some((p) => p.product._id === product._id) ? (
+          <button
+            onClick={() =>
+              actionHandler({ action: "removeFromCart", productId: product._id })
+            }
+            className="p-1.5 text-red-500 rounded-lg bg-red-300 mb-1 cursor-pointer"
+          >
+            <FaRegTrashAlt />
+          </button>
+        ) : (
+          <button
+            onClick={() =>
+              actionHandler({ action: "addToCart", productId: product._id })
+            }
+            className="p-1.5 text-white rounded-lg bg-primary-500 mb-1 cursor-pointer"
+          >
+            <HiOutlinePlusSm />
+          </button>
+        )}
       </div>
     </div>
   );

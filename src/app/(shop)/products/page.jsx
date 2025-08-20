@@ -18,7 +18,8 @@ const Products = () => {
     try {
       if (user && products) {
         const res = await mutateAsync({ id: user.user._id, data: action });
-        console.log(res);
+        if(action.action === "addToCart") toast.success("Added to cart");
+        if(action.action === "removeFromCart") toast.success("Removed from cart!");
         queryClient.invalidateQueries({ queryKey: ["get-user"] });
       }
     } catch (err) {

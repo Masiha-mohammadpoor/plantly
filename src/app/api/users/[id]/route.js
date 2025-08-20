@@ -165,7 +165,7 @@ export async function PUT(request, { params }) {
 
     return NextResponse.json({ 
       success: true, 
-      data: updatedUser
+      data: updatedUser,
     });
   } catch (error) {
     return NextResponse.json(
