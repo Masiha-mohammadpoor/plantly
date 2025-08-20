@@ -7,12 +7,12 @@ export const useCreateProduct = () =>
   });
 
 export const useGetAllProducts = () => {
-  const { data, isLoading } = useQuery({
+  const { data : products, isLoading : productsLoading } = useQuery({
     queryKey: ["get-products"],
     queryFn: getAllProducts,
     retry: false,
     refetchOnWindowFocus: true,
   });
 
-  return { data, isLoading };
+  return { products, productsLoading };
 };

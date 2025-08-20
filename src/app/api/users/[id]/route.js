@@ -73,7 +73,7 @@ export async function GET(request, { params }) {
     const token = getToken(request);
     if (!token || (token.id !== id && token.role !== 'ADMIN')) {
       return NextResponse.json(
-        { success: false, error: 'دسترسی غیرمجاز' },
+        { success: false, message: 'دسترسی غیرمجاز' },
         { status: 403 }
       );
     }
@@ -86,7 +86,7 @@ export async function GET(request, { params }) {
 
     if (!user) {
       return NextResponse.json(
-        { success: false, error: 'کاربر یافت نشد' },
+        { success: false, message: 'کاربر یافت نشد' },
         { status: 404 }
       );
     }
@@ -94,7 +94,7 @@ export async function GET(request, { params }) {
     return NextResponse.json({ success: true, data: user });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 500 }
     );
   }
@@ -104,14 +104,14 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   try {
     await connectDB();
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     
     // Verify authentication
     const token = getToken(request);
     if (!token || (token.id !== id && token.role !== 'ADMIN')) {
       return NextResponse.json(
-        { success: false, error: 'دسترسی غیرمجاز' },
+        { success: false, message: 'دسترسی غیرمجاز' },
         { status: 403 }
       );
     }
@@ -119,7 +119,7 @@ export async function PUT(request, { params }) {
     const user = await User.findById(id);
     if (!user) {
       return NextResponse.json(
-        { success: false, error: 'کاربر یافت نشد' },
+        { success: false, message: 'کاربر یافت نشد' },
         { status: 404 }
       );
     }
@@ -169,7 +169,7 @@ export async function PUT(request, { params }) {
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 400 }
     );
   }
@@ -185,7 +185,7 @@ export async function DELETE(request, { params }) {
     const token = getToken(request);
     if (!token || (token.id !== id && token.role !== 'ADMIN')) {
       return NextResponse.json(
-        { success: false, error: 'دسترسی غیرمجاز' },
+        { success: false, message: 'دسترسی غیرمجاز' },
         { status: 403 }
       );
     }
@@ -193,7 +193,7 @@ export async function DELETE(request, { params }) {
     const user = await User.findByIdAndDelete(id);
     if (!user) {
       return NextResponse.json(
-        { success: false, error: 'کاربر یافت نشد' },
+        { success: false, message: 'کاربر یافت نشد' },
         { status: 404 }
       );
     }
@@ -204,7 +204,7 @@ export async function DELETE(request, { params }) {
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 500 }
     );
   }

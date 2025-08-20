@@ -27,3 +27,7 @@ export const getUser = (id) => {
 export const deleteUser = (id) => {
   return http.delete(`/users/${id}`).then(res => res.data);
 };
+
+export const likeAndSaveProduct = ({id , data}) => {
+  return http.put(`/users/${id}` , data).then(res => res.data);
+}

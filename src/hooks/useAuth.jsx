@@ -1,5 +1,6 @@
 import {
   getLoggedInUser,
+  likeAndSaveProduct,
   signin,
   signup,
   updateUser,
@@ -21,13 +22,18 @@ export const useUpdateUser = () =>
     mutationFn: updateUser,
   });
 
+export const useLikeAndSaveProduct = () =>
+  useMutation({
+    mutationFn: likeAndSaveProduct,
+  });
+
 export const useGetUser = () => {
-  const { data, isLoading } = useQuery({
+  const { data: user, isLoading: userLoading } = useQuery({
     queryKey: ["get-user"],
     queryFn: getLoggedInUser,
     retry: false,
     refetchOnWindowFocus: true,
   });
 
-  return { data, isLoading };
+  return { user, userLoading };
 };

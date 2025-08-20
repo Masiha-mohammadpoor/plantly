@@ -33,7 +33,8 @@ const linksData = [
 ];
 
 const Header = () => {
-  const { data, isLoading } = useGetUser();
+  const { user, userLoading } = useGetUser();
+  const {user : data} = user || {};
 
   return (
     <header className="flex justify-between items-center pt-3 px-8">
@@ -56,7 +57,7 @@ const Header = () => {
         </ul>
       </div>
       <div>
-        {isLoading ? (
+        {userLoading ? (
           <div></div>
         ) : data ? (
           <div className="flex gap-x-4">

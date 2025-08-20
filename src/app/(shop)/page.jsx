@@ -74,7 +74,7 @@ const Home = () => {
                   }`}
                 >
                   <Image
-                    src="/images/plant-1.webp"
+                    src="/images/peace-lily.webp"
                     alt="plant"
                     fill
                     className="object-contain"
