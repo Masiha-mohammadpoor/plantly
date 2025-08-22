@@ -6,10 +6,10 @@ export const useCreateProduct = () =>
     mutationFn: createProduct,
   });
 
-export const useGetAllProducts = () => {
+export const useGetAllProducts = (searchParams) => {
   const { data : products, isLoading : productsLoading } = useQuery({
-    queryKey: ["get-products"],
-    queryFn: getAllProducts,
+    queryKey: ["get-products" , searchParams],
+    queryFn: () => getAllProducts(searchParams),
     retry: false,
     refetchOnWindowFocus: true,
   });

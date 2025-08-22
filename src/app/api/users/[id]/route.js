@@ -4,7 +4,7 @@ import Product from '@/models/Product';
 import { NextResponse } from 'next/server';
 import { getToken } from '@/utils/auth';
 
-// Helper functions
+// Helper functions - بدون تغییر
 const handleLikeAction = (user, productId) => {
   const index = user.likes.indexOf(productId);
   if (index === -1) {
@@ -63,7 +63,7 @@ const handleRemoveFromCart = (user, productId) => {
   );
 };
 
-// GET User
+// GET User - بدون تغییر
 export async function GET(request, { params }) {
   try {
     await connectDB();
@@ -100,11 +100,11 @@ export async function GET(request, { params }) {
   }
 }
 
-// UPDATE User
+// UPDATE User - تغییر اصلی اینجاست
 export async function PUT(request, { params }) {
   try {
     await connectDB();
-    const { id } = await params;
+    const { id } = params;
     const body = await request.json();
     
     // Verify authentication
@@ -116,6 +116,7 @@ export async function PUT(request, { params }) {
       );
     }
 
+    // ابتدا کاربر را پیدا کن
     const user = await User.findById(id);
     if (!user) {
       return NextResponse.json(
@@ -151,12 +152,15 @@ export async function PUT(request, { params }) {
     }
 
     user.updatedAt = new Date();
+    
+    // فقط یکبار save کنید - این تغییر اصلی است
     await user.save();
     
     if (body.action?.includes('Cart')) {
       await user.calculateCartTotal();
     }
 
+    // کاربر را دوباره با populate بگیر
     const updatedUser = await User.findById(id)
       .select('-password')
       .populate('likes', 'name price images')
@@ -168,6 +172,16 @@ export async function PUT(request, { params }) {
       data: updatedUser,
     });
   } catch (error) {
+    // خطای موازی بودن را مدیریت کنید
+    if (error.message.includes('parallel')) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          message: 'لطفاً چند لحظه صبر کنید و دوباره تلاش کنید' 
+        },
+        { status: 429 }
+      );
+    }
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }
@@ -175,7 +189,7 @@ export async function PUT(request, { params }) {
   }
 }
 
-// DELETE User
+// DELETE User - بدون تغییر
 export async function DELETE(request, { params }) {
   try {
     await connectDB();

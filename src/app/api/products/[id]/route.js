@@ -1,5 +1,6 @@
 import {connectDB} from '@/lib/db/connect';
 import Product from '@/models/Product';
+import User from '@/models/User';
 import Category from '@/models/Category';
 import { NextResponse } from 'next/server';
 
@@ -26,6 +27,7 @@ export async function GET(request, { params }) {
     );
   }
 }
+
 
 // PUT به روزرسانی محصول
 export async function PUT(request, { params }) {

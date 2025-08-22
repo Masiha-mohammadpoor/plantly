@@ -4,8 +4,8 @@ export const createProduct = (data) => {
   return http.post("/products", data).then((res) => res.data);
 };
 
-export const getAllProducts = () => {
-  return http.get("/products").then((res) => res.data);
+export const getAllProducts = (qs) => {
+  return http.get(`/products?${qs}`).then((res) => res.data);
 };
 
 export const getProduct = (id) => {

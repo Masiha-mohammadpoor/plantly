@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`antialiased bg-bg ${rubik.className} overflow-x-hidden`}
+        className={`antialiased bg-bg ${rubik.className} overflow-hidden`}
       >
         <Providers>
           <Header />
