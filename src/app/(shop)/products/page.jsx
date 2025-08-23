@@ -9,6 +9,7 @@ import Product from "./Product";
 import { use } from "react";
 import queryString from "query-string";
 import Laoding from "@/components/Loading";
+import Search from "@/components/Search";
 
 const Products = ({ searchParams }) => {
   const params = use(searchParams);
@@ -37,16 +38,7 @@ const Products = ({ searchParams }) => {
   return (
     <section className="mt-10 flex flex-col">
       <article className="flex flex-col justify-center items-center">
-        <div className="flex justify-center w-screen">
-          <input
-            type="text"
-            className="bg-white outline-0 px-5 py-2 w-[50%] rounded-l-full custom-shadow text-secondary-500"
-            placeholder="plant name..."
-          />
-          <button className="cursor-pointer py-2 px-5 rounded-r-full shadow-2xl  bg-white text-2xl text-secondary-500">
-            <HiOutlineSearch />
-          </button>
-        </div>
+        <Search/>
       </article>
       <article className="mt-10 px-4 grid grid-cols-12 gap-8">
         {productsLoading ? (
