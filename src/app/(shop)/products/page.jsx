@@ -8,11 +8,11 @@ import toast from "react-hot-toast";
 import Product from "./Product";
 import { use } from "react";
 import queryString from "query-string";
+import Laoding from "@/components/Loading";
 
 const Products = ({ searchParams }) => {
   const params = use(searchParams);
   const result = queryString.stringify(params);
-
 
   const queryClient = useQueryClient();
   const { mutateAsync } = useUpdateUser();
@@ -49,11 +49,15 @@ const Products = ({ searchParams }) => {
         </div>
       </article>
       <article className="mt-10 px-4 grid grid-cols-12 gap-8">
-        <Filter />
-        {productsLoading
-          ? "loading..."
-          : products &&
-            user && (
+        {productsLoading ? (
+          <div className="col-span-12">
+            <Laoding />
+          </div>
+        ) : (
+          products &&
+          user && (
+            <>
+              <Filter />
               <article className="col-span-9 h-96 overflow-y-auto overflow-x-hidden pb-20">
                 <h2 className="pb-6 text-secondary-500 text-lg font-semibold">
                   plants ({count})
@@ -71,7 +75,9 @@ const Products = ({ searchParams }) => {
                   })}
                 </div>
               </article>
-            )}
+            </>
+          )
+        )}
       </article>
     </section>
   );

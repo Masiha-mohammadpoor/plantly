@@ -8,6 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useMemo, useState } from "react";
 import EmptyCart from "./EmptyCart";
+import Loading from "@/components/Loading";
 
 const Cart = () => {
   const { user: userData, userLoading } = useGetUser();
@@ -57,7 +58,7 @@ const Cart = () => {
     toast.error("Wrong Code !!!");
   };
 
-  if (userLoading && !user) return <p>loading...</p>;
+  if (userLoading || !user) return <Loading/>;
   if (!userLoading && user && user?.cart?.items?.length === 0)
     return <EmptyCart />;
   return (
