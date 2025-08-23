@@ -60,13 +60,18 @@ const Header = () => {
         {userLoading ? (
           <div></div>
         ) : data ? (
-          <div className="flex gap-x-4">
+          <div className="flex items-end gap-x-4">
+            <Link href="/profile">
             <button>
               <CiUser className="text-2xl text-secondary-800" />
             </button>
-            <button>
+            </Link>
+            <Link href="/cart">
+            <button className="cursor-pointer relative">
+              <span className="absolute text-[10px] text-white bg-red-500 rounded-full py-0.5 px-1 -top-2 -right-2">{data.cart.items.length}</span>
               <CiShoppingCart className="text-2xl text-secondary-800" />
             </button>
+            </Link>
           </div>
         ) : (
           <Link href="/auth/signin">

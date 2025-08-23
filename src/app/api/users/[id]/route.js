@@ -82,7 +82,7 @@ export async function GET(request, { params }) {
       .select('-password')
       .populate('likes', 'name price images')
       .populate('saved', 'name price images')
-      .populate('cart.items.product', 'name price images');
+      .populate('cart.items.product', 'name price images offPrice discount');
 
     if (!user) {
       return NextResponse.json(
