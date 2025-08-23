@@ -10,6 +10,7 @@ import { use } from "react";
 import queryString from "query-string";
 import Laoding from "@/components/Loading";
 import Search from "@/components/Search";
+import NoProduct from "./NoProduct";
 
 const Products = ({ searchParams }) => {
   const params = use(searchParams);
@@ -38,7 +39,7 @@ const Products = ({ searchParams }) => {
   return (
     <section className="mt-10 flex flex-col">
       <article className="flex flex-col justify-center items-center">
-        <Search/>
+        <Search />
       </article>
       <article className="mt-10 px-4 grid grid-cols-12 gap-8">
         {productsLoading ? (
@@ -55,16 +56,20 @@ const Products = ({ searchParams }) => {
                   plants ({count})
                 </h2>
                 <div className="grid grid-cols-12 gap-x-6 gap-y-10">
-                  {data.map((product) => {
-                    return (
-                      <Product
-                        key={product._id}
-                        product={product}
-                        user={user}
-                        actionHandler={actionHandler}
-                      />
-                    );
-                  })}
+                  {data.length > 0 ? (
+                    data.map((product) => {
+                      return (
+                        <Product
+                          key={product._id}
+                          product={product}
+                          user={user}
+                          actionHandler={actionHandler}
+                        />
+                      );
+                    })
+                  ) : (
+                    <NoProduct />
+                  )}
                 </div>
               </article>
             </>
