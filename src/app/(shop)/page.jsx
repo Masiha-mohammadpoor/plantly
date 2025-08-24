@@ -49,9 +49,11 @@ const Home = () => {
                 Go to shop
               </button>
             </Link>
+            <Link href="/profile">
             <button className="absolute profile-btn w-32 p-2 rounded-r-lg text-white bg-secondary-500 left-28 cursor-pointer hover:bg-secondary-800 transition-all duration-300">
               My profile
             </button>
+            </Link>
           </div>
         </div>
       </article>

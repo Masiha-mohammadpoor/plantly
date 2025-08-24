@@ -62,7 +62,7 @@ const Header = () => {
         ) : data ? (
           <div className="flex items-end gap-x-4">
             <Link href="/profile">
-            <button>
+            <button className="cursor-pointer">
               <CiUser className="text-2xl text-secondary-800" />
             </button>
             </Link>
