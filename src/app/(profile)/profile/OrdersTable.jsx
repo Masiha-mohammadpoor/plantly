@@ -35,7 +35,7 @@ const OrderTable = () => {
             return (
               <tr key={p._id}>
                 <td className="table__td font-bold text-lg">{index + 1}</td>
-                <td className="table__td  whitespace-nowrap truncate">
+                <td className="table__td  whitespace-nowrap truncate text-center">
                   {p.invoiceNumber}
                 </td>
                 <td className="table__td">
@@ -58,7 +58,7 @@ const OrderTable = () => {
                   </div>
                 </td>
                 <td className="table__td text-lg text-center">
-                  $ <span>{p.amount}</span>
+                  $ <span>{p.amount.toFixed(2)}</span>
                 </td>
                 <td className="table__td text-nowrap">
                   {toLoacalDate(p.createdAt)}

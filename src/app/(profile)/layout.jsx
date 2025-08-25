@@ -19,11 +19,15 @@ export default function RootLayout({ children }) {
         className={`antialiased bg-bg ${rubik.className} overflow-x-hidden`}
       >
         <Providers>
-          <main className="w-full h-screen overflow-hidden grid grid-cols-15">
+          <main className="w-full h-screen overflow-hidden grid grid-cols-15 bg-primary-200">
             <ProfileMenu openMenu={openMenu} setOpenMenu={setOpenMenu} />
             <section className={`${openMenu ? "col-span-12" : "col-span-14"}`}>
               <ProfileHeader />
-              <article className="w-full bg-gree-300">{children}</article>
+              <article className="w-full">
+                <section className="w-full bg-white rounded-tl-lg h-screen pt-4">
+                  {children}
+                </section>
+              </article>
             </section>
           </main>
         </Providers>

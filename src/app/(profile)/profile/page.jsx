@@ -14,20 +14,20 @@ import { useEffect, useState } from "react";
 const Profile = () => {
   const { user, userLoading } = useGetUser();
   const { payments, paymentsLoading } = useGetPayments(user?.user?._id);
-  const [plantsCount , setPlantsCount] = useState(0);
+  const [plantsCount, setPlantsCount] = useState(0);
 
   useEffect(() => {
-    if(payments) {
-      payments.data.map(p => p.items.map(i => setPlantsCount(prev => prev += i.quantity)));
+    if (payments) {
+      payments.data.map((p) =>
+        p.items.map((i) => setPlantsCount((prev) => (prev += i.quantity)))
+      );
     }
-  },[payments])
+  }, [payments]);
 
   if (userLoading && paymentsLoading) return <Loading />;
   return (
-    <section className="w-full bg-white rounded-tl-lg h-screen overflow-y-auto pb-20 px-8 pt-8">
-      {/* cards */}
+    <section className="w-full bg-white rounded-tl-lg h-screen pb-28 px-8 pt-4 overflow-y-auto">
       <article className="grid grid-cols-12 gap-x-4">
-        {/* 1 */}
         <div className="h-32 col-span-4 bg-primary-200 rounded-lg p-4 text-white relative overflow-hidden flex justify-start items-center">
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -top-20 -right-12"></div>
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -bottom-20 -right-12"></div>
@@ -41,7 +41,6 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        {/* 2 */}
         <div className="h-32 col-span-4 bg-primary-200 rounded-lg p-4 text-white relative overflow-hidden flex justify-start items-center">
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -top-20 -right-12"></div>
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -bottom-20 -right-12"></div>
@@ -51,13 +50,10 @@ const Profile = () => {
             </span>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>My Plant</h2>
-              <div>
-                {plantsCount}
-              </div>
+              <div>{plantsCount}</div>
             </div>
           </div>
         </div>
-        {/* 3 */}
         <div className="h-32 col-span-4 bg-primary-200 rounded-lg p-4 text-white relative overflow-hidden flex justify-start items-center">
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -top-20 -right-12"></div>
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -bottom-20 -right-12"></div>
@@ -72,10 +68,9 @@ const Profile = () => {
           </div>
         </div>
       </article>
-      {/* last orders */}
       <article className="grid grid-cols-12 gap-x-4  mt-10">
         <div className="col-span-12 flex justify-between items-center">
-          <h2 className="text-lg font-semibold">Latest Orders</h2>
+          <h2 className="text-xl font-semibold">Latest Orders</h2>
           <Link href="/profile/my-orders">
             <button className="cursor-pointer flex justify-center items-center gap-x-2 px-2 py-1 rounded-lg text-white  bg-primary-200">
               All Orders <FaLongArrowAltRight />
