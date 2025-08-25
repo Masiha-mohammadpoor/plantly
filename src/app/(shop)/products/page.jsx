@@ -8,9 +8,9 @@ import toast from "react-hot-toast";
 import Product from "./Product";
 import { use } from "react";
 import queryString from "query-string";
-import Laoding from "@/components/Loading";
 import Search from "@/components/Search";
 import NoProduct from "./NoProduct";
+import Loading from "@/components/Loading";
 
 const Products = ({ searchParams }) => {
   const params = use(searchParams);
@@ -44,7 +44,7 @@ const Products = ({ searchParams }) => {
       <article className="mt-10 px-4 grid grid-cols-12 gap-8">
         {productsLoading ? (
           <div className="col-span-12">
-            <Laoding />
+            <Loading />
           </div>
         ) : (
           products &&

@@ -12,7 +12,7 @@ export async function GET(request, { params }) {
     
     if (!payment) {
       return NextResponse.json(
-        { success: false, error: 'پرداخت یافت نشد' },
+        { success: false, message: 'پرداخت یافت نشد' },
         { status: 404 }
       );
     }

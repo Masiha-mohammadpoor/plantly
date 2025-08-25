@@ -6,8 +6,23 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import Link from "next/link";
 import OrderTable from "./OrdersTable";
 import { useGetUser } from "@/hooks/useAuth";
+import Loading from "@/components/Loading";
+import { toLoacalDate } from "@/utils/localDate";
+import { useGetPayments } from "@/hooks/usePayments";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
+  const { user, userLoading } = useGetUser();
+  const { payments, paymentsLoading } = useGetPayments(user?.user?._id);
+  const [plantsCount , setPlantsCount] = useState(0);
+
+  useEffect(() => {
+    if(payments) {
+      payments.data.map(p => p.items.map(i => setPlantsCount(prev => prev += i.quantity)));
+    }
+  },[payments])
+
+  if (userLoading && paymentsLoading) return <Loading />;
   return (
     <section className="w-full bg-white rounded-tl-lg h-screen overflow-y-auto pb-20 px-8 pt-8">
       {/* cards */}
@@ -22,7 +37,7 @@ const Profile = () => {
             </span>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>Date Of Joining</h2>
-              <p>3</p>
+              <p className="text-sm">{toLoacalDate(user?.user?.createdAt)}</p>
             </div>
           </div>
         </div>
@@ -36,7 +51,9 @@ const Profile = () => {
             </span>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>My Plant</h2>
-              <p>3</p>
+              <div>
+                {plantsCount}
+              </div>
             </div>
           </div>
         </div>
@@ -50,7 +67,7 @@ const Profile = () => {
             </span>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>My Orders</h2>
-              <p>3</p>
+              <p>{payments?.data?.length}</p>
             </div>
           </div>
         </div>
@@ -66,7 +83,7 @@ const Profile = () => {
           </Link>
         </div>
       </article>
-      <OrderTable/>
+      <OrderTable />
     </section>
   );
 };
