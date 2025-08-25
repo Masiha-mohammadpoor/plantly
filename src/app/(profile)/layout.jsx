@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`antialiased bg-bg ${rubik.className} overflow-x-hidden`}
+        className={`antialiased bg-bg ${rubik.className} overflow-x-hidden bg-primary-200`}
       >
         <Providers>
           <main className="w-full h-screen overflow-hidden grid grid-cols-15">

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { LuMenu } from "react-icons/lu";
 import Link from "next/link";
-import { menuData } from "@/constants/data";
+import { menuData } from "@/constants/menuData";
 import { usePathname } from "next/navigation";
 
 const ProfileMenu = ({ openMenu, setOpenMenu }) => {

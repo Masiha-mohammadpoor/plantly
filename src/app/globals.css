@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+@layer components {
+  .table__th {
+    @apply border-b-2 border-b-gray-500 font-medium p-3 pr-8 pb-3 text-right text-secondary-800;
+  }
+  .table__td {
+    @apply border-b  border-b-gray-300 p-3 pr-8 pb-3 text-right;
+  }
+}
+
+
 @theme {
   --color-primary-200: #588157;
   --color-primary-500: #3a5a40;

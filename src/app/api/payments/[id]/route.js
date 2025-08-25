@@ -20,7 +20,7 @@ export async function GET(request, { params }) {
     return NextResponse.json({ success: true, data: payment });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 500 }
     );
   }

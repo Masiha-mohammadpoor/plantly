@@ -9,11 +9,13 @@ import toast from "react-hot-toast";
 import { useMemo, useState } from "react";
 import EmptyCart from "./EmptyCart";
 import Loading from "@/components/Loading";
+import { useCreatePayment } from "@/hooks/usePayments";
 
 const Cart = () => {
   const { user: userData, userLoading } = useGetUser();
   const { user } = userData || {};
-  const { mutateAsync } = useUpdateUser();
+  const { mutateAsync: updateUserMutateAsync } = useUpdateUser();
+  const { mutateAsync: paymentMutateAsunc } = useCreatePayment();
   const queryClient = useQueryClient();
   const [discountCode, setDiscountCode] = useState("");
 
@@ -42,7 +44,7 @@ const Cart = () => {
   const actionHandler = async (action) => {
     try {
       if (user) {
-        const res = await mutateAsync({ id: user._id, data: action });
+        const res = await updateUserMutateAsync({ id: user._id, data: action });
         if (action.action === "removeFromCart")
           toast.success("Removed from cart!");
         queryClient.invalidateQueries({ queryKey: ["get-user"] });
@@ -58,7 +60,20 @@ const Cart = () => {
     toast.error("Wrong Code !!!");
   };
 
-  if (userLoading || !user) return <Loading/>;
+  const paymentHandler = async () => {
+    try {
+      const data = await paymentMutateAsunc({
+        userId: user._id,
+        paymentMethod: "online",
+      });
+      toast.success("Payment was successful !!!");
+      queryClient.invalidateQueries(["get-user"]);
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
+
+  if (userLoading || !user) return <Loading />;
   if (!userLoading && user && user?.cart?.items?.length === 0)
     return <EmptyCart />;
   return (
@@ -199,7 +214,10 @@ const Cart = () => {
               $ {(totalPrice - totalDiscount).toFixed(2)}
             </p>
           </div>
-          <button className="mt-4 w-full rounded-lg text-white p-2 bg-primary-200">
+          <button
+            onClick={paymentHandler}
+            className="mt-4 w-full rounded-lg text-white p-2 bg-primary-200 cursor-pointer"
+          >
             Payment
           </button>
         </article>
