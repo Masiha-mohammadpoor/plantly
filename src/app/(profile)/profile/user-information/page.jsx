@@ -1,9 +1,59 @@
+"use client";
+import Loading from "@/components/Loading";
+import { useGetUser, useUpdateUser } from "@/hooks/useAuth";
 import Image from "next/image";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
+
+const schema = yup
+  .object({
+    name: yup
+      .string()
+      .required("Name is required")
+      .min(6, "Name must be at least 6 characters"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .email("Please enter a valid email"),
+  })
+  .required();
 
 const UserInformation = () => {
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useUpdateUser();
+  const { user, userLoading } = useGetUser();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isDirty, isSubmitting },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onTouched",
+  });
+
+  useEffect(() => {
+    if (user) reset({ name: user?.user?.name, email: user?.user?.email });
+  }, [user, reset]);
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await mutateAsync({ id: user?.user?._id, data });
+      toast.success("Updated successfully !!!");
+      queryClient.invalidateQueries(["get-user"]);
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
+
+  if (userLoading && !user) return <Loading />;
   return (
     <section className="w-full bg-white rounded-tl-lg h-screen pb-28 px-8 pt-4 overflow-y-auto">
-      <h2 className="text-xl font-semibold mb-10">User Information</h2>
+      <h2 className="text-xl font-semibold mb-6">User Information</h2>
       {/* form */}
       <article className="w-[50%] bg-white rounded-lg custom-shadow">
         <div className="w-full h-24 rounded-t-lg bg-primary-200 relative">
@@ -29,13 +79,15 @@ const UserInformation = () => {
           </p>
         </div>
         <div className="mt-20 w-full flex justify-center items-center">
-          <form className="flex flex-col">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
             <label htmlFor="name" className="text-secondary-500 mb-3">
               User Name
             </label>
             <input
               type="text"
               id="name"
+              name="name"
+              {...register("name")}
               className="bg-secondary-200 mb-5 w-96 rounded-lg custom-shadow border-0 outline-0 p-2"
               autoComplete="off"
             />
@@ -43,12 +95,18 @@ const UserInformation = () => {
               Email
             </label>
             <input
-              type="text"
+              type="email"
               id="email"
+              name="email"
+              {...register("email")}
               className="bg-secondary-200 mb-10 w-96 rounded-lg custom-shadow border-0 outline-0 p-2"
               autoComplete="off"
             />
-            <button className="w-96 rounded-lg bg-primary-200 text-white mb-10 p-2 cursor-pointer custom-shadow">
+            <button
+              disabled={!isValid || !isDirty || isSubmitting}
+              type="submit"
+              className="w-96 rounded-lg bg-primary-200 text-white mb-10 p-2 cursor-pointer custom-shadow disabled:cursor-not-allowed disabled:bg-secondary-500 disabled:opacity-65"
+            >
               Update
             </button>
           </form>

@@ -54,7 +54,7 @@ const Signup = () => {
       const { message } = await mutateAsync({
         name: data.name,
         email: data.email,
-        password: data.email,
+        password: data.password,
       });
       toast.success(message);
       router.push("/");
