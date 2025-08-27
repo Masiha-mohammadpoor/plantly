@@ -1,62 +1,71 @@
 import { connectDB } from "@/lib/db/connect";
 import Product from "@/models/Product";
-import User from '@/models/User';
-import { getToken } from '@/utils/auth';
+import User from "@/models/User";
+import { getToken } from "@/utils/auth";
 
 export async function GET(request) {
   try {
     await connectDB();
 
-    // دریافت توکن از کوکی
+    // get Token from Cookie
     const token = getToken(request);
     if (!token) {
       return new Response(
-        JSON.stringify({ success: false, message: "دسترسی غیرمجاز" }), 
+        JSON.stringify({ success: false, message: "دسترسی غیرمجاز" }),
         { status: 401 }
       );
     }
 
-    // یافتن کاربر با اطلاعات کامل
     const user = await User.findById(token.id)
-      .select('-password') // فقط رمز عبور را حذف می‌کنیم
+      .select("-password")
       .populate({
-        path: 'likes',
-        select: 'name price images'
+        path: "likes",
+        select: "name price images offPrice discount category",
+        populate: {
+          path: "category",
+          select: "name englishTitle",
+        },
       })
       .populate({
-        path: 'saved',
-        select: 'name price images'
+        path: "saved",
+        select: "name price images offPrice discount category",
+        populate: {
+          path: "category",
+          select: "name englishTitle",
+        },
       })
       .populate({
-        path: 'cart.items.product',
-        select: 'name price images'
+        path: "cart.items.product",
+        select: "name price images offPrice discount category",
+        populate: {
+          path: "category",
+          select: "name englishTitle",
+        },
       });
-
     if (!user) {
       return new Response(
-        JSON.stringify({ success: false, message: "کاربر یافت نشد" }), 
+        JSON.stringify({ success: false, message: "کاربر یافت نشد" }),
         { status: 404 }
       );
     }
 
-    // محاسبه قیمت کل سبد خرید با استفاده از متد مدل
     await user.calculateCartTotal();
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        user: user.toJSON() // استفاده از متد toJSON مدل برای حذف فیلدهای حساس
-      }), 
+      JSON.stringify({
+        success: true,
+        user: user.toJSON(),
+      }),
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error fetching user data:', error);
+    console.error("Error fetching user data:", error);
     return new Response(
-      JSON.stringify({ 
-        success: false, 
+      JSON.stringify({
+        success: false,
         message: "خطای سرور",
-        error: error.message 
-      }), 
+        error: error.message,
+      }),
       { status: 500 }
     );
   }

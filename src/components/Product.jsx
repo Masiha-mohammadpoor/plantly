@@ -3,6 +3,7 @@ import Image from "next/image";
 import { HiOutlinePlusSm, HiOutlineHeart, HiHeart } from "react-icons/hi";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { LiaCartPlusSolid } from "react-icons/lia";
 
 const Product = ({ product, user, actionHandler }) => {
   return (
@@ -40,7 +41,7 @@ const Product = ({ product, user, actionHandler }) => {
         </button>
       </div>
       <div className="absolute top-10 left-2 rounded-full text-xs text-white bg-primary-500 px-2 py-1">
-        {product.category.name}
+        {product.category?.name}
       </div>
       <div className="absolute w-44 h-44 left-[80px] -top-12">
         <Image
@@ -68,7 +69,7 @@ const Product = ({ product, user, actionHandler }) => {
             }
             className="p-1.5 text-red-500 rounded-lg bg-red-300 mb-1 cursor-pointer"
           >
-            <FaRegTrashAlt />
+            <FaRegTrashAlt className="text-xl"/>
           </button>
         ) : (
           <button
@@ -77,7 +78,7 @@ const Product = ({ product, user, actionHandler }) => {
             }
             className="p-1.5 text-white rounded-lg bg-primary-500 mb-1 cursor-pointer"
           >
-            <HiOutlinePlusSm />
+            <LiaCartPlusSolid className="text-xl"/>
           </button>
         )}
       </div>

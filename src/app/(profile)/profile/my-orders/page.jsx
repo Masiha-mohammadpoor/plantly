@@ -1,7 +1,6 @@
 "use client";
 import { useGetUser } from "@/hooks/useAuth";
 import OrdersTable from "../OrdersTable";
-import PaginationComponent from "@/components/Pagination";
 
 const MyOrders = () => {
   const { user, userLoading } = useGetUser();

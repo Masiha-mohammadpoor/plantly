@@ -4,6 +4,7 @@ import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import { LuUserRound } from "react-icons/lu";
 import { RxDashboard } from "react-icons/rx";
+import { FaRegBookmark } from "react-icons/fa6";
 
 
 export const menuData = [
@@ -33,18 +34,24 @@ export const menuData = [
   },
   {
     id: 5,
-    title: "Like & Save",
+    title: "Liked Products",
     icon: <FaRegHeart />,
-    link: "/profile/like-and-save",
+    link: "/profile/liked-products",
   },
   {
     id: 6,
+    title: "Saved Products",
+    icon: <FaRegBookmark />,
+    link: "/profile/saved-products",
+  },
+  {
+    id: 7,
     title: "Admin Panel",
     icon: <MdOutlineAdminPanelSettings />,
     link: "/profile/admin-panel",
   },
   {
-    id: 7,
+    id: 8,
     title: "Logout",
     icon: <TbLogout2 />,
     link: "/logout",

@@ -5,7 +5,7 @@ import { useGetAllProducts } from "@/hooks/useProducts";
 import { useGetUser, useUpdateUser } from "@/hooks/useAuth";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import Product from "./Product";
+import Product from "@/components/Product";
 import { use } from "react";
 import queryString from "query-string";
 import Search from "@/components/Search";
