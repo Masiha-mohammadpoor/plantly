@@ -13,7 +13,7 @@ export const usersTable = [
   },
   {
     id: 4,
-    title: "created At",
+    title: "Created At",
   },
   {
     id: 5,
