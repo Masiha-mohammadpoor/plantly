@@ -1,14 +1,14 @@
 import { connectDB } from '@/lib/db/connect';
 import Payment from '@/models/Payment';
 import User from '@/models/User';
+import { getToken } from '@/utils/auth';
 import { NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
 
 export async function GET(request) {
   try {
     await connectDB();
     
-    const token = await getToken({ req: request });
+    const token = getToken(request);
     
     if (!token) {
       return NextResponse.json(
@@ -17,9 +17,9 @@ export async function GET(request) {
       );
     }
     
-    const user = await User.findById(token.userId);
+    // const user = await User.findById(token.userId);
     
-    if (!user || user.role !== 'ADMIN') {
+    if (!token || token.role !== "ADMIN") {
       return NextResponse.json(
         { success: false, message: 'شما دسترسی لازم را ندارید' },
         { status: 403 }

@@ -1,0 +1,30 @@
+export const paymentsTable = [
+  {
+    id:1,
+    title:"#",
+  },
+  {
+    id:2,
+    title:"Invoice Number",
+  },
+  {
+    id:3,
+    title:"Products",
+  },
+  {
+    id:4,
+    title:"Amount",
+  },
+  {
+    id:5,
+    title:"User",
+  },
+  {
+    id:6,
+    title:"Date",
+  },
+  {
+    id:7,
+    title:"Status",
+  }
+]

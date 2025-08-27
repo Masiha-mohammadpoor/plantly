@@ -10,6 +10,6 @@ export const getPayment = (id) => {
 };
 
 // only admin
-export const getAllPayments = () => {
-  return http.get("/payments").then((res) => res.data);
+export const getAllPayments = (query) => {
+  return http.get(`/payments${query}`).then((res) => res.data);
 };

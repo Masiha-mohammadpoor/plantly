@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/db/connect";
 import Product from "@/models/Product";
+import Category from "@/models/Category";
 import User from "@/models/User";
 import { getToken } from "@/utils/auth";
 

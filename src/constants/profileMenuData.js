@@ -7,7 +7,7 @@ import { RxDashboard } from "react-icons/rx";
 import { FaRegBookmark } from "react-icons/fa6";
 
 
-export const menuData = [
+export const profileMenuData = [
   {
     id: 1,
     title: "Home Page",
@@ -48,6 +48,6 @@ export const menuData = [
     id: 7,
     title: "Admin Panel",
     icon: <MdOutlineAdminPanelSettings />,
-    link: "/profile/admin-panel",
+    link: "/admin-panel",
   }
 ];

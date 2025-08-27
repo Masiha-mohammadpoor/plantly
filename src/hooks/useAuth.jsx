@@ -1,4 +1,5 @@
 import {
+  getAllUsers,
   getLoggedInUser,
   logout,
   signin,
@@ -36,4 +37,16 @@ export const useGetUser = () => {
   });
 
   return { user, userLoading };
+};
+
+//only admin
+export const useGetAllUsers = () => {
+  const { data: users, isLoading: usersLoading } = useQuery({
+    queryKey: ["get-users"],
+    queryFn: getAllUsers,
+    retry: false,
+    refetchOnWindowFocus: true,
+  });
+
+  return { users, usersLoading };
 };

@@ -16,7 +16,7 @@ export const getLoggedInUser = () => {
   return http.get("/auth/me").then(res => res.data);
 };
 
-export const getAllUser = () => {
+export const getAllUsers = () => {
   return http.get("/users").then(res => res.data);
 };
 

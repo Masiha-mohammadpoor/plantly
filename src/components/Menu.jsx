@@ -2,14 +2,13 @@
 import Image from "next/image";
 import { LuMenu } from "react-icons/lu";
 import Link from "next/link";
-import { menuData } from "@/constants/menuData";
 import { usePathname, useRouter } from "next/navigation";
 import { TbLogout2 } from "react-icons/tb";
 import toast from "react-hot-toast";
 import { useLogout } from "@/hooks/useAuth";
 import { useQueryClient } from "@tanstack/react-query";
 
-const ProfileMenu = ({ openMenu, setOpenMenu }) => {
+const Menu = ({ openMenu, setOpenMenu, menuData }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { mutateAsync } = useLogout();
@@ -52,7 +51,7 @@ const ProfileMenu = ({ openMenu, setOpenMenu }) => {
       </div>
       {/* menu */}
       <div className="mt-16 w-full">
-        {menuData.map((i) => {
+        {menuData?.map((i) => {
           return (
             <Link key={i.id} href={i.link}>
               <button
@@ -86,4 +85,4 @@ const ProfileMenu = ({ openMenu, setOpenMenu }) => {
   );
 };
 
-export default ProfileMenu;
+export default Menu;

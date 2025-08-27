@@ -5,7 +5,7 @@ import Providers from "../Providers";
 import ProfileHeader from "@/components/ProfileHeader";
 import Menu from "@/components/Menu";
 import { useState } from "react";
-import { profileMenuData } from "@/constants/profileMenuData";
+import { adminPanelMenuData } from "@/constants/adminPanelMenuData";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <main className="w-full h-screen overflow-hidden grid grid-cols-15 bg-primary-200">
-            <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} menuData={profileMenuData}/>
+            <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} menuData={adminPanelMenuData}/>
             <section className={`${openMenu ? "col-span-12" : "col-span-14"}`}>
               <ProfileHeader />
               <article className="w-full">
