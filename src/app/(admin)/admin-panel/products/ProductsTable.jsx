@@ -1,8 +1,6 @@
 "use client";
 import Loading from "@/components/Loading";
 import { toLoacalDate } from "@/utils/localDate";
-import { usersTable } from "@/constants/usersTable";
-import { useGetAllUsers } from "@/hooks/useAuth";
 import { useGetAllProducts } from "@/hooks/useProducts";
 import { productsTable } from "@/constants/productsTable";
 import Image from "next/image";
@@ -16,13 +14,13 @@ const ProductsTable = () => {
       <table className="border-collapse table-auto w-full min-w-[800px] text-sm">
         <thead>
           <tr>
-            {productsTable.map((h) => {
+            {productsTable.map((p) => {
               return (
                 <th
-                  key={h.id}
+                  key={p.id}
                   className="whitespace-nowrap table__th text-center"
                 >
-                  {h.title}
+                  {p.title}
                 </th>
               );
             })}
@@ -36,7 +34,13 @@ const ProductsTable = () => {
                   {index + 1}
                 </td>
                 <td className="table__td  whitespace-nowrap truncate">
-                  <Image src={p.images} alt={p.name} width={40} height={40} className="mx-auto"/>
+                  <Image
+                    src={p.images}
+                    alt={p.name}
+                    width={40}
+                    height={40}
+                    className="mx-auto"
+                  />
                 </td>
                 <td className="table__td  whitespace-nowrap truncate text-center font-semibold">
                   {p.name}
