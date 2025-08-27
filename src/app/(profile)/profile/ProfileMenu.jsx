@@ -3,10 +3,29 @@ import Image from "next/image";
 import { LuMenu } from "react-icons/lu";
 import Link from "next/link";
 import { menuData } from "@/constants/menuData";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { TbLogout2 } from "react-icons/tb";
+import toast from "react-hot-toast";
+import { useLogout } from "@/hooks/useAuth";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ProfileMenu = ({ openMenu, setOpenMenu }) => {
   const pathname = usePathname();
+  const router = useRouter();
+  const { mutateAsync } = useLogout();
+  const queryClient = useQueryClient();
+
+  const logoutHandler = async () => {
+    try {
+      const { message } = await mutateAsync();
+      toast.success(message);
+      queryClient.invalidateQueries(["get-user"]);
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.response?.data?.message);
+    }
+  };
 
   return (
     <aside
@@ -51,6 +70,17 @@ const ProfileMenu = ({ openMenu, setOpenMenu }) => {
             </Link>
           );
         })}
+        <button
+          onClick={logoutHandler}
+          className={`my-3 cursor-pointer text-white flex items-center ${
+            openMenu
+              ? "text-xl px-4 py-2 gap-x-4 justify-start"
+              : "text-xl w-10 h-10 justify-center"
+          } w-full rounded-lg transition-all duration-300 hover:bg-white/20`}
+        >
+          <TbLogout2 />
+          {openMenu && <span className="text-base">Logout</span>}
+        </button>
       </div>
     </aside>
   );

@@ -57,10 +57,10 @@ const Product = ({ product, user, actionHandler }) => {
           {product.discount !== 0 ? <div className="py-2 flex flex-col">
             <div className="flex items-center gap-x-2">
               <span className="text-white text-xs bg-red-500 px-1 py-0.5 rounded-full">{product.discount} %</span>
-              <p className="text-white text-sm line-through">$ {product.price}</p>
+              <p className="text-white text-sm line-through">$ {product.price.toFixed(2)}</p>
             </div>
-            <p className="text-white">$ {product.offPrice}</p>
-          </div> : <p className="text-white pb-2 pt-7">$ {product.offPrice}</p>}
+            <p className="text-white">$ {product.offPrice.toFixed(2)}</p>
+          </div> : <p className="text-white pb-2 pt-7">$ {product.offPrice.toFixed(2)}</p>}
         </div>
         {user.user.cart.items.some((p) => p.product._id === product._id) ? (
           <button

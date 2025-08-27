@@ -49,11 +49,5 @@ export const menuData = [
     title: "Admin Panel",
     icon: <MdOutlineAdminPanelSettings />,
     link: "/profile/admin-panel",
-  },
-  {
-    id: 8,
-    title: "Logout",
-    icon: <TbLogout2 />,
-    link: "/logout",
-  },
+  }
 ];

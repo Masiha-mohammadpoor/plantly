@@ -1,6 +1,6 @@
 import {
   getLoggedInUser,
-  likeAndSaveProduct,
+  logout,
   signin,
   signup,
   updateUser,
@@ -15,6 +15,11 @@ export const useSignup = () =>
 export const useSignin = () =>
   useMutation({
     mutationFn: signin,
+  });
+
+export const useLogout = () =>
+  useMutation({
+    mutationFn: logout,
   });
 
 export const useUpdateUser = () =>
