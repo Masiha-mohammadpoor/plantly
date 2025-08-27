@@ -1,6 +1,5 @@
 "use client";
-import { orderTableData } from "@/constants/orderTableData";
-import { useGetAllPayments, useGetPayments } from "@/hooks/usePayments";
+import { useGetAllPayments } from "@/hooks/usePayments";
 import Loading from "@/components/Loading";
 import Link from "next/link";
 import { toLoacalDate } from "@/utils/localDate";
@@ -76,7 +75,7 @@ const PaymentsTable = ({ limit }) => {
                   </div>
                 </td>
                 <td className="table__td text-lg text-center">
-                  $ <span>{p.amount.toFixed(2)}</span>
+                  <span className="flex gap-x-1">$ <span>{p.amount.toFixed(2)}</span></span>
                 </td>
                 <td className="table__td text-sm text-center">
                   <p>{p.user.name}</p>
