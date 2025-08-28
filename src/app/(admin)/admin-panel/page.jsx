@@ -1,19 +1,14 @@
 "use client";
 import { TbPlant } from "react-icons/tb";
-import { FiCalendar } from "react-icons/fi";
-import { AiOutlineProduct } from "react-icons/ai";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Link from "next/link";
 import { useGetAllUsers } from "@/hooks/useAuth";
 import Loading from "@/components/Loading";
-import { toLoacalDate } from "@/utils/localDate";
 import { useGetAllPayments } from "@/hooks/usePayments";
-import { useEffect, useState } from "react";
-import OrdersTable from "@/app/(profile)/profile/OrdersTable";
 import { LuUsers } from "react-icons/lu";
 import { IoCardOutline } from "react-icons/io5";
 import { useGetAllProducts } from "@/hooks/useProducts";
-import PaymentsTable from "./paymentsTable";
+import PaymentsTable from "./PaymentsTable";
 
 
 const AdminPanel = () => {

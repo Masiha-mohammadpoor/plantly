@@ -79,7 +79,6 @@ const ProductSchema = new mongoose.Schema(
   }
 );
 
-// محاسبه خودکار slug از نام محصول
 ProductSchema.pre("save", function (next) {
   if (!this.slug) {
     this.slug = this.name

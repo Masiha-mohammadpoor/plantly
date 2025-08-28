@@ -1,4 +1,4 @@
-export const paymentsTable = [
+export const paymentsTableData = [
   {
     id:1,
     title:"#",

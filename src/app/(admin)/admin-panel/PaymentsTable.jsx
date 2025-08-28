@@ -5,7 +5,7 @@ import Link from "next/link";
 import { toLoacalDate } from "@/utils/localDate";
 import PaginationComponent from "@/components/Pagination";
 import { useSearchParams } from "next/navigation";
-import { paymentsTable } from "@/constants/paymentsTable";
+import { paymentsTableData } from "@/constants/paymentsTable";
 
 const PaymentsTable = ({ limit }) => {
   const searchParams = useSearchParams();
@@ -33,7 +33,7 @@ const PaymentsTable = ({ limit }) => {
       <table className="border-collapse table-auto w-full min-w-[800px] text-sm">
         <thead>
           <tr>
-            {paymentsTable.map((h) => {
+            {paymentsTableData.map((h) => {
               return (
                 <th
                   key={h.id}

@@ -116,7 +116,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          error: "نام، قیمت، توضیحات و دسته‌بندی الزامی هستند",
+          message: "نام، قیمت، توضیحات و دسته‌بندی الزامی هستند",
         },
         { status: 400 }
       );
@@ -157,12 +157,12 @@ export async function POST(request) {
   } catch (error) {
     if (error.code === 11000) {
       return NextResponse.json(
-        { success: false, error: "این محصول قبلا ثبت شده است" },
+        { success: false, message: "این محصول قبلا ثبت شده است" },
         { status: 400 }
       );
     }
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 400 }
     );
   }
