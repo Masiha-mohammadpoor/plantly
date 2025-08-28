@@ -11,7 +11,7 @@ export async function GET(request, { params }) {
     
     if (!category) {
       return NextResponse.json(
-        { success: false, error: 'دسته‌بندی یافت نشد' },
+        { success: false, message: 'دسته‌بندی یافت نشد' },
         { status: 404 }
       );
     }
@@ -19,7 +19,7 @@ export async function GET(request, { params }) {
     return NextResponse.json({ success: true, data: category });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 500 }
     );
   }
@@ -42,7 +42,7 @@ export async function PUT(request, { params }) {
     
     if (!category) {
       return NextResponse.json(
-        { success: false, error: 'دسته‌بندی یافت نشد' },
+        { success: false, message: 'دسته‌بندی یافت نشد' },
         { status: 404 }
       );
     }
@@ -52,12 +52,12 @@ export async function PUT(request, { params }) {
     if (error.code === 11000) {
       const field = error.message.includes('englishTitle') ? 'عنوان انگلیسی' : 'نام';
       return NextResponse.json(
-        { success: false, error: `${field} تکراری است` },
+        { success: false, message: `${field} تکراری است` },
         { status: 400 }
       );
     }
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 400 }
     );
   }
@@ -72,7 +72,7 @@ export async function DELETE(request, { params }) {
     
     if (!category) {
       return NextResponse.json(
-        { success: false, error: 'دسته‌بندی یافت نشد' },
+        { success: false, message: 'دسته‌بندی یافت نشد' },
         { status: 404 }
       );
     }
@@ -80,7 +80,7 @@ export async function DELETE(request, { params }) {
     return NextResponse.json({ success: true, data: {} });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 500 }
     );
   }

@@ -1,4 +1,4 @@
-export const formInputsData = [
+export const productFormInputsData = [
   {
     id:1,
     label:"Name",

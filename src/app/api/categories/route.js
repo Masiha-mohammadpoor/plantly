@@ -21,7 +21,7 @@ export async function GET(request) {
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 500 }
     );
   }
@@ -34,7 +34,7 @@ export async function POST(request) {
 
     if (!body.name || !body.englishTitle) {
       return NextResponse.json(
-        { success: false, error: "نام و عنوان انگلیسی الزامی هستند" },
+        { success: false, message: "نام و عنوان انگلیسی الزامی هستند" },
         { status: 400 }
       );
     }
@@ -53,7 +53,7 @@ export async function POST(request) {
     );
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 400 }
     );
   }

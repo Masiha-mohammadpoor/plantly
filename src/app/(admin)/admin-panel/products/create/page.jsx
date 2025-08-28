@@ -1,6 +1,6 @@
 "use client";
-import { formInputsData } from "@/constants/productsFieldData";
-import Input from "./Input";
+import { productFormInputsData } from "@/constants/productsFieldData";
+import Input from "../../Input";
 import { useState } from "react";
 import { useGetAllCategories } from "@/hooks/useCategories";
 import Select from "react-select";
@@ -9,7 +9,7 @@ import { useCreateProduct } from "@/hooks/useProducts";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-const CreateProducts = () => {
+const CreateProduct = () => {
   const router = useRouter();
   const { mutateAsync } = useCreateProduct();
   const { categories, categoriesLoading } = useGetAllCategories();
@@ -38,7 +38,7 @@ const CreateProducts = () => {
         stock: parseInt(formData.stock),
         category,
       });
-      toast.success("product was successfully created");
+      toast.success("Product created successfully !!!");
       router.push("/admin-panel/products");
     } catch (err) {
       toast.error(err?.response?.data?.message);
@@ -47,10 +47,10 @@ const CreateProducts = () => {
 
   return (
     <section className="w-full bg-white rounded-tl-lg h-screen pb-28 px-8 pt-4 overflow-y-auto">
-      <h2 className="text-xl font-semibold mb-6">Create Products</h2>
+      <h2 className="text-xl font-semibold mb-6">Create Product</h2>
       <div>
         <form onSubmit={submitHandler} className="w-[50%]">
-          {formInputsData.map((f) => {
+          {productFormInputsData.map((f) => {
             return (
               <Input
                 key={f.id}
@@ -91,4 +91,4 @@ const CreateProducts = () => {
   );
 };
 
-export default CreateProducts;
+export default CreateProduct;
