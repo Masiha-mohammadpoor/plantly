@@ -14,7 +14,7 @@ export async function GET(request, { params }) {
     
     if (!product) {
       return NextResponse.json(
-        { success: false, error: 'محصول یافت نشد' },
+        { success: false, message: 'محصول یافت نشد' },
         { status: 404 }
       );
     }
@@ -22,7 +22,7 @@ export async function GET(request, { params }) {
     return NextResponse.json({ success: true, data: product });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 500 }
     );
   }
@@ -44,7 +44,7 @@ export async function PUT(request, { params }) {
       const categoryExists = await Category.exists({ _id: body.category });
       if (!categoryExists) {
         return NextResponse.json(
-          { success: false, error: 'دسته‌بندی معتبر نیست' },
+          { success: false, message: 'دسته‌بندی معتبر نیست' },
           { status: 400 }
         );
       }
@@ -57,7 +57,7 @@ export async function PUT(request, { params }) {
     
     if (!product) {
       return NextResponse.json(
-        { success: false, error: 'محصول یافت نشد' },
+        { success: false, message: 'محصول یافت نشد' },
         { status: 404 }
       );
     }
@@ -66,12 +66,12 @@ export async function PUT(request, { params }) {
   } catch (error) {
     if (error.code === 11000) {
       return NextResponse.json(
-        { success: false, error: 'این نام محصول قبلا ثبت شده است' },
+        { success: false, message: 'این نام محصول قبلا ثبت شده است' },
         { status: 400 }
       );
     }
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 400 }
     );
   }
@@ -86,7 +86,7 @@ export async function DELETE(request, { params }) {
     
     if (!product) {
       return NextResponse.json(
-        { success: false, error: 'محصول یافت نشد' },
+        { success: false, message: 'محصول یافت نشد' },
         { status: 404 }
       );
     }
@@ -94,7 +94,7 @@ export async function DELETE(request, { params }) {
     return NextResponse.json({ success: true, data: {} });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, message: error.message },
       { status: 500 }
     );
   }

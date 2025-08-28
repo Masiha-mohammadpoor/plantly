@@ -1,4 +1,8 @@
-import { createProduct, getAllProducts } from "@/services/productService";
+import {
+  createProduct,
+  deleteProduct,
+  getAllProducts,
+} from "@/services/productService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useCreateProduct = () =>
@@ -6,9 +10,14 @@ export const useCreateProduct = () =>
     mutationFn: createProduct,
   });
 
+export const useDeleteProduct = () =>
+  useMutation({
+    mutationFn: deleteProduct,
+  });
+
 export const useGetAllProducts = (searchParams) => {
-  const { data : products, isLoading : productsLoading } = useQuery({
-    queryKey: ["get-products" , searchParams],
+  const { data: products, isLoading: productsLoading } = useQuery({
+    queryKey: ["get-products", searchParams],
     queryFn: () => getAllProducts(searchParams),
     retry: false,
     refetchOnWindowFocus: true,

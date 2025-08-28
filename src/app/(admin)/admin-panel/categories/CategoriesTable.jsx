@@ -3,8 +3,10 @@ import Loading from "@/components/Loading";
 import { toLoacalDate } from "@/utils/localDate";
 import { useGetAllCategories } from "@/hooks/useCategories";
 import { categoriesTable } from "@/constants/categoriesTable";
+import { FaTrashCan } from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
 
-const CategoriesTable = () => {
+const CategoriesTable = ({ onDelete }) => {
   const { categories, categoriesLoading } = useGetAllCategories();
 
   if (categoriesLoading) return <Loading />;
@@ -40,6 +42,19 @@ const CategoriesTable = () => {
                 </td>
                 <td className="table__td  whitespace-nowrap truncate text-center">
                   {toLoacalDate(c.createdAt)}
+                </td>
+                <td className="table__td  whitespace-nowrap truncate text-center">
+                  <div className="w-full justify-center flex gap-x-4">
+                    <button
+                      onClick={() => onDelete(c._id)}
+                      className="bg-transparent text-lg cursor-pointer text-red-500"
+                    >
+                      <FaTrashCan />
+                    </button>
+                    <button className="bg-transparent text-lg cursor-pointer text-primary-200">
+                      <FaEdit />
+                    </button>
+                  </div>
                 </td>
               </tr>
             );

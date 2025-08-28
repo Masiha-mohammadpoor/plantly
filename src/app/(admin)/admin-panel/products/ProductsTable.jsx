@@ -4,8 +4,10 @@ import { toLoacalDate } from "@/utils/localDate";
 import { useGetAllProducts } from "@/hooks/useProducts";
 import { productsTable } from "@/constants/productsTable";
 import Image from "next/image";
+import { FaTrashCan } from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
 
-const ProductsTable = () => {
+const ProductsTable = ({ onDelete }) => {
   const { products, productsLoading } = useGetAllProducts();
 
   if (productsLoading) return <Loading />;
@@ -64,6 +66,19 @@ const ProductsTable = () => {
                 </td>
                 <td className="table__td  whitespace-nowrap truncate text-center">
                   {toLoacalDate(p.createdAt)}
+                </td>
+                <td className="table__td  whitespace-nowrap truncate text-center">
+                  <div className="w-full justify-center flex gap-x-4">
+                    <button
+                      onClick={() => onDelete(p._id)}
+                      className="bg-transparent text-lg cursor-pointer text-red-500"
+                    >
+                      <FaTrashCan />
+                    </button>
+                    <button className="bg-transparent text-lg cursor-pointer text-primary-200">
+                      <FaEdit />
+                    </button>
+                  </div>
                 </td>
               </tr>
             );

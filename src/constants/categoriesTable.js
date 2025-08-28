@@ -14,5 +14,9 @@ export const categoriesTable = [
   {
     id: 4,
     title: "Created At",
+  },
+  {
+    id: 5,
+    title: "Actions",
   }
 ];

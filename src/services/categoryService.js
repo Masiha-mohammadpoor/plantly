@@ -7,3 +7,7 @@ export const getAllCategories = () => {
 export const createCategory = (data) => {
   return http.post("/categories" , data).then((res) => res.data);
 }
+
+export const deleteCategory = (id) => {
+  return http.delete(`/categories/${id}`).then((res) => res.data);
+}

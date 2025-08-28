@@ -31,4 +31,8 @@ export const productsTable = [
     id: 8,
     title: "Created At",
   },
+  {
+    id: 9,
+    title: "Actions",
+  },
 ];
