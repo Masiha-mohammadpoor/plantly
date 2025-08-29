@@ -59,8 +59,7 @@ const EditProduct = () => {
         stock: parseInt(formData.stock),
         category,
       };
-      const data1 = await mutateAsync({id:params.productId , data : updatedData});
-      console.log(data1)
+      await mutateAsync({id:params.productId , data : updatedData});
       toast.success("Product updated successfully !!!");
       router.push("/admin-panel/products");
     } catch (err) {
