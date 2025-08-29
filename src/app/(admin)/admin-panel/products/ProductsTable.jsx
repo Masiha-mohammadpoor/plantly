@@ -6,6 +6,7 @@ import { productsTable } from "@/constants/productsTable";
 import Image from "next/image";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
+import Link from "next/link";
 
 const ProductsTable = ({ onDelete }) => {
   const { products, productsLoading } = useGetAllProducts();
@@ -69,14 +70,16 @@ const ProductsTable = ({ onDelete }) => {
                 </td>
                 <td className="table__td  whitespace-nowrap truncate text-center">
                   <div className="w-full justify-center flex gap-x-4">
+                    <Link href={`/admin-panel/products/edit/${p._id}`}>
+                      <button className="bg-transparent text-lg cursor-pointer text-primary-200">
+                        <FaEdit />
+                      </button>
+                    </Link>
                     <button
                       onClick={() => onDelete(p._id)}
                       className="bg-transparent text-lg cursor-pointer text-red-500"
                     >
                       <FaTrashCan />
-                    </button>
-                    <button className="bg-transparent text-lg cursor-pointer text-primary-200">
-                      <FaEdit />
                     </button>
                   </div>
                 </td>

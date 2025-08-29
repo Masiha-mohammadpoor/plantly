@@ -2,12 +2,19 @@ import {
   createProduct,
   deleteProduct,
   getAllProducts,
+  getProduct,
+  updateProduct,
 } from "@/services/productService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useCreateProduct = () =>
   useMutation({
     mutationFn: createProduct,
+  });
+
+export const useUpdateProduct = () =>
+  useMutation({
+    mutationFn: updateProduct,
   });
 
 export const useDeleteProduct = () =>
@@ -24,4 +31,15 @@ export const useGetAllProducts = (searchParams) => {
   });
 
   return { products, productsLoading };
+};
+
+export const useGetProduct = (id) => {
+  const { data: product, isLoading: productLoading } = useQuery({
+    queryKey: ["get-product", id],
+    queryFn: () => getProduct(id),
+    retry: false,
+    refetchOnWindowFocus: true,
+  });
+
+  return { product, productLoading };
 };

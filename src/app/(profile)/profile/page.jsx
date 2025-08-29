@@ -63,7 +63,7 @@ const Profile = () => {
             </span>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>My Orders</h2>
-              <p>{payments?.data?.length}</p>
+              <p>{payments?.pagination?.total}</p>
             </div>
           </div>
         </div>

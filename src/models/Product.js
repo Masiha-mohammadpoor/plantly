@@ -46,8 +46,8 @@ const ProductSchema = new mongoose.Schema(
       required: [true, "دسته‌بندی الزامی است"],
     },
     images: {
-      type:String,
-      required:[true , "عکس محصول الزامی است"]
+      type: String,
+      required: [true, "عکس محصول الزامی است"],
     },
     stock: {
       type: Number,
@@ -94,8 +94,63 @@ ProductSchema.pre("save", function (next) {
     this.discount = Math.round(
       ((this.price - this.offPrice) / this.price) * 100
     );
+  } else {
+    this.discount = 0;
   }
   next();
 });
 
-export default mongoose.models.Product || mongoose.model("Product", ProductSchema);
+ProductSchema.pre("findOneAndUpdate", function (next) {
+  const update = this.getUpdate();
+
+  if (
+    update.$set &&
+    (update.$set.price !== undefined || update.$set.offPrice !== undefined)
+  ) {
+    const price =
+      update.$set.price !== undefined
+        ? update.$set.price
+        : this._update.$set?.price;
+    const offPrice =
+      update.$set.offPrice !== undefined
+        ? update.$set.offPrice
+        : this._update.$set?.offPrice;
+
+    if (price !== undefined && offPrice !== undefined && offPrice > 0) {
+      const discount = Math.round(((price - offPrice) / price) * 100);
+      this.setUpdate({
+        ...update,
+        $set: {
+          ...update.$set,
+          discount: discount,
+        },
+      });
+    } else if (offPrice === 0 || offPrice === null || offPrice === undefined) {
+      this.setUpdate({
+        ...update,
+        $set: {
+          ...update.$set,
+          discount: 0,
+        },
+      });
+    }
+  }
+
+  this.setUpdate({
+    ...update,
+    $set: {
+      ...update.$set,
+      updatedAt: new Date(),
+    },
+  });
+
+  next();
+});
+
+ProductSchema.pre("save", function (next) {
+  this.updatedAt = new Date();
+  next();
+});
+
+export default mongoose.models.Product ||
+  mongoose.model("Product", ProductSchema);

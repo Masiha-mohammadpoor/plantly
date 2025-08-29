@@ -12,7 +12,7 @@ export const getProduct = (id) => {
   return http.get(`/products/${id}`).then((res) => res.data);
 };
 
-export const updateProduct = (id, data) => {
+export const updateProduct = ({id, data}) => {
   return http.put(`/products/${id}`, data).then((res) => res.data);
 };
 

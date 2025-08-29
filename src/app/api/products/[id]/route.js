@@ -1,24 +1,26 @@
-import {connectDB} from '@/lib/db/connect';
-import Product from '@/models/Product';
-import User from '@/models/User';
-import Category from '@/models/Category';
-import { NextResponse } from 'next/server';
+import { connectDB } from "@/lib/db/connect";
+import Product from "@/models/Product";
+import User from "@/models/User";
+import Category from "@/models/Category";
+import { NextResponse } from "next/server";
 
 // GET محصول خاص
 export async function GET(request, { params }) {
   try {
     await connectDB();
-    
-    const product = await Product.findById(params.id)
-      .populate('category', 'name englishTitle');
-    
+
+    const product = await Product.findById(params.id).populate(
+      "category",
+      "name englishTitle"
+    );
+
     if (!product) {
       return NextResponse.json(
-        { success: false, message: 'محصول یافت نشد' },
+        { success: false, message: "محصول یافت نشد" },
         { status: 404 }
       );
     }
-    
+
     return NextResponse.json({ success: true, data: product });
   } catch (error) {
     return NextResponse.json(
@@ -28,48 +30,108 @@ export async function GET(request, { params }) {
   }
 }
 
-
 // PUT به روزرسانی محصول
 export async function PUT(request, { params }) {
   try {
     await connectDB();
     const body = await request.json();
-    
-    // حذف فیلدهای غیرقابل به‌روزرسانی
+
     delete body._id;
     delete body.createdAt;
-    
-    // اگر دسته‌بندی تغییر کرده، بررسی معتبر بودن
+
     if (body.category) {
       const categoryExists = await Category.exists({ _id: body.category });
       if (!categoryExists) {
         return NextResponse.json(
-          { success: false, message: 'دسته‌بندی معتبر نیست' },
+          { success: false, message: "دسته‌بندی معتبر نیست" },
           { status: 400 }
         );
       }
     }
-    
-    const product = await Product.findByIdAndUpdate(params.id, body, {
-      new: true,
-      runValidators: true
-    }).populate('category', 'name englishTitle');
-    
+
+    if (body.name) {
+      const existingProduct = await Product.findOne({
+        name: body.name,
+        _id: { $ne: params.id },
+      });
+
+      if (existingProduct) {
+        return NextResponse.json(
+          { success: false, message: "این نام محصول قبلا ثبت شده است" },
+          { status: 400 }
+        );
+      }
+    }
+
+    if (body.price !== undefined || body.offPrice !== undefined) {
+      const currentProduct = await Product.findById(params.id);
+
+      const finalPrice =
+        body.price !== undefined ? body.price : currentProduct.price;
+      const finalOffPrice =
+        body.offPrice !== undefined ? body.offPrice : currentProduct.offPrice;
+
+      if (
+        finalOffPrice !== null &&
+        finalOffPrice !== undefined &&
+        finalOffPrice > finalPrice
+      ) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "قیمت تخفیف باید کمتر یا مساوی قیمت اصلی باشد",
+          },
+          { status: 400 }
+        );
+      }
+
+      if (finalOffPrice && finalOffPrice > 0 && finalPrice > 0) {
+        body.discount = Math.round(
+          ((finalPrice - finalOffPrice) / finalPrice) * 100
+        );
+      } else {
+        body.discount = 0;
+        if (body.offPrice === 0 || body.offPrice === null) {
+          body.offPrice = null;
+        }
+      }
+    }
+
+    const product = await Product.findByIdAndUpdate(
+      params.id,
+      { ...body, updatedAt: new Date() },
+      {
+        new: true,
+        runValidators: true,
+      }
+    ).populate("category", "name englishTitle");
+
     if (!product) {
       return NextResponse.json(
-        { success: false, message: 'محصول یافت نشد' },
+        { success: false, message: "محصول یافت نشد" },
         { status: 404 }
       );
     }
-    
+
     return NextResponse.json({ success: true, data: product });
   } catch (error) {
-    if (error.code === 11000) {
+    console.error("Error updating product:", error);
+
+    if (error.name === "ValidationError") {
+      const errors = Object.values(error.errors).map((err) => err.message);
       return NextResponse.json(
-        { success: false, message: 'این نام محصول قبلا ثبت شده است' },
+        { success: false, message: errors.join(", ") },
         { status: 400 }
       );
     }
+
+    if (error.code === 11000) {
+      return NextResponse.json(
+        { success: false, message: "این نام محصول قبلا ثبت شده است" },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }
@@ -81,16 +143,16 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
-    
+
     const product = await Product.findByIdAndDelete(params.id);
-    
+
     if (!product) {
       return NextResponse.json(
-        { success: false, message: 'محصول یافت نشد' },
+        { success: false, message: "محصول یافت نشد" },
         { status: 404 }
       );
     }
-    
+
     return NextResponse.json({ success: true, data: {} });
   } catch (error) {
     return NextResponse.json(
