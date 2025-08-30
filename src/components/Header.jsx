@@ -37,7 +37,7 @@ const Header = () => {
   const {user : data} = user || {};
 
   return (
-    <header className="flex justify-between items-center pt-3 px-8">
+    <header className="flex justify-between items-center pt-3 px-8 sticky top-0 bg-bg/95 z-[100] pb-3">
       <Link href="/">
         <div className="flex justify-center items-end gap-x-1">
           <Image src="/Logo.png" alt="Logo" width={30} height={30} />

@@ -108,7 +108,7 @@ const Filter = () => {
   };
 
   return (
-    <article className="col-span-3 pb-20 h-96 overflow-y-scroll">
+    <article className="col-span-3 pb-20 overflow-y-auto h-96">
       <h2 className="text-secondary-500 text-lg font-semibold sticky top-0 bg-bg p-3 ">
         Filter & Sort
       </h2>

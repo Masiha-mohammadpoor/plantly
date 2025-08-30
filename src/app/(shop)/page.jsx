@@ -15,7 +15,7 @@ const Home = async () => {
   const response = await getProducts();
 
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col overflow-hidden">
       <article className="grid grid-cols-6 mt-[70px] px-8">
         <div className="col-span-2"></div>
         <div className="col-span-2">

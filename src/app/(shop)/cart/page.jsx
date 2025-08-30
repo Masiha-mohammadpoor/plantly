@@ -83,7 +83,7 @@ const Cart = () => {
       </h1>
       <article className="grid grid-cols-12 gap-8">
         {/* produts */}
-        <article className="col-span-8 h-96">
+        <article className="col-span-8">
           {/* product */}
           {user?.cart?.items?.map((p) => {
             return (
