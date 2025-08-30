@@ -1,5 +1,4 @@
 "use client";
-import { HiOutlineSearch } from "react-icons/hi";
 import Filter from "@/components/Filter";
 import { useGetAllProducts } from "@/hooks/useProducts";
 import { useGetUser, useUpdateUser } from "@/hooks/useAuth";
@@ -9,7 +8,7 @@ import Product from "@/components/Product";
 import { use } from "react";
 import queryString from "query-string";
 import Search from "@/components/Search";
-import NoProduct from "./NoProduct";
+import NoProduct from "@/components/NoProduct";
 import Loading from "@/components/Loading";
 
 const Products = ({ searchParams }) => {

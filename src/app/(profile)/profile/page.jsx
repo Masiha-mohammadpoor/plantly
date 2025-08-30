@@ -2,8 +2,6 @@
 import { TbPlant } from "react-icons/tb";
 import { FiCalendar } from "react-icons/fi";
 import { AiOutlineProduct } from "react-icons/ai";
-import { FaLongArrowAltRight } from "react-icons/fa";
-import Link from "next/link";
 import { useGetUser } from "@/hooks/useAuth";
 import Loading from "@/components/Loading";
 import { toLoacalDate } from "@/utils/localDate";
@@ -40,7 +38,7 @@ const Profile = () => {
             </span>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>My Plant</h2>
-              <div>{payments?.pagination?.totalProducts}</div>
+              <div>{payments?.pagination?.totalProducts || 0}</div>
             </div>
           </div>
         </div>
@@ -53,22 +51,12 @@ const Profile = () => {
             </span>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>My Orders</h2>
-              <p>{payments?.pagination?.total}</p>
+              <p>{payments?.pagination?.total || 0}</p>
             </div>
           </div>
         </div>
       </article>
-      <article className="grid grid-cols-12 gap-x-4  mt-10">
-        <div className="col-span-12 flex justify-between items-center">
-          <h2 className="text-xl font-semibold">Latest Orders</h2>
-          <Link href="/profile/my-orders">
-            <button className="cursor-pointer flex justify-center items-center gap-x-2 px-2 py-1 rounded-lg text-white  bg-primary-200">
-              All Orders <FaLongArrowAltRight />
-            </button>
-          </Link>
-        </div>
-      </article>
-      <OrdersTable user={user} userLoading={userLoading} limit={5}/>
+      <OrdersTable user={user} userLoading={userLoading} limit={5} />
     </section>
   );
 };

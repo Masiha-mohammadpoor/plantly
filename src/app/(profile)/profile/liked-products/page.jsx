@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/components/Loading";
+import NoProduct from "@/components/NoProduct";
 import Product from "@/components/Product";
 import { useGetUser, useUpdateUser } from "@/hooks/useAuth";
 import { useQueryClient } from "@tanstack/react-query";
@@ -25,6 +26,9 @@ const LikeAndSave = () => {
     }
   };
 
+    if (!userLoading && user?.user?.likes.length === 0){
+    return <NoProduct text="There is no Product." link />;
+  }
   return (
     <section className="w-full bg-white rounded-tl-lg h-screen pb-28 px-8 pt-4 overflow-y-auto">
       <h2 className="text-xl font-semibold mb-6">Liked Products</h2>
