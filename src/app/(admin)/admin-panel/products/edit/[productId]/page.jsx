@@ -1,16 +1,10 @@
 "use client";
-import { productFormInputsData } from "@/constants/productsFieldData";
-import Input from "../../../Input";
 import { useEffect, useState } from "react";
 import { useGetAllCategories } from "@/hooks/useCategories";
-import Select from "react-select";
-import { selectStyles } from "@/constants/selectStyles";
-import {
-  useGetProduct,
-  useUpdateProduct,
-} from "@/hooks/useProducts";
+import { useGetProduct, useUpdateProduct } from "@/hooks/useProducts";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
+import ProductForm from "@/components/ProductForm";
 
 const EditProduct = () => {
   const router = useRouter();
@@ -59,7 +53,7 @@ const EditProduct = () => {
         stock: parseInt(formData.stock),
         category,
       };
-      await mutateAsync({id:params.productId , data : updatedData});
+      await mutateAsync({ id: params.productId, data: updatedData });
       toast.success("Product updated successfully !!!");
       router.push("/admin-panel/products");
     } catch (err) {
@@ -70,45 +64,16 @@ const EditProduct = () => {
   return (
     <section className="w-full bg-white rounded-tl-lg h-screen pb-28 px-8 pt-4 overflow-y-auto">
       <h2 className="text-xl font-semibold mb-6">Edit Product</h2>
-      <div>
-        <form onSubmit={submitHandler} className="w-[50%]">
-          {productFormInputsData.map((f) => {
-            return (
-              <Input
-                key={f.id}
-                id={f.name}
-                label={f.label}
-                name={f.name}
-                type={f.type}
-                value={formData[f.name]}
-                onChange={changeHandler}
-              />
-            );
-          })}
-          {categories && !categoriesLoading && (
-            <div className="flex flex-col justify-start gap-y-1 mb-4">
-              <label className="text-secondary-800">Category</label>
-              <Select
-                defaultValue={category}
-                value={category}
-                onChange={setCategory}
-                options={categories?.data}
-                getOptionLabel={(option) => option.name}
-                getOptionValue={(option) => option._id}
-                menuPlacement="auto"
-                placeholder="select..."
-                styles={selectStyles}
-              />
-            </div>
-          )}
-          <button
-            type="submit"
-            className="w-full text-white rounded-lg bg-primary-200 py-2 cursor-pointer mt-4"
-          >
-            Update Product
-          </button>
-        </form>
-      </div>
+      <ProductForm
+        onSubmit={submitHandler}
+        onChange={changeHandler}
+        categories={categories}
+        categoriesLoading={categoriesLoading}
+        category={category}
+        setCategory={setCategory}
+        formData={formData}
+        btnText="Update Product"
+      />
     </section>
   );
 };
