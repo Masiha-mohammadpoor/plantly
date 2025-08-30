@@ -1,6 +1,6 @@
 "use client";
 import { productFormInputsData } from "@/constants/productsFieldData";
-import Input from "@/app/(admin)/admin-panel/Input";
+import FormInput from "./FormInput";
 import Select from "react-select";
 import { selectStyles } from "@/constants/selectStyles";
 
@@ -19,7 +19,7 @@ const ProductForm = ({
       <form onSubmit={onSubmit} className="w-[50%]">
         {productFormInputsData.map((f) => {
           return (
-            <Input
+            <FormInput
               key={f.id}
               id={f.name}
               label={f.label}

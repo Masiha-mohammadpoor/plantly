@@ -17,6 +17,7 @@ export async function GET(request) {
     const minPrice = searchParams.get("minPrice");
     const maxPrice = searchParams.get("maxPrice");
     const search = searchParams.get("search");
+    const limit = searchParams.get("limit");
 
     const query = {};
 
@@ -90,9 +91,19 @@ export async function GET(request) {
       sortOptions = { price: -1 };
     }
 
-    const products = await Product.find(query)
+    // ایجاد کوئری پایه
+    let productsQuery = Product.find(query)
       .populate("category", "name englishTitle")
       .sort(sortOptions);
+
+    if (limit) {
+      const limitValue = parseInt(limit);
+      if (!isNaN(limitValue) && limitValue > 0) {
+        productsQuery = productsQuery.limit(limitValue);
+      }
+    }
+
+    const products = await productsQuery;
 
     return NextResponse.json({
       success: true,
@@ -107,6 +118,7 @@ export async function GET(request) {
   }
 }
 
+// POST بدون تغییر باقی می‌ماند
 export async function POST(request) {
   try {
     await connectDB();

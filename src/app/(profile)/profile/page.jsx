@@ -56,7 +56,7 @@ const Profile = () => {
           </div>
         </div>
       </article>
-      <OrdersTable user={user} userLoading={userLoading} limit={5} />
+      <OrdersTable user={user} userLoading={userLoading} limit={5} header/>
     </section>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 import { categoryFormInputsData } from "@/constants/categoriesFieldData";
-import Input from "@/app/(admin)/admin-panel/Input";
+import FormInput from "./FormInput";
 
 const CategoryForm = ({ onSubmit, formData, onChange, btnText }) => {
   return (
@@ -8,7 +8,7 @@ const CategoryForm = ({ onSubmit, formData, onChange, btnText }) => {
       <form onSubmit={onSubmit} className="w-[50%]">
         {categoryFormInputsData.map((f) => {
           return (
-            <Input
+            <FormInput
               key={f.id}
               id={f.name}
               label={f.label}

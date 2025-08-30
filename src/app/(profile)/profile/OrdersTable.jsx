@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import NoProduct from "@/components/NoProduct";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
-const OrdersTable = ({ user, userLoading, limit }) => {
+const OrdersTable = ({ user, userLoading, limit , header = false}) => {
   const searchParams = useSearchParams();
 
   const createQueryString = () => {
@@ -34,7 +34,7 @@ const OrdersTable = ({ user, userLoading, limit }) => {
   }
   return (
     <>
-      <article className="grid grid-cols-12 gap-x-4  mt-10">
+      {header && <article className="grid grid-cols-12 gap-x-4  mt-10">
         <div className="col-span-12 flex justify-between items-center">
           <h2 className="text-xl font-semibold">Latest Orders</h2>
           <Link href="/profile/my-orders">
@@ -43,7 +43,7 @@ const OrdersTable = ({ user, userLoading, limit }) => {
             </button>
           </Link>
         </div>
-      </article>
+      </article>}
 
       <div className="overflow-auto my-10">
         <table className="border-collapse table-auto w-full min-w-[800px] text-sm">
