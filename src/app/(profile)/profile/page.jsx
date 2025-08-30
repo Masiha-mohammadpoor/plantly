@@ -8,21 +8,11 @@ import { useGetUser } from "@/hooks/useAuth";
 import Loading from "@/components/Loading";
 import { toLoacalDate } from "@/utils/localDate";
 import { useGetPayments } from "@/hooks/usePayments";
-import { useEffect, useState } from "react";
 import OrdersTable from "./OrdersTable";
 
 const Profile = () => {
   const { user, userLoading } = useGetUser();
   const { payments, paymentsLoading } = useGetPayments(user?.user?._id);
-  const [plantsCount, setPlantsCount] = useState(0);
-
-  useEffect(() => {
-    if (payments) {
-      payments.data.map((p) =>
-        p.items.map((i) => setPlantsCount((prev) => (prev += i.quantity)))
-      );
-    }
-  }, [payments]);
 
   if (userLoading && paymentsLoading) return <Loading />;
   return (
@@ -50,7 +40,7 @@ const Profile = () => {
             </span>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>My Plant</h2>
-              <div>{plantsCount}</div>
+              <div>{payments?.pagination?.totalProducts}</div>
             </div>
           </div>
         </div>
