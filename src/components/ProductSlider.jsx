@@ -8,7 +8,6 @@ import Slider from "react-slick";
 import Link from "next/link";
 
 const ProductSlider = ({ products }) => {
-  console.log(products);
 
   const productsNumber = [1, 2, 3, 4, 5, 6];
   const [currentSlide, setCurrentSlide] = useState(0);
