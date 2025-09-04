@@ -4,7 +4,7 @@ import User from "@/models/User";
 import Category from "@/models/Category";
 import { NextResponse } from "next/server";
 
-// GET محصول خاص
+// GET (by product id)
 export async function GET(request, { params }) {
   try {
     await connectDB();
@@ -16,7 +16,7 @@ export async function GET(request, { params }) {
 
     if (!product) {
       return NextResponse.json(
-        { success: false, message: "محصول یافت نشد" },
+        { success: false, message: "Product not found" },
         { status: 404 }
       );
     }
@@ -30,7 +30,7 @@ export async function GET(request, { params }) {
   }
 }
 
-// PUT به روزرسانی محصول
+// PUT (update product)
 export async function PUT(request, { params }) {
   try {
     await connectDB();
@@ -43,7 +43,7 @@ export async function PUT(request, { params }) {
       const categoryExists = await Category.exists({ _id: body.category });
       if (!categoryExists) {
         return NextResponse.json(
-          { success: false, message: "دسته‌بندی معتبر نیست" },
+          { success: false, message: "Category is not valid" },
           { status: 400 }
         );
       }
@@ -57,7 +57,10 @@ export async function PUT(request, { params }) {
 
       if (existingProduct) {
         return NextResponse.json(
-          { success: false, message: "این نام محصول قبلا ثبت شده است" },
+          {
+            success: false,
+            message: "This product name is already registered",
+          },
           { status: 400 }
         );
       }
@@ -79,7 +82,8 @@ export async function PUT(request, { params }) {
         return NextResponse.json(
           {
             success: false,
-            message: "قیمت تخفیف باید کمتر یا مساوی قیمت اصلی باشد",
+            message:
+              "The discounted price must be less than or equal to the original price",
           },
           { status: 400 }
         );
@@ -108,7 +112,7 @@ export async function PUT(request, { params }) {
 
     if (!product) {
       return NextResponse.json(
-        { success: false, message: "محصول یافت نشد" },
+        { success: false, message: "Product not found" },
         { status: 404 }
       );
     }
@@ -127,7 +131,7 @@ export async function PUT(request, { params }) {
 
     if (error.code === 11000) {
       return NextResponse.json(
-        { success: false, message: "این نام محصول قبلا ثبت شده است" },
+        { success: false, message: "This product name is already registered" },
         { status: 400 }
       );
     }
@@ -148,7 +152,7 @@ export async function DELETE(request, { params }) {
 
     if (!product) {
       return NextResponse.json(
-        { success: false, message: "محصول یافت نشد" },
+        { success: false, message: "Product not found" },
         { status: 404 }
       );
     }

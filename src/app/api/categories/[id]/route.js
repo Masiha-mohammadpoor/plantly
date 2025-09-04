@@ -11,7 +11,7 @@ export async function GET(request, { params }) {
     
     if (!category) {
       return NextResponse.json(
-        { success: false, message: 'دسته‌بندی یافت نشد' },
+        { success: false, message: 'Category not found' },
         { status: 404 }
       );
     }
@@ -42,7 +42,7 @@ export async function PUT(request, { params }) {
     
     if (!category) {
       return NextResponse.json(
-        { success: false, message: 'دسته‌بندی یافت نشد' },
+        { success: false, message: 'Category not found' },
         { status: 404 }
       );
     }
@@ -50,9 +50,9 @@ export async function PUT(request, { params }) {
     return NextResponse.json({ success: true, data: category });
   } catch (error) {
     if (error.code === 11000) {
-      const field = error.message.includes('englishTitle') ? 'عنوان انگلیسی' : 'نام';
+      const field = error.message.includes('englishTitle') ? 'englishTitle' : 'name';
       return NextResponse.json(
-        { success: false, message: `${field} تکراری است` },
+        { success: false, message: `The ${field} is repeated.` },
         { status: 400 }
       );
     }
@@ -72,7 +72,7 @@ export async function DELETE(request, { params }) {
     
     if (!category) {
       return NextResponse.json(
-        { success: false, message: 'دسته‌بندی یافت نشد' },
+        { success: false, message: 'Category not found' },
         { status: 404 }
       );
     }

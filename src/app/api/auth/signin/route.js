@@ -13,19 +13,25 @@ export async function POST(req) {
     // Check if user exists
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
-      return new Response(JSON.stringify({ message: "کاربری با این ایمیل یافت نشد" }), {
-        status: 404,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ message: "No user with this email was found" }),
+        {
+          status: 404,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return new Response(JSON.stringify({ message: "رمز عبور اشتباه است" }), {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ message: "The password is incorrect" }),
+        {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     // Create JWT token
@@ -44,12 +50,15 @@ export async function POST(req) {
       path: "/",
     });
 
-    return new Response(JSON.stringify({ message: "ورود موفقیت آمیز بود", user }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ message: "Login was successful", user }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
-    return new Response(JSON.stringify({ message: "خطای سرور" }), {
+    return new Response(JSON.stringify({ message: "Server error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

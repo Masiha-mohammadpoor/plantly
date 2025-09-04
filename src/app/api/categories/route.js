@@ -34,7 +34,7 @@ export async function POST(request) {
 
     if (!body.name || !body.englishTitle) {
       return NextResponse.json(
-        { success: false, message: "نام و عنوان انگلیسی الزامی هستند" },
+        { success: false, message: "name and englishTitle are required" },
         { status: 400 }
       );
     }

@@ -4,7 +4,7 @@ import Category from "@/models/Category";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 
-// GET همه محصولات
+// GET (all products)
 export async function GET(request) {
   try {
     await connectDB();
@@ -91,7 +91,6 @@ export async function GET(request) {
       sortOptions = { price: -1 };
     }
 
-    // ایجاد کوئری پایه
     let productsQuery = Product.find(query)
       .populate("category", "name englishTitle")
       .sort(sortOptions);
@@ -118,7 +117,7 @@ export async function GET(request) {
   }
 }
 
-// POST بدون تغییر باقی می‌ماند
+// POST (create new product)
 export async function POST(request) {
   try {
     await connectDB();
@@ -128,7 +127,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "نام، قیمت، توضیحات و دسته‌بندی الزامی هستند",
+          message: "Name, price, description and category are required",
         },
         { status: 400 }
       );
@@ -146,7 +145,7 @@ export async function POST(request) {
 
       if (!categoryDoc) {
         return NextResponse.json(
-          { success: false, message: "دسته‌بندی معتبر نیست" },
+          { success: false, message: "Category is not valid" },
           { status: 400 }
         );
       }
@@ -156,7 +155,7 @@ export async function POST(request) {
       const categoryExists = await Category.exists({ _id: body.category });
       if (!categoryExists) {
         return NextResponse.json(
-          { success: false, message: "دسته‌بندی معتبر نیست" },
+          { success: false, message: "Category is not valid" },
           { status: 400 }
         );
       }
@@ -169,7 +168,7 @@ export async function POST(request) {
   } catch (error) {
     if (error.code === 11000) {
       return NextResponse.json(
-        { success: false, message: "این محصول قبلا ثبت شده است" },
+        { success: false, message: "This product has already been registered" },
         { status: 400 }
       );
     }

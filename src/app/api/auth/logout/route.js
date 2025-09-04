@@ -1,23 +1,22 @@
-import { NextResponse } from 'next/server'
-import { signOut } from '@/utils/auth'
+import { NextResponse } from "next/server";
+import { signOut } from "@/utils/auth";
 
 export async function POST() {
   try {
-    signOut()
+    signOut();
 
     return NextResponse.json({
       success: true,
-      message: 'Logout completed successfully'
-    })
-
+      message: "Logout completed successfully",
+    });
   } catch (error) {
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         message: "Error logging out",
-        error: error.message 
+        error: error.message,
       },
       { status: 500 }
-    )
+    );
   }
 }

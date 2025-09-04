@@ -5,14 +5,16 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { TbLogout2 } from "react-icons/tb";
 import toast from "react-hot-toast";
-import { useLogout } from "@/hooks/useAuth";
+import { useGetUser, useLogout } from "@/hooks/useAuth";
 import { useQueryClient } from "@tanstack/react-query";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 
 const Menu = ({ openMenu, setOpenMenu, menuData }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { mutateAsync } = useLogout();
   const queryClient = useQueryClient();
+  const { user, userLoading } = useGetUser();
 
   const logoutHandler = async () => {
     try {
@@ -69,6 +71,23 @@ const Menu = ({ openMenu, setOpenMenu, menuData }) => {
             </Link>
           );
         })}
+        {!userLoading &&
+          user.user.role === "ADMIN" &&
+          pathname.startsWith("/profile") && (
+            <Link href="/admin-panel">
+              <button
+                className={`my-3 cursor-pointer text-white flex items-center ${
+                  openMenu
+                    ? "text-xl px-4 py-2 gap-x-4 justify-start"
+                    : "text-xl w-10 h-10 justify-center"
+                } w-full rounded-lg transition-all duration-300 hover:bg-white/20`}
+              >
+                <MdOutlineAdminPanelSettings />
+                {openMenu && <span className="text-base">Admin Panel</span>}
+              </button>
+            </Link>
+          )}
+
         <button
           onClick={logoutHandler}
           className={`my-3 cursor-pointer text-white flex items-center ${

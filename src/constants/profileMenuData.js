@@ -43,11 +43,5 @@ export const profileMenuData = [
     title: "Saved Products",
     icon: <FaRegBookmark />,
     link: "/profile/saved-products",
-  },
-  {
-    id: 7,
-    title: "Admin Panel",
-    icon: <MdOutlineAdminPanelSettings />,
-    link: "/admin-panel",
   }
 ];

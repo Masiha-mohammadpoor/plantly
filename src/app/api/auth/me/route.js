@@ -12,7 +12,7 @@ export async function GET(request) {
     const token = getToken(request);
     if (!token) {
       return new Response(
-        JSON.stringify({ success: false, message: "دسترسی غیرمجاز" }),
+        JSON.stringify({ success: false, message: "Unauthorized access" }),
         { status: 401 }
       );
     }
@@ -45,7 +45,7 @@ export async function GET(request) {
       });
     if (!user) {
       return new Response(
-        JSON.stringify({ success: false, message: "کاربر یافت نشد" }),
+        JSON.stringify({ success: false, message: "User not found" }),
         { status: 404 }
       );
     }
@@ -64,7 +64,7 @@ export async function GET(request) {
     return new Response(
       JSON.stringify({
         success: false,
-        message: "خطای سرور",
+        message: "Server error",
         error: error.message,
       }),
       { status: 500 }

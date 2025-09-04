@@ -74,20 +74,20 @@ export async function GET(request, { params }) {
     const token = getToken(request);
     if (!token || (token.id !== id && token.role !== "ADMIN")) {
       return NextResponse.json(
-        { success: false, message: "دسترسی غیرمجاز" },
+        { success: false, message: "Unauthorized access" },
         { status: 403 }
       );
     }
 
     const user = await User.findById(id)
-    .select('-password')
-      .populate('likes', 'name price images offPrice discount')
-      .populate('saved', 'name price images offPrice discount')
+      .select("-password")
+      .populate("likes", "name price images offPrice discount")
+      .populate("saved", "name price images offPrice discount")
       .populate("cart.items.product", "name price images offPrice discount");
 
     if (!user) {
       return NextResponse.json(
-        { success: false, message: "کاربر یافت نشد" },
+        { success: false, message: "User not found" },
         { status: 404 }
       );
     }
@@ -112,7 +112,7 @@ export async function PUT(request, { params }) {
     const token = getToken(request);
     if (!token || (token.id !== id && token.role !== "ADMIN")) {
       return NextResponse.json(
-        { success: false, message: "دسترسی غیرمجاز" },
+        { success: false, message: "Unauthorized access" },
         { status: 403 }
       );
     }
@@ -121,7 +121,7 @@ export async function PUT(request, { params }) {
     const user = await User.findById(id);
     if (!user) {
       return NextResponse.json(
-        { success: false, message: "کاربر یافت نشد" },
+        { success: false, message: "User not found" },
         { status: 404 }
       );
     }
@@ -175,7 +175,7 @@ export async function PUT(request, { params }) {
       return NextResponse.json(
         {
           success: false,
-          message: "لطفاً چند لحظه صبر کنید و دوباره تلاش کنید",
+          message: "Please wait a few moments and try again",
         },
         { status: 429 }
       );
@@ -197,7 +197,7 @@ export async function DELETE(request, { params }) {
     const token = getToken(request);
     if (!token || (token.id !== id && token.role !== "ADMIN")) {
       return NextResponse.json(
-        { success: false, message: "دسترسی غیرمجاز" },
+        { success: false, message: "Unauthorized access" },
         { status: 403 }
       );
     }
@@ -205,14 +205,14 @@ export async function DELETE(request, { params }) {
     const user = await User.findByIdAndDelete(id);
     if (!user) {
       return NextResponse.json(
-        { success: false, message: "کاربر یافت نشد" },
+        { success: false, message: "User not found" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      data: { message: "کاربر با موفقیت حذف شد" },
+      data: { message: "User successfully deleted" },
     });
   } catch (error) {
     return NextResponse.json(

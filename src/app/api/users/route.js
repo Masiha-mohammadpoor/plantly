@@ -4,16 +4,15 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { getToken } from "@/utils/auth";
 
-// GET همه کاربران (فقط ادمین)
+// GET (nly Admin)
 export async function GET(request) {
   try {
     await connectDB();
 
-    // بررسی احراز هویت و نقش ادمین
     const token = getToken(request);
     if (!token || token.role !== "ADMIN") {
       return NextResponse.json(
-        { success: false, message: "دسترسی غیرمجاز" },
+        { success: false, message: "Unauthorized access" },
         { status: 403 }
       );
     }
@@ -28,37 +27,36 @@ export async function GET(request) {
   }
 }
 
-// POST ایجاد کاربر جدید
+// POST (creat new user)
 export async function POST(request) {
   try {
     await connectDB();
     const body = await request.json();
 
-    // اعتبارسنجی
+    // Validation
     if (!body.name || !body.email || !body.password) {
       return NextResponse.json(
         {
           success: false,
-          message: "نام کاربری، ایمیل و رمز عبور الزامی هستند",
+          message: "username, email and password are required",
         },
         { status: 400 }
       );
     }
 
-    // بررسی تکراری نبودن ایمیل
+    // Check for duplicate email
     const existingUser = await User.findOne({ email: body.email });
     if (existingUser) {
       return NextResponse.json(
-        { success: false, message: "کاربر با این ایمیل وجود دارد" },
+        { success: false, message: "User with this email exists" },
         { status: 400 }
       );
     }
 
-    // هش کردن رمز عبور
+    // Password hashing
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(body.password, salt);
 
-    // ایجاد کاربر جدید با مقادیر پیش‌فرض
     const user = await User.create({
       name: body.name,
       email: body.email,
@@ -74,7 +72,6 @@ export async function POST(request) {
       updatedAt: new Date(),
     });
 
-    // حذف فیلدهای حساس قبل از ارسال پاسخ
     const userResponse = user.toObject();
     delete userResponse.password;
 
@@ -82,7 +79,7 @@ export async function POST(request) {
       {
         success: true,
         data: userResponse,
-        message: "ثبت نام با موفقیت انجام شد",
+        message: "Registration successful",
       },
       { status: 201 }
     );

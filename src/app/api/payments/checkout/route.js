@@ -17,14 +17,14 @@ export async function POST(request) {
 
     if (!user) {
       return NextResponse.json(
-        { success: false, message: "کاربر یافت نشد" },
+        { success: false, message: "User not found" },
         { status: 404 }
       );
     }
 
     if (user.cart.items.length === 0) {
       return NextResponse.json(
-        { success: false, message: "سبد خرید خالی است" },
+        { success: false, message: "Shopping cart is empty" },
         { status: 400 }
       );
     }
@@ -35,7 +35,7 @@ export async function POST(request) {
         return NextResponse.json(
           {
             success: false,
-            message: `موجودی محصول ${product.name} کافی نیست`,
+            message: `"Insufficient inventory of product ${product.name}`,
           },
           { status: 400 }
         );
