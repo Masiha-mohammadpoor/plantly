@@ -25,6 +25,32 @@ const ProductSlider = ({ products }) => {
     touchMove: false,
     beforeChange: (current, next) =>
       setCurrentSlide(next % productsNumber.length),
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 880,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 650,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 410,
+        settings: {
+          slidesToShow: 1,
+        }
+      }
+    ]
   };
 
   return (
@@ -35,14 +61,14 @@ const ProductSlider = ({ products }) => {
           <div key={p._id} className="relative col-span-1 w-44 h-44">
             <div
               className={`w-full h-full bg-white rounded-lg custom-shadow origin-bottom transition-all duration-500 ${
-                isActive && "animate-plant"
+                isActive && "lg:animate-plant"
               }`}
             ></div>
             <div
-              className={`absolute bottom-0 transition-all duration-500 ${
+              className={`absolute bottom-0 transition-all duration-500 -left-[2.6rem] w-[230px] h-[230px] ${
                 isActive
-                  ? "-left-[6.5rem] w-[450px] h-[450px]"
-                  : "-left-[2.5rem] w-[230px] h-[230px]"
+                  ? "lg:-left-[6.5rem] lg:w-[450px] lg:h-[450px]"
+                  : "-left-[2.6rem] w-[230px] h-[230px]"
               }`}
             >
               <Image
@@ -55,7 +81,7 @@ const ProductSlider = ({ products }) => {
             <p
               className={`absolute z-30 transition-all duration-500 ${
                 isActive
-                  ? "bottom-16 right-[25%] text-black"
+                  ? "bottom-16 right-[15%] lg:right-[25%] text-black"
                   : "bottom-5 right-5 text-secondary-500"
               } text-sm font-semibold`}
             >
@@ -63,7 +89,7 @@ const ProductSlider = ({ products }) => {
             </p>
             {isActive && (
               <Link href={`/products/${p._id}`}>
-                <p className="transition-all duration-500 absolute bottom-10 right-[25%] text-primary-500 flex items-center text-xs">
+                <p className="transition-all duration-500 absolute bottom-10 right-[13%] lg:right-[25%] text-primary-500 flex items-center text-xs">
                   View the product <HiArrowNarrowRight />
                 </p>
               </Link>
