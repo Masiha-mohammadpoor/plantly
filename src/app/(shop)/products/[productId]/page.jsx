@@ -32,9 +32,9 @@ const productPage = () => {
   };
 
   if (productLoading && userLoading) return <Loading />;
-  if (product && !productLoading)
+  if (product && !productLoading && user && !userLoading)
     return (
-      <section className="px-20 flex justify-center items-start gap-x-16 mt-16 pb-10">
+      <section className="px-4 md:px-20 lg:px-40 flex flex-col md:flex-row items-center md:items-start gap-x-16 mt-16 pb-10 overflow-x-hidden">
         {/* image */}
         <article>
           <div className="relative w-[290px] h-[380px] rounded-t-[300px] rounded-b-lg bg-primary-200 custom-shadow">
@@ -49,7 +49,7 @@ const productPage = () => {
           </div>
         </article>
         {/* detail */}
-        <article className="mt-5 flex flex-col items-start gap-y-4">
+        <article className="w-[100%] md:w-auto mt-5 flex flex-col items-center justify-center md:items-start gap-y-4 px-8">
           <div className="left-2 top-2 flex gap-x-1">
             <button
               onClick={() =>
@@ -60,7 +60,7 @@ const productPage = () => {
               }
               className="text-red-500 text-2xl cursor-pointer"
             >
-              {user.user.likes.some((l) => l._id === data?._id) ? (
+              {user?.user?.likes.some((l) => l._id === data?._id) ? (
                 <HiHeart />
               ) : (
                 <HiOutlineHeart />
@@ -75,17 +75,17 @@ const productPage = () => {
               }
               className="text-primary-500 text-xl cursor-pointer"
             >
-              {user.user.saved.some((l) => l._id === data?._id) ? (
+              {user?.user?.saved.some((l) => l._id === data?._id) ? (
                 <FaBookmark />
               ) : (
                 <FaRegBookmark />
               )}
             </button>
           </div>
-          <p className="text-6xl font-extralight text-secondary-800">
+          <p className="text-6xl font-extralight text-secondary-800 text-center md:text-left">
             {data?.name}
           </p>
-          <p className="w-[22rem] text-sm text-secondary-500 leading-6">
+          <p className="max-w-[22rem] text-sm text-secondary-500 leading-6 text-center md:text-left">
             {data?.description}
           </p>
           <div className="py-1 px-3 rounded-full bg-primary-200 text-sm text-white ">
@@ -105,7 +105,7 @@ const productPage = () => {
               onClick={() =>
                 actionHandler({ action: "removeFromCart", productId: data._id })
               }
-              className="text-red-500 w-80 bg-red-200 rounded-lg custom-shadow cursor-pointer py-1.5 transition-all duration-300 hover:bg-red-300"
+              className="text-red-500 w-72 bg-red-200 rounded-lg custom-shadow cursor-pointer py-1.5 transition-all duration-300 hover:bg-red-300"
             >
               Remove From Cart
             </button>
@@ -114,7 +114,7 @@ const productPage = () => {
               onClick={() =>
                 actionHandler({ action: "addToCart", productId: data._id })
               }
-              className="text-white w-80 bg-primary-200 rounded-lg custom-shadow cursor-pointer py-1.5 transition-all duration-300 hover:bg-primary-500"
+              className="text-white w-72 bg-primary-200 rounded-lg custom-shadow cursor-pointer py-1.5 transition-all duration-300 hover:bg-primary-500"
             >
               Add To Cart
             </button>
