@@ -6,6 +6,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { IoPricetagOutline } from "react-icons/io5";
 import { useGetAllCategories } from "@/hooks/useCategories";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { IoIosClose } from "react-icons/io";
 
 const filterTypes = [
   { id: 1, title: "All", value: "all" },
@@ -18,7 +19,7 @@ const filterSorts = [
   { id: 2, title: "Low To High", value: "LTH" },
 ];
 
-const Filter = () => {
+const Filter = ({ showFilter, setShowFilter }) => {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
@@ -108,15 +109,27 @@ const Filter = () => {
   };
 
   return (
-    <article className="col-span-3 pb-20 overflow-y-auto h-96">
-      <h2 className="text-secondary-500 text-lg font-semibold sticky top-0 bg-bg p-3 ">
-        Filter & Sort
-      </h2>
+    <article
+      className={`xl:col-span-3 fixed top-0 xl:static xl:top-auto transition-all duration-300 z-[180] xl:z-auto bg-primary-200 xl:bg-transparent pt-10 xl:pt-0 xl:pr-2 px-4 ${
+        showFilter ? "left-0" : "-left-80"
+      } w-80 h-screen xl:h-96 pb-20 overflow-y-auto xl:block`}
+    >
+      <div className="w-full flex items-start justify-between pb-9 xl:pb-2 xl:sticky xl:top-0 xl:bg-bg">
+        <h2 className="xl:text-secondary-500 text-white text-lg font-semibold xl:p-3 xl:pt-0 ">
+          Filter & Sort
+        </h2>
+        <button
+          className="text-white text-4xl cursor-pointer xl:hidden"
+          onClick={() => setShowFilter(false)}
+        >
+          <IoIosClose />
+        </button>
+      </div>
       {!categoriesLoading && categories && (
         <div className="flex flex-col gap-y-4">
           {/* category */}
           <div
-            className={`transition-all duration-500 bg-white flex flex-col overflow-hidden custom-shadow rounded-lg ${
+            className={`transition-all duration-500 bg-white flex flex-col overflow-hidden xl:custom-shadow rounded-lg ${
               categoryOpen ? "max-h-[500px]" : "max-h-10"
             }`}
           >
@@ -163,7 +176,7 @@ const Filter = () => {
           </div>
           {/* type */}
           <div
-            className={`transition-all duration-500 bg-white flex flex-col overflow-hidden custom-shadow rounded-lg ${
+            className={`transition-all duration-500 bg-white flex flex-col overflow-hidden lg:custom-shadow rounded-lg ${
               typeOpen ? "max-h-[500px]" : "max-h-10"
             }`}
           >
@@ -201,7 +214,7 @@ const Filter = () => {
           </div>
           {/* sort */}
           <div
-            className={`transition-all duration-500 bg-white flex flex-col overflow-hidden custom-shadow rounded-lg ${
+            className={`transition-all duration-500 bg-white flex flex-col overflow-hidden lg:custom-shadow rounded-lg ${
               sortOpen ? "max-h-[500px]" : "max-h-10"
             }`}
           >
