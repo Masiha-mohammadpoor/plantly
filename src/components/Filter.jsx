@@ -20,7 +20,7 @@ const filterSorts = [
 ];
 
 const Filter = ({ showFilter, setShowFilter }) => {
-  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(true);
   const [typeOpen, setTypeOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
   const { categories, categoriesLoading } = useGetAllCategories();

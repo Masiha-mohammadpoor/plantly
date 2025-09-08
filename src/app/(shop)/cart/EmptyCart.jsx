@@ -4,7 +4,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 
 const EmptyCart = () => {
   return (
-    <section className="w-full flex flex-col justify-center items-center gap-y-4 mt-20">
+    <section className="w-full flex flex-col justify-center items-center gap-y-4 mt10 lg:mt-20 ">
       <div className="w-[250px] h-[250px] relative">
         <Image
           src="/UI-images/empty-cart.svg"

@@ -77,22 +77,22 @@ const Cart = () => {
   if (!userLoading && user && user?.cart?.items?.length === 0)
     return <EmptyCart />;
   return (
-    <section className="flex flex-col justify-center mt-16 mx-auto px-32 max-w-7xl overflow-y-auto">
-      <h1 className="text-xl font-semibold pb-8">
+    <section className="flex flex-col justify-center mt-16 mx-auto px-4 lg:px-16 max-w-7xl overflow-y-auto overflow-x-hidden">
+      <h1 className="text-xl font-semibold pb-2 w-[650px] lg:w-full mx-auto lg:px-16">
         Your shopping cart ({user?.cart?.items?.length || 0})
       </h1>
-      <article className="grid grid-cols-12 gap-8">
+      <article className="grid grid-cols-12 lg:gap-8 mx-auto">
         {/* produts */}
-        <article className="col-span-8">
+        <article className="col-span-12 lg:col-span-8 overflow-x-auto pt-10 order-2 lg:order-1">
           {/* product */}
           {user?.cart?.items?.map((p) => {
             return (
               <div
                 key={p._id}
-                className="w-full rounded-lg bg-primary-200 p-2 h-36 flex justify-between mb-5"
+                className="w-[650px] lg:w-auto rounded-lg bg-primary-200 p-2 h-36 flex justify-between mb-5"
               >
                 {/* image */}
-                <div className="w-44 h-44 -left-5 -top-10 relative">
+                <div className="w-44 h-44 -left-5 -top-10 relative z-50">
                   <Image
                     src={p.product.images}
                     alt={p.product.name}
@@ -176,7 +176,7 @@ const Cart = () => {
           })}
         </article>
         {/* payment */}
-        <article className="h-[23.25rem] col-span-4 bg-white custom-shadow p-4 rounded-lg">
+        <article className="h-[23.25rem] mt-10 col-span-12 lg:col-span-4 bg-white custom-shadow p-4 rounded-lg order- lg:order-2 max-w-[650px]">
           <h2 className="flex items-center gap-x-2 font-semibold">
             <LuInfo /> Payment Information
           </h2>
