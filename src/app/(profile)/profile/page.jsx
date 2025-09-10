@@ -15,8 +15,8 @@ const Profile = () => {
   if (userLoading && paymentsLoading) return <Loading />;
   return (
     <section className="w-full bg-white rounded-tl-lg h-screen pb-28 px-8 pt-4 overflow-y-auto">
-      <article className="grid grid-cols-12 gap-x-4">
-        <div className="h-32 col-span-4 bg-primary-200 rounded-lg p-4 text-white relative overflow-hidden flex justify-start items-center">
+      <article className="grid grid-cols-12 gap-4">
+        <div className="h-32 col-span-12 sm:col-span-6 md:col-span-4 bg-primary-200 rounded-lg p-4 text-white relative overflow-hidden flex justify-start items-center">
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -top-20 -right-12"></div>
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -bottom-20 -right-12"></div>
           <div className="flex items-center gap-x-4">
@@ -29,7 +29,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="h-32 col-span-4 bg-primary-200 rounded-lg p-4 text-white relative overflow-hidden flex justify-start items-center">
+        <div className="h-32 col-span-12 sm:col-span-6 md:col-span-4 bg-primary-200 rounded-lg p-4 text-white relative overflow-hidden flex justify-start items-center">
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -top-20 -right-12"></div>
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -bottom-20 -right-12"></div>
           <div className="flex items-center gap-x-4">
@@ -42,7 +42,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="h-32 col-span-4 bg-primary-200 rounded-lg p-4 text-white relative overflow-hidden flex justify-start items-center">
+        <div className="h-32 col-span-12 sm:col-span-6 md:col-span-4 bg-primary-200 rounded-lg p-4 text-white relative overflow-hidden flex justify-start items-center">
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -top-20 -right-12"></div>
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -bottom-20 -right-12"></div>
           <div className="flex items-center gap-x-4">
@@ -56,7 +56,7 @@ const Profile = () => {
           </div>
         </div>
       </article>
-      <OrdersTable user={user} userLoading={userLoading} limit={5} header/>
+      <OrdersTable user={user} userLoading={userLoading} limit={5} header />
     </section>
   );
 };

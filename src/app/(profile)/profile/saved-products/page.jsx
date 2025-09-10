@@ -31,13 +31,13 @@ const SavedProducts = () => {
     return <NoProduct text="There is no Product." link />;
   }
   return (
-    <section className="w-full bg-white rounded-tl-lg h-screen pb-28 px-8 pt-4 overflow-y-auto">
+    <section className="w-full bg-white rounded-tl-lg h-screen pb-28 px-4 lg:px-8 pt-4 overflow-y-auto">
       <h2 className="text-xl font-semibold mb-6">Saved Products</h2>
 
       {!user && userLoading ? (
         <Loading />
       ) : (
-        <div className="grid grid-cols-12 gap-x-8 gap-y-12">
+        <div className="grid grid-cols-12 gap-x-9 gap-y-12 justify-center">
           {user?.user?.saved.map((p) => {
             return (
               <Product

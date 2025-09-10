@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import NoProduct from "@/components/NoProduct";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
-const OrdersTable = ({ user, userLoading, limit , header = false}) => {
+const OrdersTable = ({ user, userLoading, limit, header = false }) => {
   const searchParams = useSearchParams();
 
   const createQueryString = () => {
@@ -29,21 +29,23 @@ const OrdersTable = ({ user, userLoading, limit , header = false}) => {
   );
 
   if (userLoading && paymentsLoading) return <Loading />;
-  if (!paymentsLoading && !payments?.data){
+  if (!paymentsLoading && !payments?.data) {
     return <NoProduct text="There is no payment." link />;
   }
   return (
     <>
-      {header && <article className="grid grid-cols-12 gap-x-4  mt-10">
-        <div className="col-span-12 flex justify-between items-center">
-          <h2 className="text-xl font-semibold">Latest Orders</h2>
-          <Link href="/profile/my-orders">
-            <button className="cursor-pointer flex justify-center items-center gap-x-2 px-2 py-1 rounded-lg text-white  bg-primary-200">
-              All Orders <FaLongArrowAltRight />
-            </button>
-          </Link>
-        </div>
-      </article>}
+      {header && (
+        <article className="grid grid-cols-12 gap-x-4  mt-10">
+          <div className="col-span-12 flex justify-between items-center">
+            <h2 className="text-sm sm:text-xl font-semibold">Latest Orders</h2>
+            <Link href="/profile/my-orders">
+              <button className="cursor-pointer flex justify-center items-center gap-x-2 px-2 py-1 rounded-lg text-white  bg-primary-200 text-sm sm:text-base">
+                All Orders <FaLongArrowAltRight />
+              </button>
+            </Link>
+          </div>
+        </article>
+      )}
 
       <div className="overflow-auto my-10">
         <table className="border-collapse table-auto w-full min-w-[800px] text-sm">
@@ -90,8 +92,8 @@ const OrdersTable = ({ user, userLoading, limit , header = false}) => {
                       })}
                     </div>
                   </td>
-                  <td className="table__td text-lg text-center">
-                    $ <span>{p.amount.toFixed(2)}</span>
+                  <td className="table__td text-sm sm:text-lg text-center">
+                    <span className="text-nowrap">$ {p.amount.toFixed(2)}</span>
                   </td>
                   <td className="table__td text-nowrap">
                     {toLoacalDate(p.createdAt)}
