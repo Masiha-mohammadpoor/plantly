@@ -16,7 +16,7 @@ const ProductForm = ({
 }) => {
   return (
     <div>
-      <form onSubmit={onSubmit} className="w-[50%]">
+      <form onSubmit={onSubmit} className="w-full md:w-[50%]">
         {productFormInputsData.map((f) => {
           return (
             <FormInput

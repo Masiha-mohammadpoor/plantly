@@ -5,7 +5,7 @@ import FormInput from "./FormInput";
 const CategoryForm = ({ onSubmit, formData, onChange, btnText }) => {
   return (
     <div>
-      <form onSubmit={onSubmit} className="w-[50%]">
+      <form onSubmit={onSubmit} className="w-full md:w-[50%]">
         {categoryFormInputsData.map((f) => {
           return (
             <FormInput

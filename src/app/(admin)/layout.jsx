@@ -13,6 +13,7 @@ const rubik = Rubik({
 
 export default function RootLayout({ children }) {
   const [openMenu, setOpenMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
     <html lang="en">
@@ -21,11 +22,24 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <main className="w-full h-screen overflow-hidden grid grid-cols-15 bg-primary-200">
-            <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} menuData={adminPanelMenuData}/>
-            <section className={`${openMenu ? "col-span-12" : "col-span-14"}`}>
-              <ProfileHeader />
+            <Menu
+              showMenu={showMenu}
+              setShowMenu={setShowMenu}
+              openMenu={openMenu}
+              setOpenMenu={setOpenMenu}
+              menuData={adminPanelMenuData}
+              closeMenu={() => setShowMenu(false)}
+            />
+            <section
+              className={`${
+                openMenu
+                  ? "col-span-15 lg:col-span-12"
+                  : "col-span-15 lg:col-span-14"
+              }`}
+            >
+              <ProfileHeader setShowMenu={() => setShowMenu((prev) => !prev)} />
               <article className="w-full">
-                <section className="w-full bg-white rounded-tl-lg h-screen pt-4">
+                <section className="w-full bg-white lg:rounded-tl-lg h-screen pt-4">
                   {children}
                 </section>
               </article>

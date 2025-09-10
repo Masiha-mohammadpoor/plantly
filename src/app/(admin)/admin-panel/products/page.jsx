@@ -25,7 +25,7 @@ const Products = () => {
       <div className="w-full flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold">Products</h2>
         <Link href="/admin-panel/products/create">
-          <button className="flex items-center gap-x-2 text-white bg-primary-200 rounded-lg px-2 py-1 cursor-pointer">
+          <button className="flex items-center gap-x-2 text-white bg-primary-200 rounded-lg px-2 py-1 cursor-pointer text-sm md:text-base">
             <FaPlus /> Add Product
           </button>
         </Link>
