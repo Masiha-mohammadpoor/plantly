@@ -43,7 +43,7 @@ const Signin = () => {
 
   const onSubmit = async (data) => {
     try {
-      const { message } = await mutateAsync({...data});
+      const { message } = await mutateAsync({ ...data });
       toast.success(message);
       router.push("/");
     } catch (err) {
@@ -52,8 +52,8 @@ const Signin = () => {
   };
 
   return (
-    <section className="flex">
-      <article className="h-screen w-[50%] bg-primary-200 rounded-r-[120px] flex flex-col justify-center items-center">
+    <section className="w-screen flex px-4 md:px-0 justify-center">
+      <article className="h-screen w-[50%] bg-primary-200 rounded-r-[120px] hidden lg:flex flex-col justify-center items-center">
         <h1 className="text-white text-6xl font-semibold pb-6">
           Welcome Back!
         </h1>
@@ -67,8 +67,10 @@ const Signin = () => {
           </button>
         </Link>
       </article>
-      <article className="w-[50%] h-screen flex flex-col justify-center items-center">
-        <h2 className="text-3xl font-semibold pb-3">Login To The Account</h2>
+      <article className="w-full sm:w-[70%] lg:w-[50%] h-screen flex flex-col justify-center items-center ">
+        <h2 className="text-2xl md:text-3xl font-semibold pb-3">
+          Login To The Account
+        </h2>
         <div className="flex gap-x-2 pb-3">
           <button
             onClick={() => signIn("google", { redirect: "/" })}
@@ -94,7 +96,7 @@ const Signin = () => {
         </p>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col items-center justify-center"
+          className=" w-full lg:w-[70%] flex flex-col items-center justify-center"
         >
           <Input
             register={register}
@@ -116,6 +118,9 @@ const Signin = () => {
           >
             SIGN IN
           </button>
+          <Link href="/auth/signup" className="text-primary-500 mt-4 lg:hidden">
+            haven't registered yet ?
+          </Link>
         </form>
       </article>
     </section>

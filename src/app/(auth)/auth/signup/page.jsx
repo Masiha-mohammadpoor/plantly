@@ -64,8 +64,8 @@ const Signup = () => {
   };
 
   return (
-    <section className="flex">
-      <article className="h-screen w-[50%] bg-primary-200 rounded-r-[120px] flex flex-col justify-center items-center">
+    <section className="w-screen flex px-4 md:px-0 justify-center overflow-x-hidden">
+      <article className="h-screen w-[50%] bg-primary-200 rounded-r-[120px] hidden lg:flex flex-col justify-center items-center">
         <h1 className="text-white text-6xl font-semibold pb-6">Welcome!</h1>
         <p className="max-w-80 break-words overflow-hidden text-center text-white pb-6">
           Welcome to our site. Register to use all the features.
@@ -77,8 +77,10 @@ const Signup = () => {
           </button>
         </Link>
       </article>
-      <article className="w-[50%] h-screen flex flex-col justify-center items-center">
-        <h2 className="text-3xl font-semibold pb-3">Create Account</h2>
+      <article className="pt-4 w-full sm:w-[70%] lg:w-[50%] lg:h-screen flex flex-col justify-center items-center">
+        <h2 className="text-2xl md:text-3xl font-semibold pb-3">
+          Create Account
+        </h2>
         <div className="flex gap-x-2 pb-3">
           <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
             <FaGoogle />
@@ -95,7 +97,7 @@ const Signup = () => {
         </p>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col items-center justify-center"
+          className="w-full lg:w-[70%] flex flex-col items-center justify-center"
         >
           <Input
             errors={errors}
@@ -130,6 +132,12 @@ const Signup = () => {
           >
             SIGN UP
           </button>
+          <Link
+            href="/auth/signin"
+            className="text-primary-500 mt-4 lg:hidden pb-8"
+          >
+            Have you already registered?
+          </Link>
         </form>
       </article>
     </section>
