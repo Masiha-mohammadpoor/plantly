@@ -4,6 +4,8 @@ import { HiOutlineHeart, HiHeart } from "react-icons/hi";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LiaCartPlusSolid } from "react-icons/lia";
+import Link from "next/link";
+import { FaEye } from "react-icons/fa";
 
 const Product = ({ product, user, actionHandler }) => {
   return (
@@ -72,28 +74,35 @@ const Product = ({ product, user, actionHandler }) => {
             </p>
           )}
         </div>
-        {user.user.cart.items.some((p) => p.product._id === product._id) ? (
-          <button
-            onClick={() =>
-              actionHandler({
-                action: "removeFromCart",
-                productId: product._id,
-              })
-            }
-            className="p-1.5 text-red-500 rounded-lg bg-red-300 mb-1 cursor-pointer"
-          >
-            <FaRegTrashAlt className="text-xl" />
-          </button>
-        ) : (
-          <button
-            onClick={() =>
-              actionHandler({ action: "addToCart", productId: product._id })
-            }
-            className="p-1.5 text-white rounded-lg bg-primary-500 mb-1 cursor-pointer"
-          >
-            <LiaCartPlusSolid className="text-xl" />
-          </button>
-        )}
+        <div className="flex gap-x-2">
+          <Link href={`/products/${product._id}`}>
+            <button className="p-1.5 bg-primary-500 text-white rounded-lg mb-1 cursor-pointer">
+              <FaEye className="text-xl" />
+            </button>
+          </Link>
+          {user.user.cart.items.some((p) => p.product._id === product._id) ? (
+            <button
+              onClick={() =>
+                actionHandler({
+                  action: "removeFromCart",
+                  productId: product._id,
+                })
+              }
+              className="p-1.5 text-red-500 rounded-lg bg-red-300 mb-1 cursor-pointer"
+            >
+              <FaRegTrashAlt className="text-xl" />
+            </button>
+          ) : (
+            <button
+              onClick={() =>
+                actionHandler({ action: "addToCart", productId: product._id })
+              }
+              className="p-1.5 text-white rounded-lg bg-primary-500 mb-1 cursor-pointer"
+            >
+              <LiaCartPlusSolid className="text-xl" />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

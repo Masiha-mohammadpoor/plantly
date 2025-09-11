@@ -57,7 +57,7 @@ const Signup = () => {
         password: data.password,
       });
       toast.success(message);
-      router.push("/");
+      router.push("/auth/signin");
     } catch (err) {
       toast.error(err?.response?.data?.message);
     }

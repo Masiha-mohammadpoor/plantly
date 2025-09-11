@@ -8,7 +8,7 @@ const rubik = Rubik({
 });
 
 export const metadata = {
-  title: "plant",
+  title: "plantly",
   description: "plant shop",
 };
 

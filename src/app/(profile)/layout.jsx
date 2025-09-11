@@ -17,6 +17,10 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        <title>profile</title>
+        <meta name="description" content="profile" />
+      </head>
       <body
         className={`antialiased bg-bg ${rubik.className} overflow-x-hidden`}
       >

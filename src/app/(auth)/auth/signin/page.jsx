@@ -4,7 +4,6 @@ import { FaGithub } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import Input from "@/components/Input";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -72,22 +71,13 @@ const Signin = () => {
           Login To The Account
         </h2>
         <div className="flex gap-x-2 pb-3">
-          <button
-            onClick={() => signIn("google", { redirect: "/" })}
-            className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500"
-          >
+          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
             <FaGoogle />
           </button>
-          <button
-            onClick={() => signIn("github", { redirect: "/" })}
-            className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500"
-          >
+          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
             <FaGithub />
           </button>
-          <button
-            onClick={() => signIn("linkedin", { redirect: "/" })}
-            className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500"
-          >
+          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
             <FaLinkedinIn />
           </button>
         </div>

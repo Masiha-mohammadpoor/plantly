@@ -20,18 +20,20 @@ const linksData = [
   },
   {
     id: 3,
-    title: "About Us",
-    href: "/about-us",
+    title: "My Plant",
+    href: "/profile/my-orders",
   },
   {
     id: 4,
-    title: "Contact",
-    href: "/contact",
+    title: "About Us",
+    href: "https://me-pi-inky.vercel.app/",
+    target:"_blank"
   },
   {
     id: 5,
-    title: "My Plant",
-    href: "my-plant",
+    title: "My Github",
+    href: "https://github.com/Masiha-mohammadpoor",
+    target:"_blank"
   },
 ];
 
@@ -62,7 +64,7 @@ const Header = () => {
           <ul className="flex justify-center items-center gap-x-10 text-secondary-500">
             {linksData.map((l) => {
               return (
-                <Link key={l.id} href={l.href} replace>
+                <Link target={l.target && l.target} key={l.id} href={l.href} replace>
                   {l.title}
                 </Link>
               );
