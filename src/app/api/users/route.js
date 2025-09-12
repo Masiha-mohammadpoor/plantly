@@ -35,11 +35,10 @@ export async function OPTIONS() {
   });
 }
 
-// GET (nly Admin)
+// GET (only Admin)
 export async function GET(request) {
   try {
     await connectDB();
-    await runMiddleware(request, cors);
 
     const token = getToken(request);
     if (!token || token.role !== "ADMIN") {
@@ -63,7 +62,6 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     await connectDB();
-    await runMiddleware(request, cors);
     const body = await request.json();
 
     // Validation
