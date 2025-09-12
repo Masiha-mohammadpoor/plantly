@@ -35,7 +35,6 @@ const PaginationComponent = (count) => {
         count={count.count}
         page={page}
         onChange={(e, value) => paginationHandler(value)}
-        
         sx={{
           "& .MuiPaginationItem-root": {
             color: "#588157",

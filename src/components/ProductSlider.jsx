@@ -8,7 +8,6 @@ import Slider from "react-slick";
 import Link from "next/link";
 
 const ProductSlider = ({ products }) => {
-
   const productsNumber = [1, 2, 3, 4, 5, 6];
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -30,27 +29,27 @@ const ProductSlider = ({ products }) => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 4,
-        }
+        },
       },
       {
         breakpoint: 880,
         settings: {
           slidesToShow: 3,
-        }
+        },
       },
       {
         breakpoint: 650,
         settings: {
           slidesToShow: 2,
-        }
+        },
       },
       {
         breakpoint: 410,
         settings: {
           slidesToShow: 1,
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
 
   return (

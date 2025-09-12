@@ -75,7 +75,9 @@ const PaymentsTable = ({ limit }) => {
                   </div>
                 </td>
                 <td className="table__td text-lg text-center">
-                  <span className="flex gap-x-1">$ <span>{p.amount.toFixed(2)}</span></span>
+                  <span className="flex gap-x-1">
+                    $ <span>{p.amount.toFixed(2)}</span>
+                  </span>
                 </td>
                 <td className="table__td text-sm text-center">
                   <p>{p.user.name}</p>

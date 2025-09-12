@@ -26,7 +26,7 @@ const LikeAndSave = () => {
     }
   };
 
-    if (!userLoading && user?.user?.likes.length === 0){
+  if (!userLoading && user?.user?.likes.length === 0) {
     return <NoProduct text="There is no Product." link />;
   }
   return (

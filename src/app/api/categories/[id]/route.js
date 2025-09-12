@@ -2,7 +2,7 @@ import {connectDB} from '@/lib/db/connect';
 import Category from '@/models/Category';
 import { NextResponse } from 'next/server';
 
-// GET دسته‌بندی خاص
+// GET (get a single category)
 export async function GET(request, { params }) {
   try {
     await connectDB();
@@ -25,13 +25,12 @@ export async function GET(request, { params }) {
   }
 }
 
-// PUT به روزرسانی دسته‌بندی
+//PUT (update category)
 export async function PUT(request, { params }) {
   try {
     await connectDB();
     const body = await request.json();
     
-    // حذف فیلدهای غیرقابل به‌روزرسانی
     delete body._id;
     delete body.createdAt;
     
@@ -63,7 +62,7 @@ export async function PUT(request, { params }) {
   }
 }
 
-// DELETE حذف دسته‌بندی
+// DELETE
 export async function DELETE(request, { params }) {
   try {
     await connectDB();

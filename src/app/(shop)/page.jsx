@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllProducts } from "@/services/productService";
 import ProductSlider from "@/components/ProductSlider";
+export const dynamic = "force-dynamic";
 
 const getProducts = async () => {
   try {
@@ -33,16 +34,16 @@ const Home = async () => {
           </p>
           <div className="mt-1 w-full h-10">
             <div className="flex justify-center lg:justify-start">
-            <Link href="/products">
-              <button className="shop-btn w-32 p-2 rounded-l-lg text-white bg-primary-500 cursor-pointer hover:bg-primary-800 transition-all duration-300">
-                Go to shop
-              </button>
-            </Link>
-            <Link href="/profile">
-              <button className="profile-btn w-32 p-2 rounded-r-lg text-white bg-secondary-500 -ml-4 cursor-pointer hover:bg-secondary-800 transition-all duration-300">
-                My profile
-              </button>
-            </Link>
+              <Link href="/products">
+                <button className="shop-btn w-32 p-2 rounded-l-lg text-white bg-primary-500 cursor-pointer hover:bg-primary-800 transition-all duration-300">
+                  Go to shop
+                </button>
+              </Link>
+              <Link href="/profile">
+                <button className="profile-btn w-32 p-2 rounded-r-lg text-white bg-secondary-500 -ml-4 cursor-pointer hover:bg-secondary-800 transition-all duration-300">
+                  My profile
+                </button>
+              </Link>
             </div>
           </div>
         </div>

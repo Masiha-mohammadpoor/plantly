@@ -10,12 +10,10 @@ import { IoCardOutline } from "react-icons/io5";
 import { useGetAllProducts } from "@/hooks/useProducts";
 import PaymentsTable from "./PaymentsTable";
 
-
 const AdminPanel = () => {
   const { users, usersLoading } = useGetAllUsers();
-  const {products,productsLoading} = useGetAllProducts();
-  const {payments,paymentsLoading} = useGetAllPayments();
-  
+  const { products, productsLoading } = useGetAllProducts();
+  const { payments, paymentsLoading } = useGetAllPayments();
 
   if (usersLoading && productsLoading && paymentsLoading) return <Loading />;
   return (
@@ -71,7 +69,7 @@ const AdminPanel = () => {
           </Link>
         </div>
       </article>
-      <PaymentsTable limit={5}/>
+      <PaymentsTable limit={5} />
     </section>
   );
 };

@@ -22,7 +22,7 @@ export const profileMenuData = [
   },
   {
     id: 3,
-    title: "User Information",
+    title: "My Information",
     icon: <LuUserRound />,
     link: "/profile/user-information",
   },

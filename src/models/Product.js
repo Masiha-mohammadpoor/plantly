@@ -4,9 +4,9 @@ const ProductSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "نام محصول الزامی است"],
+      required: [true, "Product name is required"],
       trim: true,
-      maxlength: [100, "نام محصول نمی‌تواند بیشتر از ۱۰۰ کاراکتر باشد"],
+      maxlength: [100, "Product name cannot be longer than 100 characters"],
     },
     slug: {
       type: String,
@@ -16,49 +16,50 @@ const ProductSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: [true, "توضیحات محصول الزامی است"],
-      maxlength: [1000, "توضیحات نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد"],
+      required: [true, "Product description is required"],
+      maxlength: [1000, "Descriptions cannot exceed 1000 characters"],
     },
     price: {
       type: Number,
-      required: [true, "قیمت محصول الزامی است"],
-      min: [0, "قیمت نمی‌تواند منفی باشد"],
+      required: [true, "Product price is required"],
+      min: [0, "Price cannot be negative"],
     },
     offPrice: {
       type: Number,
-      min: [0, "قیمت تخفیف نمی‌تواند منفی باشد"],
+      min: [0, "Discount price cannot be negative"],
       validate: {
         validator: function (value) {
           if (!this.price || value === null || value === undefined) return true;
           return value <= this.price;
         },
-        message: "قیمت تخفیف باید کمتر یا مساوی قیمت اصلی باشد",
+        message:
+          "The discounted price must be less than or equal to the original price",
       },
     },
     discount: {
       type: Number,
-      min: [0, "تخفیف نمی‌تواند منفی باشد"],
-      max: [100, "تخفیف نمی‌تواند بیشتر از ۱۰۰٪ باشد"],
+      min: [0, "Discount cannot be negative"],
+      max: [100, "Discount cannot be more than 100%"],
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      required: [true, "دسته‌بندی الزامی است"],
+      required: [true, "Category is required"],
     },
     images: {
       type: String,
-      required: [true, "عکس محصول الزامی است"],
+      required: [true, "Product image is required"],
     },
     stock: {
       type: Number,
-      required: [true, "تعداد موجودی الزامی است"],
-      min: [0, "تعداد موجودی نمی‌تواند منفی باشد"],
+      required: [true, "Inventory quantity is required"],
+      min: [0, "The inventory count cannot be negative"],
       default: 0,
     },
     likesCount: {
       type: Number,
       default: 0,
-      min: [0, "تعداد لایک نمی‌تواند منفی باشد"],
+      min: [0, "The number of likes cannot be negative"],
     },
     featured: {
       type: Boolean,
