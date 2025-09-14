@@ -20,7 +20,7 @@ const Product = ({ product, user, actionHandler }) => {
           }
           className="text-red-500 text-2xl cursor-pointer"
         >
-          {user.user.likes.some((l) => l._id === product._id) ? (
+          {user?.user?.likes.some((l) => l._id === product._id) ? (
             <HiHeart />
           ) : (
             <HiOutlineHeart />
@@ -35,7 +35,7 @@ const Product = ({ product, user, actionHandler }) => {
           }
           className="text-primary-500 text-xl cursor-pointer"
         >
-          {user.user.saved.some((l) => l._id === product._id) ? (
+          {user?.user?.saved.some((l) => l._id === product._id) ? (
             <FaBookmark />
           ) : (
             <FaRegBookmark />
@@ -80,7 +80,9 @@ const Product = ({ product, user, actionHandler }) => {
               <FaEye className="text-xl" />
             </button>
           </Link>
-          {user.user.cart.items.some((p) => p.product._id === product._id) ? (
+          {user?.user?.cart?.items.some(
+            (p) => p.product._id === product._id
+          ) ? (
             <button
               onClick={() =>
                 actionHandler({

@@ -19,20 +19,18 @@ const productPage = () => {
 
   const actionHandler = async (action) => {
     try {
-      if (user && product) {
-        const res = await mutateAsync({ id: user.user._id, data: action });
-        if (action.action === "addToCart") toast.success("Added to cart");
-        if (action.action === "removeFromCart")
-          toast.success("Removed from cart!");
-        queryClient.invalidateQueries({ queryKey: ["get-user"] });
-      }
+      const res = await mutateAsync({ id: user?.user?._id, data: action });
+      if (action.action === "addToCart") toast.success("Added to cart");
+      if (action.action === "removeFromCart")
+        toast.success("Removed from cart!");
+      queryClient.invalidateQueries({ queryKey: ["get-user"] });
     } catch (err) {
       toast.error(err?.response?.data?.message);
     }
   };
 
-  if (productLoading && userLoading) return <Loading />;
-  if (product && !productLoading && user && !userLoading)
+  if (productLoading) return <Loading />;
+  if (product && !productLoading)
     return (
       <section className="px-4 md:px-20 lg:px-40 flex flex-col md:flex-row items-center md:items-start gap-x-16 mt-16 pb-10 overflow-x-hidden">
         {/* image */}
@@ -100,7 +98,7 @@ const productPage = () => {
             </div>
             <p>$ {data?.offPrice.toFixed(2)}</p>
           </div>
-          {user.user.cart.items.some((p) => p.product._id === data._id) ? (
+          {user?.user?.cart?.items.some((p) => p.product._id === data._id) ? (
             <button
               onClick={() =>
                 actionHandler({ action: "removeFromCart", productId: data._id })

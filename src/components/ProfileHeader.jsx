@@ -8,7 +8,7 @@ const ProfileHeader = ({ setShowMenu }) => {
   const { user, userLoading } = useGetUser();
 
   return (
-    <header className="w-full h-12 bg-primary-200 flex justify-between lg:justify-end items-center px-3 md:px-10 py-2">
+    <header className="sticky top-0 w-full h-12 bg-primary-200 flex justify-between lg:justify-end items-center px-3 md:px-10 py-2">
       <button
         onClick={setShowMenu}
         className="cursor-pointer w-9 h-9 bg-white/20 rounded-lg text-white flex lg:hidden justify-center items-center"

@@ -77,7 +77,7 @@ const Cart = () => {
   if (!userLoading && user && user?.cart?.items?.length === 0)
     return <EmptyCart />;
   return (
-    <section className="flex flex-col justify-center mt-16 mx-auto px-4 lg:px-16 max-w-7xl overflow-y-auto overflow-x-hidden">
+    <section className="flex flex-col justify-center mt-16 mx-auto px-4 lg:px-16 max-w-7xl overflow-y-auto overflow-x-hidden pb-10">
       <h1 className="text-xl font-semibold pb-2 w-[650px] lg:w-full mx-auto lg:px-16">
         Your shopping cart ({user?.cart?.items?.length || 0})
       </h1>

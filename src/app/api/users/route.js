@@ -3,37 +3,6 @@ import User from "@/models/User";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { getToken } from "@/utils/auth";
-// import Cors from 'cors';
-
-// // Initialize cors middleware
-// const cors = Cors({
-//   origin: '*',
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   credentials: false,
-// });
-
-// // Helper method to wait for a middleware to execute
-// function runMiddleware(req, middleware) {
-//   return new Promise((resolve, reject) => {
-//     middleware(req, null, (result) => {
-//       if (result instanceof Error) {
-//         return reject(result);
-//       }
-//       return resolve(result);
-//     });
-//   });
-// }
-
-// export async function OPTIONS() {
-//   return new Response(null, {
-//     status: 200,
-//     headers: {
-//       'Access-Control-Allow-Origin': '*',
-//       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-//       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-//     },
-//   });
-// }
 
 // GET (only Admin)
 export async function GET(request) {

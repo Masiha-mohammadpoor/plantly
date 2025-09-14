@@ -68,7 +68,7 @@ const UserInformation = () => {
           {/* image */}
           <div className="w-28 h-28 rounded-full bg-secondary-200 absolute top-10 left-3 md:left-5 flex justify-center items-center overflow-hidden custom-shadow">
             <Image
-              src="/UI-images/User.png"
+              src="/UI-images/user.png"
               alt="user"
               fill
               className="object-contain"

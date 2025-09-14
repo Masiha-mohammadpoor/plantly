@@ -110,14 +110,23 @@ export async function PUT(request, { params }) {
 
     // Verify authentication
     const token = getToken(request);
-    if (!token || (token.id !== id && token.role !== "ADMIN")) {
-      return NextResponse.json(
-        { success: false, message: "Unauthorized access" },
-        { status: 403 }
-      );
+
+    if (body.action) {
+      if (!token) {
+        return NextResponse.json(
+          { success: false, message: "Please login first !!!" },
+          { status: 401 }
+        );
+      }
+
+      if (!token.id || (token.id !== id && token.role !== "ADMIN")) {
+        return NextResponse.json(
+          { success: false, message: "Unauthorized access" },
+          { status: 403 }
+        );
+      }
     }
 
-    // find user
     const user = await User.findById(id);
     if (!user) {
       return NextResponse.json(
@@ -126,13 +135,18 @@ export async function PUT(request, { params }) {
       );
     }
 
-    // Update basic fields
     if (body.name) user.name = body.name;
     if (body.email) user.email = body.email;
-    if (body.role && token.role === "ADMIN") user.role = body.role;
+    if (body.role && token && token.role === "ADMIN") user.role = body.role;
 
-    // Handle special actions
     if (body.action) {
+      if (!token) {
+        return NextResponse.json(
+          { success: false, message: "Please login first !!!" },
+          { status: 401 }
+        );
+      }
+
       switch (body.action) {
         case "like":
           handleLikeAction(user, body.productId);

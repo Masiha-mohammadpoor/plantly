@@ -25,13 +25,11 @@ const Products = ({ searchParams }) => {
 
   const actionHandler = async (action) => {
     try {
-      if (user && products) {
-        const res = await mutateAsync({ id: user.user._id, data: action });
-        if (action.action === "addToCart") toast.success("Added to cart");
-        if (action.action === "removeFromCart")
-          toast.success("Removed from cart!");
-        queryClient.invalidateQueries({ queryKey: ["get-user"] });
-      }
+      const res = await mutateAsync({ id: user?.user?._id, data: action });
+      if (action.action === "addToCart") toast.success("Added to cart");
+      if (action.action === "removeFromCart")
+        toast.success("Removed from cart!");
+      queryClient.invalidateQueries({ queryKey: ["get-user"] });
     } catch (err) {
       toast.error(err?.response?.data?.message);
     }
@@ -48,8 +46,7 @@ const Products = ({ searchParams }) => {
             <Loading />
           </div>
         ) : (
-          products &&
-          user && (
+          products && (
             <>
               <Filter showFilter={showFilter} setShowFilter={setShowFilter} />
               <article className="col-span-12 xl:col-span-9 overflow-y-auto overflow-x-hidden pb-20 pl-4">
@@ -71,7 +68,7 @@ const Products = ({ searchParams }) => {
                         <Product
                           key={product._id}
                           product={product}
-                          user={user}
+                          user={user || null}
                           actionHandler={actionHandler}
                         />
                       );

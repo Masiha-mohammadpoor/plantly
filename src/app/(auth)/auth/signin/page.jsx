@@ -71,13 +71,13 @@ const Signin = () => {
           Login To The Account
         </h2>
         <div className="flex gap-x-2 pb-3">
-          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
+          <button className="cursor-not-allowed w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
             <FaGoogle />
           </button>
-          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
+          <button className="cursor-not-allowed w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
             <FaGithub />
           </button>
-          <button className="cursor-pointer w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
+          <button className="cursor-not-allowed w-10 h-10 flex justify-center items-center border-2 border-secondary-500 rounded-lg text-secondary-500">
             <FaLinkedinIn />
           </button>
         </div>
