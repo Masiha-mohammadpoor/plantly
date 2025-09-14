@@ -4,8 +4,12 @@ import { HiArrowNarrowRight } from "react-icons/hi";
 import { useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import dynamic from "next/dynamic";
 import Link from "next/link";
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+  loading: () => <div></div>
+});
 
 const ProductSlider = ({ products }) => {
   const productsNumber = [1, 2, 3, 4, 5, 6];
