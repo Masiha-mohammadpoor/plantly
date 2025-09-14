@@ -18,6 +18,7 @@ const ProductSlider = ({ products }) => {
   const settings = {
     infinite: true,
     slidesToScroll: 1,
+    slidesToShow: 5,
     autoplay: true,
     autoplaySpeed: 3500,
     pauseOnHover: false,
