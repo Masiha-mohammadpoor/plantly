@@ -1,0 +1,15 @@
+.swiperContainer {
+  overflow: visible !important;
+}
+
+.swiperContainer :global(.swiper) {
+  overflow: visible !important;
+}
+
+.swiperContainer :global(.swiper-wrapper) {
+  overflow: visible !important;
+}
+
+.swiperContainer :global(.swiper-slide) {
+  overflow: visible !important;
+}

@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import "../globals.css";
 import { Rubik } from "next/font/google";
 import Providers from "../Providers";
+import "swiper/css";
 
 const rubik = Rubik({
   subsets: ["latin"],
