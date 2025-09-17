@@ -56,7 +56,7 @@ const Products = ({ searchParams }) => {
                   </h2>
                   <button
                     onClick={() => setShowFilter((prev) => !prev)}
-                    className="z-[100] text-white w-9 h-9 flex justify-center items-center bg-primary-200 rounded-lg cursor-pointer xl:hidden"
+                    className="z-[90] text-white w-9 h-9 flex justify-center items-center bg-primary-200 rounded-lg cursor-pointer xl:hidden"
                   >
                     <ImSortAmountDesc />
                   </button>

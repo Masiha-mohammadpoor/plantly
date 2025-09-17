@@ -23,9 +23,11 @@ const AdminPanel = () => {
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -top-20 -right-12"></div>
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -bottom-20 -right-12"></div>
           <div className="flex items-center gap-x-4">
-            <span className="w-16 h-16 text-white rounded-lg bg-primary-500 flex justify-center items-center text-3xl">
-              <LuUsers />
-            </span>
+            <Link href="/admin-panel/users">
+              <span className="w-16 h-16 text-white rounded-lg bg-primary-500 flex justify-center items-center text-3xl">
+                <LuUsers />
+              </span>
+            </Link>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>Users</h2>
               <p className="text-sm">{users?.data?.length}</p>
@@ -36,9 +38,11 @@ const AdminPanel = () => {
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -top-20 -right-12"></div>
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -bottom-20 -right-12"></div>
           <div className="flex items-center gap-x-4">
-            <span className="w-16 h-16 text-white rounded-lg bg-primary-500 flex justify-center items-center text-3xl">
-              <TbPlant />
-            </span>
+            <Link href="/admin-panel/products">
+              <span className="w-16 h-16 text-white rounded-lg bg-primary-500 flex justify-center items-center text-3xl">
+                <TbPlant />
+              </span>
+            </Link>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>Products</h2>
               <div>{products?.count}</div>
@@ -49,9 +53,11 @@ const AdminPanel = () => {
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -top-20 -right-12"></div>
           <div className="absolute w-40 h-40 rounded-full bg-primary-500/30 -bottom-20 -right-12"></div>
           <div className="flex items-center gap-x-4">
-            <span className="w-16 h-16 text-white rounded-lg bg-primary-500 flex justify-center items-center text-3xl">
-              <IoCardOutline />
-            </span>
+            <Link href="/admin-panel/payments">
+              <span className="w-16 h-16 text-white rounded-lg bg-primary-500 flex justify-center items-center text-3xl">
+                <IoCardOutline />
+              </span>
+            </Link>
             <div className="h-16 flex flex-col justify-between items-start">
               <h2>Payments</h2>
               <p>{payments?.pagination?.total}</p>

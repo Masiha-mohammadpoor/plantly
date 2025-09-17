@@ -25,11 +25,6 @@ const ProfileHeader = ({ setShowMenu }) => {
               <CiShoppingCart className="text-2xl text-white" />
             </button>
           </Link>
-          <Link href="/profile">
-            <button className="cursor-pointer">
-              <CiUser className="text-2xl text-white" />
-            </button>
-          </Link>
         </div>
       )}
     </header>
