@@ -26,7 +26,7 @@ const linksData = [
   {
     id: 4,
     title: "About Us",
-    href: "https://me-pi-inky.vercel.app/",
+    href: "https://me-virid-chi.vercel.app/",
     target: "_blank",
   },
   {
