@@ -6,12 +6,13 @@ export async function GET(request, { params }) {
   try {
     await connectDB();
 
+    const { userId } = await params;
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get("page")) || 1;
     const limit = parseInt(searchParams.get("limit")) || 10;
     const status = searchParams.get("status");
 
-    const filter = { user: params.userId };
+    const filter = { user: userId };
     if (status) filter.status = status;
 
     const skip = (page - 1) * limit;

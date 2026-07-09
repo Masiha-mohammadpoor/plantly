@@ -3,7 +3,7 @@ import { signOut } from "@/utils/auth";
 
 export async function POST() {
   try {
-    signOut();
+    await signOut();
 
     return NextResponse.json({
       success: true,

@@ -5,8 +5,9 @@ import { NextResponse } from "next/server";
 export async function GET(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
 
-    const payment = await Payment.findById(params.id)
+    const payment = await Payment.findById(id)
       .populate("user", "name email")
       .populate("items.product", "name price images");
 

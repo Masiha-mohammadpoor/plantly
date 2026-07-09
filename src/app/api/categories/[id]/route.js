@@ -2,12 +2,12 @@ import {connectDB} from '@/lib/db/connect';
 import Category from '@/models/Category';
 import { NextResponse } from 'next/server';
 
-// GET (get a single category)
 export async function GET(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
     
-    const category = await Category.findById(params.id);
+    const category = await Category.findById(id);
     
     if (!category) {
       return NextResponse.json(
@@ -25,16 +25,16 @@ export async function GET(request, { params }) {
   }
 }
 
-//PUT (update category)
 export async function PUT(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
     const body = await request.json();
     
     delete body._id;
     delete body.createdAt;
     
-    const category = await Category.findByIdAndUpdate(params.id, body, {
+    const category = await Category.findByIdAndUpdate(id, body, {
       new: true,
       runValidators: true
     });
@@ -62,12 +62,12 @@ export async function PUT(request, { params }) {
   }
 }
 
-// DELETE
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
     
-    const category = await Category.findByIdAndDelete(params.id);
+    const category = await Category.findByIdAndDelete(id);
     
     if (!category) {
       return NextResponse.json(

@@ -8,8 +8,9 @@ import { NextResponse } from "next/server";
 export async function GET(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
 
-    const product = await Product.findById(params.id).populate(
+    const product = await Product.findById(id).populate(
       "category",
       "name englishTitle"
     );
@@ -34,6 +35,7 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
     const body = await request.json();
 
     delete body._id;
@@ -52,7 +54,7 @@ export async function PUT(request, { params }) {
     if (body.name) {
       const existingProduct = await Product.findOne({
         name: body.name,
-        _id: { $ne: params.id },
+        _id: { $ne: id },
       });
 
       if (existingProduct) {
@@ -67,7 +69,7 @@ export async function PUT(request, { params }) {
     }
 
     if (body.price !== undefined || body.offPrice !== undefined) {
-      const currentProduct = await Product.findById(params.id);
+      const currentProduct = await Product.findById(id);
 
       const finalPrice =
         body.price !== undefined ? body.price : currentProduct.price;
@@ -102,7 +104,7 @@ export async function PUT(request, { params }) {
     }
 
     const product = await Product.findByIdAndUpdate(
-      params.id,
+      id,
       { ...body, updatedAt: new Date() },
       {
         new: true,
@@ -147,8 +149,9 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
+    const { id } = await params;
 
-    const product = await Product.findByIdAndDelete(params.id);
+    const product = await Product.findByIdAndDelete(id);
 
     if (!product) {
       return NextResponse.json(

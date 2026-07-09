@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-export function getToken(req) {
+export async function getToken(req) {
   try {
     // For API routes
     if (req?.cookies) {
@@ -11,7 +11,8 @@ export function getToken(req) {
     }
 
     // For server components
-    const token = cookies().get("token")?.value;
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
     if (!token) return null;
     return jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
@@ -19,6 +20,7 @@ export function getToken(req) {
   }
 }
 
-export function signOut() {
-  cookies().delete("token");
+export async function signOut() {
+  const cookieStore = await cookies();
+  cookieStore.delete("token");
 }

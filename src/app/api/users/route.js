@@ -4,12 +4,11 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { getToken } from "@/utils/auth";
 
-// GET (only Admin)
 export async function GET(request) {
   try {
     await connectDB();
 
-    const token = getToken(request);
+    const token = await getToken(request);
     if (!token || token.role !== "ADMIN") {
       return NextResponse.json(
         { success: false, message: "Unauthorized access" },
@@ -27,13 +26,11 @@ export async function GET(request) {
   }
 }
 
-// POST (creat new user)
 export async function POST(request) {
   try {
     await connectDB();
     const body = await request.json();
 
-    // Validation
     if (!body.name || !body.email || !body.password) {
       return NextResponse.json(
         {
@@ -44,7 +41,6 @@ export async function POST(request) {
       );
     }
 
-    // Check for duplicate email
     const existingUser = await User.findOne({ email: body.email });
     if (existingUser) {
       return NextResponse.json(
@@ -53,7 +49,6 @@ export async function POST(request) {
       );
     }
 
-    // Password hashing
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(body.password, salt);
 

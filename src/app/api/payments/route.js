@@ -8,7 +8,7 @@ export async function GET(request) {
   try {
     await connectDB();
 
-    const token = getToken(request);
+    const token = await getToken(request);
 
     if (!token) {
       return NextResponse.json(
@@ -17,7 +17,7 @@ export async function GET(request) {
       );
     }
 
-    if (!token || token.role !== "ADMIN") {
+    if (token.role !== "ADMIN") {
       return NextResponse.json(
         { success: false, message: "You do not have the required access" },
         { status: 403 }

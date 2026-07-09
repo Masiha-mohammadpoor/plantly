@@ -3,16 +3,16 @@ import Product from "@/models/Product";
 import Category from "@/models/Category";
 import User from "@/models/User";
 import { getToken } from "@/utils/auth";
+import { NextResponse } from "next/server";
 
 export async function GET(request) {
   try {
     await connectDB();
 
-    // get Token from Cookie
-    const token = getToken(request);
+    const token = await getToken(request);
     if (!token) {
-      return new Response(
-        JSON.stringify({ success: false, message: "Unauthorized access" }),
+      return NextResponse.json(
+        { success: false, message: "Unauthorized access" },
         { status: 401 }
       );
     }
@@ -43,30 +43,28 @@ export async function GET(request) {
           select: "name englishTitle",
         },
       });
+      
     if (!user) {
-      return new Response(
-        JSON.stringify({ success: false, message: "User not found" }),
+      return NextResponse.json(
+        { success: false, message: "User not found" },
         { status: 404 }
       );
     }
 
     await user.calculateCartTotal();
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        user: user.toJSON(),
-      }),
-      { status: 200 }
-    );
+    return NextResponse.json({
+      success: true,
+      user: user.toJSON(),
+    });
   } catch (error) {
     console.error("Error fetching user data:", error);
-    return new Response(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         success: false,
         message: "Server error",
         error: error.message,
-      }),
+      },
       { status: 500 }
     );
   }

@@ -5,7 +5,6 @@ import Category from "@/models/Category";
 import { NextResponse } from "next/server";
 import { getToken } from "@/utils/auth";
 
-//Helper Function
 const handleLikeAction = (user, productId) => {
   const index = user.likes.indexOf(productId);
   if (index === -1) {
@@ -64,14 +63,12 @@ const handleRemoveFromCart = (user, productId) => {
   );
 };
 
-// GET User
 export async function GET(request, { params }) {
   try {
     await connectDB();
-    const { id } = params;
+    const { id } = await params;
 
-    // Verify authentication
-    const token = getToken(request);
+    const token = await getToken(request);
     if (!token || (token.id !== id && token.role !== "ADMIN")) {
       return NextResponse.json(
         { success: false, message: "Unauthorized access" },
@@ -101,15 +98,13 @@ export async function GET(request, { params }) {
   }
 }
 
-// UPDATE User
 export async function PUT(request, { params }) {
   try {
     await connectDB();
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
 
-    // Verify authentication
-    const token = getToken(request);
+    const token = await getToken(request);
 
     if (body.action) {
       if (!token) {
@@ -201,14 +196,12 @@ export async function PUT(request, { params }) {
   }
 }
 
-// DELETE User
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
-    const { id } = params;
+    const { id } = await params;
 
-    // Verify authentication
-    const token = getToken(request);
+    const token = await getToken(request);
     if (!token || (token.id !== id && token.role !== "ADMIN")) {
       return NextResponse.json(
         { success: false, message: "Unauthorized access" },
