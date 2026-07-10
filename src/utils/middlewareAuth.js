@@ -1,7 +1,7 @@
 import { toStringCookies } from "./toStringCookies";
 
 export default async function middlewareAuth(req) {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`, {
     method: "GET",
     credentials: "include",
     headers: {
